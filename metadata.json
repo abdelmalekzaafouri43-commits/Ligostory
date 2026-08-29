@@ -1,0 +1,6 @@
+{
+  "name": "LingoStory - English Interactive Reader",
+  "description": "Interactive English story learning app with grammar tags, lexicon definitions, Text-To-Speech audio, and comprehension quizzes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
