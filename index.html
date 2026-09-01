@@ -221,15 +221,22 @@
     </div>
 
     <div class="title-box">
-      <h1 id="storyTitle" class="story-title">A Journey of Discovery</h1>
-      <p id="storyThemeDesc" class="story-desc">Alex explores new horizons and opportunities</p>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div>
+          <h1 id="storyTitle" class="story-title">A Journey of Discovery</h1>
+          <p id="storyThemeDesc" class="story-desc">Alex explores new horizons and opportunities</p>
+        </div>
+        <button id="bookmarkBtn" class="icon-btn" onclick="toggleBookmark()" title="Bookmark Story" style="font-size:18px; background:var(--surface-variant);">☆</button>
+      </div>
     </div>
 
     <div>
       <div class="header-bottom">
-        <div style="display:flex; gap:6px;">
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
           <button class="btn-pill" onclick="openStoryHub()">📚 Library (<span id="libCount">4</span>)</button>
-          <button class="btn-ai" onclick="openAiGenerator()">✨ AI Generator</button>
+          <button class="btn-ai" onclick="openAiGenerator()">✨ AI</button>
+          <button class="btn-pill" onclick="openVocabNotebook()" style="background:rgba(16,185,129,0.15); color:#10b981; border-color:#10b981;">📖 Vocab (<span id="vocabCount">0</span>)</button>
+          <button id="ambientBtn" class="btn-pill" onclick="toggleAmbientSound()" style="background:rgba(59,130,246,0.15); color:#3b82f6; border-color:#3b82f6;">🌧️ Sound: Off</button>
         </div>
         <span style="font-size: 10px; opacity: 0.85;">Tap words for definitions</span>
       </div>
@@ -272,16 +279,14 @@
     </div>
 
     <div id="readerArea" class="reader-scroll font-16">
-      
-      <!-- IMAGE ADDED HERE FOR GITHUB VIEW -->
       <img id="storyHeroImage" class="story-hero-image" src="" alt="Story Illustration" />
-
-      <div id="storyContent"></div>
       
-      <div class="pagination-bar">
-        <button id="prevPageBtn" class="page-btn" onclick="prevPage()">◀ Previous</button>
-        <span id="pageIndicator" style="font-size:11.5px; font-weight:700;">Page 1 of 2</span>
-        <button id="nextPageBtn" class="page-btn" onclick="nextPage()">Next ▶</button>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px 22px; margin-bottom:20px; box-shadow:0 2px 10px rgba(0,0,0,0.04);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">
+          <span style="font-size:11.5px; font-weight:700; color:var(--primary); text-transform:uppercase; letter-spacing:0.5px;">📖 Complete Story Narrative</span>
+          <span style="font-size:11px; color:var(--text-muted);">Tap any annotated word for insights</span>
+        </div>
+        <div id="storyContent" style="line-height:2.05; white-space:pre-wrap;"></div>
       </div>
 
       <div id="quizArea" class="quiz-container"></div>
@@ -338,7 +343,23 @@
       </div>
       <div id="sheetTypeTitle" style="font-size:12px; font-weight:bold; color:var(--text-muted); margin-top:4px;">Grammar Category</div>
       <div id="sheetDesc" style="margin:12px 0; font-size:13.5px; line-height:1.45;">Explanation</div>
-      <button class="btn-play" style="width:100%; margin-top:14px; justify-content:center;" onclick="closeModalDirect('annotationModal')">Close</button>
+      <div style="display:flex; gap:8px; margin-top:14px;">
+        <button class="btn-pill" style="flex:1; justify-content:center; background:var(--primary); color:white; border:none;" onclick="saveCurrentWordToVocab()">💾 Save to Vocab Notebook</button>
+        <button class="btn-pill" style="padding:8px 16px;" onclick="closeModalDirect('annotationModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vocabulary Notebook Modal -->
+  <div id="vocabModal" class="modal-overlay" onclick="closeSheet(event, 'vocabModal')">
+    <div class="modal-sheet" style="max-height:85vh; overflow-y:auto;" onclick="event.stopPropagation()">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h2 style="font-size:1.1rem; color:var(--primary);">📖 Saved Vocabulary Notebook</h2>
+        <button class="btn-pill" style="padding:4px 10px; font-size:11px;" onclick="closeModalDirect('vocabModal')">✕ Close</button>
+      </div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Review words and expressions you have saved while reading.</div>
+      <div id="vocabList"></div>
+      <button class="btn-play" style="width:100%; margin-top:14px; justify-content:center;" onclick="closeModalDirect('vocabModal')">Close</button>
     </div>
   </div>
 
@@ -406,7 +427,6 @@
         level: "A2",
         theme: "Travel",
         description: "Alex's first adventure exploring London",
-        // IMAGE URL ADDED HERE
         imageUrl: "https://image.pollinations.ai/prompt/London%20Big%20Ben%20travel%20illustration%20storybook?width=800&height=400&nologo=true",
         raw: "[N:Alex](Subject Noun - Main traveler) [T:wakes up](Present Simple - Routine & habit) [ADV:early](Adverb of Time - Modifies 'wakes up') today [C:because](Subordinating Conjunction - Explains cause) it is his [ADJ:first](Ordinal Adjective - Modifies 'day') day in [N:London](Proper Noun - Destination city). He [T:feels](Present Simple - Stative verb of emotion) a bit [L:nervous](Anxious or worried - A2) about navigating the underground, [C:but](Coordinating Conjunction - Shows contrast) his [N:enthusiasm](Abstract Noun - Key motivation) keeps him going.\n\nAfter a [L:hearty](Substantial and satisfying - A2) [N:breakfast](Concrete Noun - Morning meal) at a [ADJ:cozy](Descriptive Adjective - Warm & comfortable) local cafe, he decides to visit Big Ben. [S:Relative Clause:While he is waiting for the bus](Dependent temporal clause describing simultaneous actions), an [ADJ:elderly](Descriptive Adjective - Modifies 'lady') lady [ADV:kindly](Adverb of Manner - Modifies 'offers') offers directions. She [T:explains](Present Simple - General truth) the city route with great detail. \n\nAlex thanks her [ADV:warmly](Adverb of Manner - Expressing gratitude) [C:and](Coordinating Conjunction - Connects actions) walks [P:towards](Preposition of Direction - Indicates movement to destination) the station. He feels [L:confident](Feeling sure of oneself - A2) that this trip will be unforgettable. It is the beginning of a beautiful journey.",
         quiz: [
@@ -416,7 +436,136 @@
           { type: "mc", question: "Vocabulary Table: Complete the word family table: Noun: Confidence, Verb: Confide, Adjective: [?]", options: ["Confidently", "Confidant", "Confident"], correct: 2, explanation: "The adjective form of confidence is 'confident'." },
           { type: "open", question: "Personal Opinion: Have you ever been nervous on a trip? How did you handle it?" }
         ]
-      }
+      },
+      {
+        id: "treasure_hunt",
+        title: "Treasure Hunt",
+        level: "B1",
+        theme: "Adventure Stories",
+        description: "An exciting expedition to find a legendary island treasure.",
+        imageUrl: "https://image.pollinations.ai/prompt/Treasure%20Hunt%20pirate%20map%20adventure%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "Captain [N:James](Proper Noun - Explorer) [T:discovered](Past Simple - Found) an [ADJ:ancient](Descriptive Adjective - Very old) parchment map [P:inside](Preposition of Place) a dusty chest. The map [T:pointed](Past Simple - Indicated) toward Whispering Island, a place [T:shrouded](Past Simple Passive - Covered) in mystery. [C:Although](Conjunctive - Contrast) the journey was [ADJ:treacherous](Descriptive Adjective - Dangerous), his crew sailed [ADV:bravely](Adverb of Manner) through the stormy seas.\n\nUpon [T:landing](Gerund - Arriving on shore), they followed three golden markers [P:past](Preposition of Position) the roaring waterfall. There, beneath the roots of an [ADJ:immense](Descriptive Adjective - Huge) banyan tree, they [T:uncovered](Past Simple - Revealed) the chest of gold. It was a victory to remember.",
+        quiz: [
+          { type: "mc", question: "Reference: What does 'The map' point toward?", options: ["Whispering Island", "A dusty chest", "A stormy sea"], correct: 0, explanation: "The map pointed toward Whispering Island." },
+          { type: "mc", question: "Sequence: What is the correct order of events?", options: ["Found map -> Sailed seas -> Uncovered chest", "Sailed seas -> Found map -> Uncovered chest", "Uncovered chest -> Found map -> Sailed seas"], correct: 0, explanation: "Captain James first found the map, then sailed through the stormy seas, and finally uncovered the chest." },
+          { type: "mc", question: "Character: Which word describes the journey?", options: ["Treacherous", "Boring", "Easy"], correct: 0, explanation: "The text states the journey was treacherous." },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Adventure, Adjective: Adventurous, Adverb: [?]", options: ["Adventurously", "Adventure", "Adventuring"], correct: 0, explanation: "The adverb form is 'adventurously'." },
+          { type: "open", question: "Personal Opinion: Would you embark on a dangerous treasure hunt? Why or why not?" }
+        ]
+      },
+      {
+        id: "best_friends",
+        title: "Best Friends",
+        level: "A2",
+        theme: "Friendship Stories",
+        description: "A heartwarming tale about loyalty and companionship.",
+        imageUrl: "https://image.pollinations.ai/prompt/two%20best%20friends%20smiling%20together%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "[N:Maya](Proper Noun) and [N:Leo](Proper Noun) [T:have been](Present Perfect - Ongoing state) best friends [P:since](Preposition of Time) childhood. They [T:shared](Past Simple) every secret and [T:supported](Past Simple) each other [ADV:constantly](Adverb of Frequency). [C:When](Subordinating Conjunction) Leo [T:faced](Past Simple) a difficult math test, Maya [T:stayed](Past Simple) up late [P:with](Preposition) him [P:to](Preposition) study.\n\nThanks [P:to](Preposition) their teamwork, Leo [T:passed](Past Simple) with flying colors. He [T:promised](Past Simple) to help Maya with her art project in return. True friendship [T:means](Present Simple - General truth) standing [P:by](Preposition) one another through thick and thin.",
+        quiz: [
+          { type: "mc", question: "Reference: Who helped Leo study for his math test?", options: ["Maya", "His teacher", "His brother"], correct: 0, explanation: "Maya stayed up late with him to study." },
+          { type: "mc", question: "Sequence: What happened first?", options: ["Leo faced a difficult math test", "Leo passed the test", "Maya painted a picture"], correct: 0, explanation: "Leo faced the difficult math test first, leading Maya to help him." },
+          { type: "mc", question: "Character: How did Maya help Leo?", options: ["She stayed up late to study with him", "She took the test for him", "She bought him a book"], correct: 0, explanation: "Maya stayed up late with him to study." },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Friend, Adjective: Friendly, Adverb: [?]", options: ["Friendship", "Friendlily", "Friendly"], correct: 1, explanation: "The adverb form of friendly is friendlily (or in a friendly manner)." },
+          { type: "open", question: "Personal Opinion: What is the most important quality in a best friend?" }
+        ]
+      },
+      {
+        id: "earth_moon",
+        title: "Earth and Its Moon",
+        level: "B1",
+        theme: "Space Education",
+        description: "Exploring the fascinating cosmic bond between our planet and its lunar partner.",
+        imageUrl: "https://image.pollinations.ai/prompt/Earth%20and%20its%20Moon%20in%20space%20educational%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "The [N:Earth](Proper Noun) and the [N:Moon](Proper Noun) [T:share](Present Simple - Scientific fact) a [ADJ:gravitational](Descriptive Adjective) dance that [T:stabilizes](Present Simple) our planet's axial tilt. [C:While](Conjunction) the Moon [T:orbits](Present Simple) Earth [ADV:smoothly](Adverb of Manner), its gravitational pull [T:creates](Present Simple) ocean tides.\n\nWithout this [ADJ:celestial](Descriptive Adjective) companion, Earth's climate [T:would be](Conditional - Unreal present) drastically more erratic. Scientists [T:continue](Present Simple) [P:to](Preposition) study this [ADJ:unique](Descriptive Adjective) relationship [P:to](Preposition) understand planetary formation across the cosmos.",
+        quiz: [
+          { type: "mc", question: "Reference: What creates ocean tides on Earth?", options: ["The Moon's gravitational pull", "Solar flares", "Wind currents"], correct: 0, explanation: "The Moon's gravitational pull creates ocean tides." },
+          { type: "mc", question: "Sequence: What does the Moon do smoothly?", options: ["Orbits Earth", "Rotates on its axis", "Cools down"], correct: 0, explanation: "The Moon orbits Earth smoothly." },
+          { type: "mc", question: "Character: Which adjective describes the Moon in relation to Earth?", options: ["Celestial companion", "Distant star", "Gas giant"], correct: 0, explanation: "The Moon is described as a celestial companion." },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Universe, Adjective: Universal, Adverb: [?]", options: ["Universally", "Universe", "Universalist"], correct: 0, explanation: "The adverb form is universally." },
+          { type: "open", question: "Personal Opinion: Why is space education important for humanity's future?" }
+        ]
+      },
+      {
+        id: "lazy_donkey",
+        title: "Lazy Donkey",
+        level: "A2",
+        theme: "Motivational Stories",
+        description: "A humorous fable about hard work and learning responsibility.",
+        imageUrl: "https://image.pollinations.ai/prompt/lazy%20donkey%20resting%20in%20a%20sunny%20meadow%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "Once, a [ADJ:stubborn](Descriptive Adjective) donkey [T:named](Past Simple) Dolo [T:refused](Past Simple) [P:to](Preposition) carry heavy sacks of salt [P:across](Preposition) the river. He [ADV:always](Adverb of Frequency) [T:tried](Past Simple) [P:tofind](Verb) shortcuts. One hot afternoon, he [T:decided](Past Simple) [P:to](Preposition) roll [P:in](Preposition) the shallow water, dissolving the salt and [T:making](Present Participle) his load [ADJ:light](Descriptive Adjective).\n\n[C:However](Conjunctive Adverb), his master [T:noticed](Past Simple) the trick [P:on](Preposition) the next trip and [T:loaded](Past Simple) the donkey with heavy wet sponges instead! When Dolo rolled [P:in](Preposition) the water again, the sponges [T:absorbed](Past Simple) tons of water, becoming [ADJ:ten times heavier](Comparative Adjective). Dolo [T:learned](Past Simple) his lesson about hard work [ADV:immediately](Adverb of Time).",
+        quiz: [
+          { type: "mc", question: "Reference: What did Dolo carry on the second trip?", options: ["Heavy wet sponges", "Sacks of salt", "Bags of wool"], correct: 0, explanation: "His master loaded him with heavy wet sponges." },
+          { type: "mc", question: "Sequence: What happened when Dolo rolled in the water with sponges?", options: ["They absorbed water and became much heavier", "They dissolved completely", "They floated away"], correct: 0, explanation: "The sponges absorbed tons of water and became much heavier." },
+          { type: "mc", question: "Character: Which word describes Dolo at the beginning?", options: ["Stubborn and lazy", "Hardworking", "Clever"], correct: 0, explanation: "Dolo tried to find shortcuts and refused to carry heavy sacks." },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Laziness, Adjective: Lazy, Adverb: [?]", options: ["Lazily", "Lazy", "Laziness"], correct: 0, explanation: "The adverb form is lazily." },
+          { type: "open", question: "Personal Opinion: Why is trying to find dishonest shortcuts usually a bad idea?" }
+        ]
+      },
+      {
+        id: "the_butterfly",
+        title: "The Butterfly",
+        level: "A2",
+        theme: "Inspirational Stories",
+        description: "The inspiring transformation of a caterpillar into a magnificent butterfly.",
+        imageUrl: "https://image.pollinations.ai/prompt/a%20beautiful%20butterfly%20emerging%20from%20cocoon%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "A small [N:caterpillar](Noun) [T:spent](Past Simple) weeks [T:munching](Present Participle) green leaves [P:in](Preposition) a quiet garden. [C:When](Conjunction) the time [T:was](Past Simple) right, it [T:spun](Past Simple) a tight cocoon [P:around](Preposition) itself. Inside, a [ADJ:miraculous](Descriptive Adjective) change [T:was taking place](Past Continuous).\n\nWeeks later, the shell [T:crackled](Past Simple) open, and a [ADJ:vibrant](Descriptive Adjective) butterfly [T:emerged](Past Simple). Its wings [T:unfurled](Past Simple) [ADV:gracefully](Adverb of Manner) in the warm sunshine. It [T:flew](Past Simple) high into the sky, proving that great beauty comes [P:from](Preposition) patient perseverance.",
+        quiz: [
+          { type: "mc", question: "Reference: What did the caterpillar spin around itself?", options: ["A tight cocoon", "A spider web", "A silk scarf"], correct: 0, explanation: "It spun a tight cocoon around itself." },
+          { type: "mc", question: "Sequence: What happened after weeks in the cocoon?", options: ["It emerged as a vibrant butterfly", "It turned back into a leaf", "It fell to the ground"], correct: 0, explanation: "A vibrant butterfly emerged from the shell." },
+          { type: "mc", question: "Character: How did the butterfly's wings unfurl?", options: ["Gracefully", "Quickly and violently", "Awkwardly"], correct: 0, explanation: "Its wings unfurled gracefully in the warm sunshine." },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Beauty, Adjective: Beautiful, Adverb: [?]", options: ["Beautifully", "Beauty", "Beautify"], correct: 0, explanation: "The adverb form is beautifully." },
+          { type: "open", question: "Personal Opinion: How does patience help us grow through difficult times?" }
+        ]
+      },
+      {
+        id: "four_friends",
+        title: "Four Friends",
+        level: "A2",
+        theme: "Animal Stories",
+        description: "Four woodland animals working together to overcome a challenge.",
+        imageUrl: "https://image.pollinations.ai/prompt/four%20different%20animals%20cooperating%20in%20forest%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "In a lush green forest, a [N:deer](Noun), a [N:rabbit](Noun), a [N:squirrel](Noun), and a [N:hedgehog](Noun) [T:lived](Past Simple) [ADV:harmoniously](Adverb of Manner). [C:Whenever](Conjunction) danger [T:approached](Past Simple), they [T:warned](Past Simple) each other [ADV:instantly](Adverb of Time). One autumn day, a deep ravine [N:blocked](Past Simple) their path to the orchard.\n\nThe clever squirrel [T:jumped](Past Simple) across with a vine, the strong deer [T:anchored](Past Simple) it, and together they [T:built](Past Simple) a sturdy bridge. All four animals [T:crossed](Past Simple) safely, celebrating the power [P:of](Preposition) true cooperation.",
+        quiz: [
+          { type: "mc", question: "Reference: What blocked their path to the orchard?", options: ["A deep ravine", "A fallen tree", "A wide river"], correct: 0, explanation: "A deep ravine blocked their path." },
+          { type: "mc", question: "Sequence: Who jumped across with a vine first?", options: ["The squirrel", "The deer", "The hedgehog"], correct: 0, explanation: "The clever squirrel jumped across with a vine." },
+          { type: "mc", question: "Character: Which animal anchored the vine?", options: ["The strong deer", "The rabbit", "The squirrel"], correct: 0, explanation: "The strong deer anchored it." },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Cooperation, Verb: Cooperate, Adjective: [?]", options: ["Cooperative", "Cooperates", "Cooperating"], correct: 0, explanation: "The adjective form is cooperative." },
+          { type: "open", question: "Personal Opinion: Why is teamwork often better than trying to solve everything alone?" }
+        ]
+      },
+      {
+        id: "foolish_monkeys",
+        title: "Foolish Monkeys",
+        level: "A2",
+        theme: "General Stories",
+        description: "An amusing lesson about wisdom, patience, and foolish choices.",
+        imageUrl: "https://image.pollinations.ai/prompt/funny%20monkeys%20playing%20in%20jungle%20trees%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "A troop [P:of](Preposition) [ADJ:lively](Descriptive Adjective) monkeys [T:swung](Past Simple) through the jungle canopy [P:on](Preposition) a chilly winter night. They [T:shivered](Past Simple) [ADV:uncontrollably](Adverb of Manner) until they [T:spotted](Past Simple) a glowing firefly.\n\n[N:Mistaking](Gerund) the bug for a burning ember, they [T:gathered](Past Simple) [ADV:eagerly](Adverb of Manner) around it and [T:began](Past Simple) blowing on it [P:to](Preposition) create warmth. An [ADJ:observant](Descriptive Adjective) owl [T:warned](Past Simple) them [C:that](Conjunction) bugs produce no heat, [C:but](Conjunction) the foolish monkeys [T:ignored](Past Simple) the wise advice and [T:kept](Past Simple) shivering.",
+        quiz: [
+          { type: "mc", question: "Reference: What did the monkeys mistake for a burning ember?", options: ["A glowfly / firefly", "A glowing leaf", "A red flower"], correct: 0, explanation: "They mistook a glowing firefly for a burning ember." },
+          { type: "mc", question: "Sequence: What happened after the owl warned them?", options: ["They ignored the advice and kept shivering", "They built a real fire", "They went to sleep"], correct: 0, explanation: "The foolish monkeys ignored the wise advice and kept shivering." },
+          { type: "mc", question: "Character: Which adjective best describes the owl?", options: ["Observant and wise", "Foolish", "Lively"], correct: 0, explanation: "The owl gave wise advice and is described as observant." },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Wisdom, Adjective: Wise, Adverb: [?]", options: ["Wisely", "Wisdom", "Wiser"], correct: 0, explanation: "The adverb form of wise is wisely." },
+          { type: "open", question: "Personal Opinion: Why is it important to listen to good advice?" }
+        ]
+      },
+      {
+        id: "ant_dove",
+        title: "The Ant and the Dove",
+        level: "A2",
+        theme: "Moral Stories",
+        description: "A classic Aesop's fable about kindness returning twofold.",
+        imageUrl: "https://image.pollinations.ai/prompt/tiny%20ant%20and%20a%20white%20dove%20near%20stream%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "A tiny [N:ant](Noun) [T:went](Past Simple) down [P:to](Preposition) a brook [P:to](Preposition) drink water, [C:but](Conjunction) a strong current [T:swept](Past Simple) him away. A [ADJ:kind](Descriptive Adjective) dove [P:perched](Past Participle) on a nearby tree [T:noticed](Past Simple) the struggling ant and [T:dropped](Past Simple) a leaf [P:into](Preposition) the water.\n\nThe ant [T:climbed](Past Simple) onto the leaf [P:and](Conjunction) [T:floated](Past Simple) safely ashore. Days later, when a hunter [T:aimed](Past Simple) his net [P:at](Preposition) the dove, the grateful ant [T:bitten](Past Simple) the hunter's ankle [ADV:sharp](Adverb of Manner), causing him [P:to](Preposition) drop his weapon. The dove [T:escaped](Past Simple), proving that one good turn [T:deserves](Present Simple) another.",
+        quiz: [
+          { type: "mc", question: "Reference: What did the dove drop into the water to save the ant?", options: ["A leaf", "A twig", "A feather"], correct: 0, explanation: "The dove dropped a leaf into the water." },
+          { type: "mc", question: "Sequence: What happened after the ant floated ashore?", options: ["Days later, the ant saved the dove from a hunter", "The ant thanked the dove immediately", "They built a nest together"], correct: 0, explanation: "Days later, the ant bit the hunter to save the dove." },
+          { type: "mc", question: "Character: Which word describes the dove?", options: ["Kind and helpful", "Selfish", "Careless"], correct: 0, explanation: "The dove was kind and helped the ant." },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Kindness, Adjective: Kind, Adverb: [?]", options: ["Kindly", "Kindness", "Kinda"], correct: 0, explanation: "The adverb form of kind is kindly." },
+          { type: "open", question: "Personal Opinion: Have you ever helped someone who later helped you back?" }
+        ]
+      },
+
     ];
 
     let currentStory = allStories[0];
@@ -430,10 +579,20 @@
     let currentSpeed = 1.0;
     let currentAccent = 'en-US';
     let currentAnnotationWord = "";
+    let currentAnnotationObj = null;
+
+    let savedVocab = JSON.parse(localStorage.getItem('lingo_saved_vocab')) || [];
+    let bookmarkedIds = JSON.parse(localStorage.getItem('lingo_bookmarks')) || [];
+
+    let ambientAudioCtx = null;
+    let ambientGainNode = null;
+    let ambientNoiseNode = null;
+    let isAmbientOn = false;
 
     function init() {
       loadStory(currentStory);
       document.getElementById('libCount').innerText = allStories.length;
+      updateVocabCount();
     }
 
     function loadStory(story) {
@@ -456,9 +615,9 @@
       }
 
       parseStoryMarkup(story.raw);
-      paginateStory();
-      renderPage(0);
+      renderFullStory();
       renderQuiz();
+      updateBookmarkButton();
       stopAudio();
     }
 
@@ -503,24 +662,11 @@
       }
     }
 
-    function paginateStory() {
-      pages = [];
-      const mid = Math.ceil(parsedTokens.length / 2);
-      pages.push(parsedTokens.slice(0, mid));
-      pages.push(parsedTokens.slice(mid));
-    }
-
-    function renderPage(pageIdx) {
-      currentPage = pageIdx;
-      document.getElementById('pageIndicator').innerText = `Page ${currentPage + 1} of ${pages.length}`;
-      document.getElementById('prevPageBtn').disabled = (currentPage === 0);
-      document.getElementById('nextPageBtn').disabled = (currentPage === pages.length - 1);
-
+    function renderFullStory() {
       const content = document.getElementById('storyContent');
       content.innerHTML = "";
 
-      const currentTokens = pages[currentPage] || [];
-      currentTokens.forEach((token) => {
+      parsedTokens.forEach((token) => {
         if (token.type === 'TEXT') {
           content.appendChild(document.createTextNode(token.text));
         } else {
@@ -535,23 +681,152 @@
       });
     }
 
-    function prevPage() { if (currentPage > 0) renderPage(currentPage - 1); }
-    function nextPage() { if (currentPage < pages.length - 1) renderPage(currentPage + 1); }
-
     function setGrammarFilter(type, btn) {
       activeFilter = type;
       document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
-      renderPage(currentPage);
+      renderFullStory();
     }
 
     function showAnnotationModal(token) {
       currentAnnotationWord = token.text;
+      currentAnnotationObj = token;
       document.getElementById('sheetWord').innerText = token.text;
       document.getElementById('sheetTypeTitle').innerText = token.extra ? token.extra : token.type;
       document.getElementById('sheetBadge').innerText = token.type;
       document.getElementById('sheetDesc').innerText = token.info;
       document.getElementById('annotationModal').style.display = 'flex';
+    }
+
+    function saveCurrentWordToVocab() {
+      if (!currentAnnotationObj) return;
+      const item = {
+        word: currentAnnotationObj.text,
+        type: currentAnnotationObj.type,
+        extra: currentAnnotationObj.extra || '',
+        info: currentAnnotationObj.info,
+        date: new Date().toLocaleDateString()
+      };
+      // Prevent duplicates
+      if (!savedVocab.some(v => v.word.toLowerCase() === item.word.toLowerCase())) {
+        savedVocab.push(item);
+        localStorage.setItem('lingo_saved_vocab', JSON.stringify(savedVocab));
+        updateVocabCount();
+        alert(`Saved "${item.word}" to your Vocabulary Notebook!`);
+      } else {
+        alert(`"${item.word}" is already in your Vocabulary Notebook.`);
+      }
+      closeModalDirect('annotationModal');
+    }
+
+    function updateVocabCount() {
+      document.getElementById('vocabCount').innerText = savedVocab.length;
+    }
+
+    function openVocabNotebook() {
+      const list = document.getElementById('vocabList');
+      list.innerHTML = "";
+      if (savedVocab.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:13px;">No saved words yet. Tap on any highlighted word while reading and click "Save to Vocab Notebook".</div>`;
+      } else {
+        savedVocab.forEach((v, idx) => {
+          const div = document.createElement('div');
+          div.style = "padding:10px 12px; margin-bottom:8px; border-radius:8px; border:1px solid var(--border); background:var(--surface-variant); display:flex; justify-content:space-between; align-items:center;";
+          div.innerHTML = `
+            <div>
+              <div style="font-weight:700; font-size:13px; color:var(--primary);">${v.word} <span style="font-size:10px; font-weight:normal; color:var(--text-muted);">(${v.type})</span></div>
+              <div style="font-size:11.5px; color:var(--text-main); margin-top:2px;">${v.info}</div>
+            </div>
+            <button class="btn-pill" style="padding:4px 8px; font-size:10px; background:#ef4444; color:white; border:none;" onclick="removeVocabWord(${idx})">Remove</button>
+          `;
+          list.appendChild(div);
+        });
+      }
+      document.getElementById('vocabModal').style.display = 'flex';
+    }
+
+    function removeVocabWord(idx) {
+      savedVocab.splice(idx, 1);
+      localStorage.setItem('lingo_saved_vocab', JSON.stringify(savedVocab));
+      updateVocabCount();
+      openVocabNotebook();
+    }
+
+    function toggleBookmark() {
+      if (!currentStory) return;
+      const idx = bookmarkedIds.indexOf(currentStory.id);
+      if (idx > -1) {
+        bookmarkedIds.splice(idx, 1);
+      } else {
+        bookmarkedIds.push(currentStory.id);
+      }
+      localStorage.setItem('lingo_bookmarks', JSON.stringify(bookmarkedIds));
+      updateBookmarkButton();
+    }
+
+    function updateBookmarkButton() {
+      const btn = document.getElementById('bookmarkBtn');
+      if (currentStory && bookmarkedIds.includes(currentStory.id)) {
+        btn.innerText = "★";
+        btn.style.color = "#f59e0b";
+      } else {
+        btn.innerText = "☆";
+        btn.style.color = "inherit";
+      }
+    }
+
+    function toggleAmbientSound() {
+      const btn = document.getElementById('ambientBtn');
+      if (isAmbientOn) {
+        if (ambientAudioCtx) {
+          ambientAudioCtx.close();
+          ambientAudioCtx = null;
+        }
+        isAmbientOn = false;
+        btn.innerText = "🌧️ Sound: Off";
+        btn.style.background = "rgba(59,130,246,0.15)";
+        btn.style.color = "#3b82f6";
+      } else {
+        try {
+          ambientAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          // Create white/pink noise buffer for rain soundscape
+          const bufferSize = 2 * ambientAudioCtx.sampleRate;
+          const noiseBuffer = ambientAudioCtx.createBuffer(1, bufferSize, ambientAudioCtx.sampleRate);
+          const output = noiseBuffer.getChannelData(0);
+          let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+          for (let i = 0; i < bufferSize; i++) {
+            const white = Math.random() * 2 - 1;
+            b0 = 0.99886 * b0 + white * 0.0555179;
+            b1 = 0.99332 * b1 + white * 0.0750759;
+            b2 = 0.96900 * b2 + white * 0.1538520;
+            b3 = 0.86650 * b3 + white * 0.3104856;
+            b4 = 0.55000 * b4 + white * 0.5329522;
+            b5 = -0.7616 * b5 - white * 0.0168980;
+            output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+            output[i] *= 0.03; // volume scale
+            b6 = white * 0.115926;
+          }
+
+          ambientNoiseNode = ambientAudioCtx.createBufferSource();
+          ambientNoiseNode.buffer = noiseBuffer;
+          ambientNoiseNode.loop = true;
+
+          ambientGainNode = ambientAudioCtx.createGain();
+          ambientGainNode.gain.value = 0.15;
+
+          ambientNoiseNode.connect(ambientGainNode);
+          ambientGainNode.connect(ambientAudioCtx.destination);
+          ambientNoiseNode.start(0);
+
+          isAmbientOn = true;
+          btn.innerText = "🌧️ Sound: Rain";
+          btn.style.background = "#3b82f6";
+          btn.style.color = "white";
+        } catch (e) {
+          console.error("Web Audio error:", e);
+          alert("Audio context could not be started.");
+        }
+      }
     }
 
     function renderQuiz() {
