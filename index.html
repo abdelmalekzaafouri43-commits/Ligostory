@@ -546,31 +546,91 @@
 
       try {
         let newStory;
-
-        if (apiKey) {
-          // Direct Gemini API Call (Fallback for real implementation)
-          const prompt = `Generate an English CEFR ${level} story about ${theme} featuring protagonist ${protagonist}. Format with annotated tags [TYPE:word](explanation) for N, T, L, ADJ, ADV, P, C, S and include a 2-question quiz. Output valid JSON.`;
-          // Note: Actual API logic would go here.
-        }
-
-        // GENERATE IMAGE URL DYNAMICALLY
         const promptForImage = `${protagonist} achieving a milestone in ${theme}, beautiful storybook illustration`;
         const generatedImageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(promptForImage)}?width=800&height=400&nologo=true`;
 
-        // Instant Built-in AI Generative Engine
-        newStory = {
-          id: `ai_${Date.now()}`,
-          title: `${protagonist}'s Breakthrough in ${theme}`,
-          level: level,
-          theme: theme,
-          description: `${protagonist} achieves a key milestone in ${theme.toLowerCase()}`,
-          imageUrl: generatedImageUrl, // Attach image to story
-          raw: `[N:${protagonist}](Subject Noun - Protagonist) [T:has achieved](Present Perfect - Completed milestone with present relevance) an [ADJ:extraordinary](Descriptive Adjective - Remarkable & impressive) triumph in [N:${theme}](Proper Noun - Field of study). [C:Although](Subordinating Conjunction - Shows concession) the initial obstacles were [L:daunting](Intimidating or difficult - ${level}), his [N:dedication](Abstract Noun - Key strength) remained [ADJ:unwavering](Descriptive Adjective - Steady and resolute). [S:Participial Clause:Working diligently each day](Participial clause describing continuous effort), he [ADV:successfully](Adverb of Manner - Modifies 'mastered') [T:mastered](Past Simple - Definite completed accomplishment) complex concepts. He [T:looks](Present Simple - State of anticipation) [ADV:confidently](Adverb of Manner - Expressing self-assurance) [P:towards](Preposition of Direction - Future orientation) his next great adventure.`,
-          quiz: [
-            { question: `What did ${protagonist} achieve?`, options: [`A breakthrough triumph in ${theme}`, "A vacation trip", "A routine exercise"], correct: 0, explanation: `The story highlights ${protagonist}'s triumph in ${theme}.` },
-            { question: "What is the function of 'Although'?", options: ["Subordinating conjunction expressing concession", "Preposition of time", "Proper noun"], correct: 0, explanation: "'Although' introduces a subordinate clause showing contrast or concession." }
-          ]
-        };
+        if (apiKey) {
+          // TRUE GEMINI API CALL FOR UNLIMITED GENERATIONS
+          const prompt = `Generate an English CEFR ${level} story about ${theme} featuring protagonist ${protagonist}. 
+          Format the response strictly as a JSON object with this structure:
+          {
+            "title": "Story Title",
+            "description": "Short description",
+            "raw": "The annotated story text using [TYPE:word](explanation) format. Include types N, T, L, ADJ, ADV, P, C, S.",
+            "quiz": [
+              { "question": "Q1", "options": ["Opt1", "Opt2", "Opt3"], "correct": 0, "explanation": "Reasoning" },
+              { "question": "Q2", "options": ["Opt1", "Opt2", "Opt3"], "correct": 1, "explanation": "Reasoning" }
+            ]
+          }
+          Do NOT wrap the JSON in markdown code blocks. Just output raw JSON.`;
+
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+          });
+          
+          if (!res.ok) throw new Error("Invalid API Key or API Error");
+          const data = await res.json();
+          
+          const rawText = data.candidates[0].content.parts[0].text;
+          const jsonStr = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+          const aiData = JSON.parse(jsonStr);
+
+          newStory = {
+            id: `ai_${Date.now()}`,
+            title: aiData.title,
+            level: level,
+            theme: theme,
+            description: aiData.description,
+            imageUrl: generatedImageUrl,
+            raw: aiData.raw,
+            quiz: aiData.quiz
+          };
+        } else {
+          // OFFLINE RANDOMIZED FALLBACK ENGINE
+          const templates = [
+            {
+              title: `${protagonist}'s Breakthrough in ${theme}`,
+              description: `${protagonist} achieves a key milestone in ${theme.toLowerCase()}`,
+              raw: `[N:${protagonist}](Subject Noun - Protagonist) [T:has achieved](Present Perfect - Completed milestone with present relevance) an [ADJ:extraordinary](Descriptive Adjective - Remarkable & impressive) triumph in [N:${theme}](Proper Noun - Field of study). [C:Although](Subordinating Conjunction - Shows concession) the initial obstacles were [L:daunting](Intimidating or difficult - ${level}), his [N:dedication](Abstract Noun - Key strength) remained [ADJ:unwavering](Descriptive Adjective - Steady and resolute). [S:Participial Clause:Working diligently each day](Participial clause describing continuous effort), he [ADV:successfully](Adverb of Manner - Modifies 'mastered') [T:mastered](Past Simple - Definite completed accomplishment) complex concepts. He [T:looks](Present Simple - State of anticipation) [ADV:confidently](Adverb of Manner - Expressing self-assurance) [P:towards](Preposition of Direction - Future orientation) his next great adventure.`,
+              q: `What did ${protagonist} achieve?`, o: [`A breakthrough triumph in ${theme}`, "A vacation trip", "A routine exercise"], c: 0,
+              q2: "What is the function of 'Although'?", o2: ["Subordinating conjunction expressing concession", "Preposition of time", "Proper noun"], c2: 0
+            },
+            {
+              title: `The Mystery of ${theme}`,
+              description: `${protagonist} uncovers a hidden secret about ${theme.toLowerCase()}`,
+              raw: `One [ADJ:quiet](Descriptive Adjective - Modifies 'evening') evening, [N:${protagonist}](Proper Noun - Protagonist) [T:was exploring](Past Continuous - Interrupted action) the archives of [N:${theme}](Proper Noun - Topic). [ADV:Suddenly](Adverb of Time/Manner), a [ADJ:strange](Descriptive Adjective - Unusual) document [T:fell](Past Simple - Main event) [P:from](Preposition - Shows origin) the shelf. [S:Conditional Clause:If he had ignored it](Past Unreal Conditional), the secret would have been lost forever. [C:Instead](Conjunctive Adverb - Shows contrast), he [ADV:carefully](Adverb of Manner - Modifies 'opened') [T:opened](Past Simple - Sequential action) the envelope. Inside was a [L:profound](Deeply meaningful - ${level}) revelation that changed everything.`,
+              q: `What did ${protagonist} find?`, o: ["A strange document", "A lost key", "An old friend"], c: 0,
+              q2: "What is 'carefully' in the story?", o2: ["Adverb of Manner", "Proper Noun", "Adjective"], c2: 0
+            },
+            {
+              title: `A Challenge in ${theme}`,
+              description: `${protagonist} faces a difficult choice.`,
+              raw: `[N:${protagonist}](Proper Noun - Protagonist) [T:stood](Past Simple - State) [P:at](Preposition of Place) a crossroads in his journey involving [N:${theme}](Proper Noun). He [T:needed](Past Simple - Necessity) to make a [L:crucial](Extremely important - ${level}) decision. [S:Infinitive Phrase:To succeed in this field](Purpose clause), one must be [ADJ:resilient](Descriptive Adjective - Able to withstand challenges). [C:Because](Subordinating Conjunction - Shows reason) he had prepared [ADV:thoroughly](Adverb of Degree - Modifies 'prepared'), the choice became [ADJ:clear](Descriptive Adjective - Evident). He [T:stepped](Past Simple - Action) [ADV:boldly](Adverb of Manner - Modifies 'stepped') into the future.`,
+              q: `Why did the choice become clear?`, o: ["Because he prepared thoroughly", "Because it was easy", "Because someone told him what to do"], c: 0,
+              q2: "What is 'boldly'?", o2: ["Adverb of Manner", "Conjunction", "Verb"], c2: 0
+            }
+          ];
+          
+          // Pick a random template
+          const randIdx = Math.floor(Math.random() * templates.length);
+          const t = templates[randIdx];
+
+          newStory = {
+            id: `ai_${Date.now()}`,
+            title: t.title,
+            level: level,
+            theme: theme,
+            description: t.description,
+            imageUrl: generatedImageUrl,
+            raw: t.raw,
+            quiz: [
+              { question: t.q, options: t.o, correct: t.c, explanation: `The story explains this detail.` },
+              { question: t.q2, options: t.o2, correct: t.c2, explanation: `Grammar rule applied in context.` }
+            ]
+          };
+        }
 
         allStories.unshift(newStory);
         localStorage.setItem('lingo_stories_v3', JSON.stringify(allStories));
