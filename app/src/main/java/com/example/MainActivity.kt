@@ -169,7 +169,7 @@ fun MainAppScreen(
                 onSaveImageToGallery = {
                     scope.launch {
                         snackbarHostState.showSnackbar("Saving image to gallery...")
-                        val result = com.example.util.ImageSaverUtil.saveStoryImageToGallery(context, activeStory, "Abdelmalek Zaafouri")
+                        val result = com.example.util.ImageSaverUtil.saveStoryImageToGallery(context, activeStory, "Guest Learner")
                         result.onSuccess { msg ->
                             snackbarHostState.showSnackbar("🖼️ $msg")
                         }.onFailure { error ->

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>LingoStory - Learner: Abdelmalek Zaafouri</title>
+  <title>LingoStory</title>
   <style>
     :root {
       --primary: #4338ca;
@@ -179,7 +179,7 @@
   <div class="top-section">
     <div class="top-bar">
       <div class="user-pill">
-        👤 Abdelmalek Zaafouri
+        👤 My Profile
       </div>
       <div class="badge-group">
         <span id="levelBadge" class="badge badge-a2">A2 Elementary</span>
@@ -193,7 +193,7 @@
 
     <div class="title-box">
       <h1 id="storyTitle" class="story-title">A Journey of Discovery</h1>
-      <p id="storyThemeDesc" class="story-desc">Abdelmalek explores new horizons and opportunities</p>
+      <p id="storyThemeDesc" class="story-desc">Alex explores new horizons and opportunities</p>
     </div>
 
     <div>
@@ -266,7 +266,7 @@
       
       <div class="form-group">
         <label class="form-label">Learner / Protagonist Name:</label>
-        <input id="aiProtagonist" class="form-input" value="Abdelmalek Zaafouri" />
+        <input id="aiProtagonist" class="form-input" value="Alex" />
       </div>
 
       <div class="form-group">
@@ -323,20 +323,20 @@
   </div>
 
   <script>
-    // Initial story featuring learner Abdelmalek
-    let allStories = JSON.parse(localStorage.getItem('lingo_stories_abdelmalek_v2')) || [
+    // Initial story featuring learner Alex
+    let allStories = JSON.parse(localStorage.getItem('lingo_stories_v3')) || [
       {
-        id: "abdelmalek_journey_1",
-        title: "Abdelmalek's First Journey to London",
+        id: "alex_journey_1",
+        title: "Alex's First Journey to London",
         level: "A2",
         theme: "Travel",
-        description: "Abdelmalek's first adventure exploring London",
+        description: "Alex's first adventure exploring London",
         // IMAGE URL ADDED HERE
         imageUrl: "https://image.pollinations.ai/prompt/London%20Big%20Ben%20travel%20illustration%20storybook?width=800&height=400&nologo=true",
-        raw: "[N:Abdelmalek](Subject Noun - Main traveler) [T:wakes up](Present Simple - Routine & habit) [ADV:early](Adverb of Time - Modifies 'wakes up') today [C:because](Subordinating Conjunction - Explains cause) it is his [ADJ:first](Ordinal Adjective - Modifies 'day') day in [N:London](Proper Noun - Destination city). He [T:feels](Present Simple - Stative verb of emotion) a bit [L:nervous](Anxious or worried - A2) about navigating the underground, [C:but](Coordinating Conjunction - Shows contrast) his [N:enthusiasm](Abstract Noun - Key motivation) keeps him going. After a [L:hearty](Substantial and satisfying - A2) [N:breakfast](Concrete Noun - Morning meal) at a [ADJ:cozy](Descriptive Adjective - Warm & comfortable) local cafe, he decides to visit Big Ben. [S:Relative Clause:While he is waiting for the bus](Dependent temporal clause describing simultaneous actions), an [ADJ:elderly](Descriptive Adjective - Modifies 'lady') lady [ADV:kindly](Adverb of Manner - Modifies 'offers') offers directions. She [T:explains](Present Simple - General truth) the city route with great detail. Abdelmalek thanks her [ADV:warmly](Adverb of Manner - Expressing gratitude) [C:and](Coordinating Conjunction - Connects actions) walks [P:towards](Preposition of Direction - Indicates movement to destination) the station. He feels [L:confident](Feeling sure of oneself - A2) that this trip will be unforgettable.",
+        raw: "[N:Alex](Subject Noun - Main traveler) [T:wakes up](Present Simple - Routine & habit) [ADV:early](Adverb of Time - Modifies 'wakes up') today [C:because](Subordinating Conjunction - Explains cause) it is his [ADJ:first](Ordinal Adjective - Modifies 'day') day in [N:London](Proper Noun - Destination city). He [T:feels](Present Simple - Stative verb of emotion) a bit [L:nervous](Anxious or worried - A2) about navigating the underground, [C:but](Coordinating Conjunction - Shows contrast) his [N:enthusiasm](Abstract Noun - Key motivation) keeps him going. After a [L:hearty](Substantial and satisfying - A2) [N:breakfast](Concrete Noun - Morning meal) at a [ADJ:cozy](Descriptive Adjective - Warm & comfortable) local cafe, he decides to visit Big Ben. [S:Relative Clause:While he is waiting for the bus](Dependent temporal clause describing simultaneous actions), an [ADJ:elderly](Descriptive Adjective - Modifies 'lady') lady [ADV:kindly](Adverb of Manner - Modifies 'offers') offers directions. She [T:explains](Present Simple - General truth) the city route with great detail. Alex thanks her [ADV:warmly](Adverb of Manner - Expressing gratitude) [C:and](Coordinating Conjunction - Connects actions) walks [P:towards](Preposition of Direction - Indicates movement to destination) the station. He feels [L:confident](Feeling sure of oneself - A2) that this trip will be unforgettable.",
         quiz: [
-          { question: "Why does Abdelmalek wake up early?", options: ["Because he has a flight to catch", "Because it is his first day in London", "Because his alarm rings continuously"], correct: 1, explanation: "The text states: 'Abdelmalek wakes up early today because it is his first day in London.'" },
-          { question: "What part of speech is 'warmly' in 'Abdelmalek thanks her warmly'?", options: ["Adverb of Manner", "Proper Noun", "Conjunction"], correct: 0, explanation: "'warmly' is an Adverb of Manner describing how Abdelmalek thanks the lady." }
+          { question: "Why does Alex wake up early?", options: ["Because he has a flight to catch", "Because it is his first day in London", "Because his alarm rings continuously"], correct: 1, explanation: "The text states: 'Alex wakes up early today because it is his first day in London.'" },
+          { question: "What part of speech is 'warmly' in 'Alex thanks her warmly'?", options: ["Adverb of Manner", "Proper Noun", "Conjunction"], correct: 0, explanation: "'warmly' is an Adverb of Manner describing how Alex thanks the lady." }
         ]
       }
     ];
@@ -506,7 +506,7 @@
 
     // AI STORY GENERATOR
     async function generateAiStory() {
-      const protagonist = document.getElementById('aiProtagonist').value.trim() || "Abdelmalek";
+      const protagonist = document.getElementById('aiProtagonist').value.trim() || "Alex";
       const level = document.getElementById('aiLevelSelect').value;
       const theme = document.getElementById('aiThemeSelect').value;
       const apiKey = document.getElementById('aiApiKey').value.trim();
@@ -544,7 +544,7 @@
         };
 
         allStories.unshift(newStory);
-        localStorage.setItem('lingo_stories_abdelmalek_v2', JSON.stringify(allStories));
+        localStorage.setItem('lingo_stories_v3', JSON.stringify(allStories));
         document.getElementById('libCount').innerText = allStories.length;
         loadStory(newStory);
         closeModalDirect('aiModal');

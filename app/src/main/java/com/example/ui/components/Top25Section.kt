@@ -282,7 +282,7 @@ fun Top25Section(
                 // Greeting and Badges
                 Column {
                     Text(
-                        text = "Welcome, Mr.Zaafouri Abdelmalek",
+                        text = "Welcome, Guest Learner",
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold,
                             color = Color.White
