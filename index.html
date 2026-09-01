@@ -829,10 +829,19 @@
       }
     }
 
+    let isQuizCollapsed = false;
+
     function renderQuiz() {
       const qArea = document.getElementById('quizArea');
-      qArea.innerHTML = `<div class="quiz-head">📝 Comprehension & Grammar Quiz</div>`;
+      qArea.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleQuizCollapse()">
+          <div class="quiz-head" style="margin-bottom:0;">📝 Comprehension & Grammar Quiz</div>
+          <span id="quizToggleIcon" style="font-size:12px; font-weight:700; color:var(--primary); background:var(--surface-variant); padding:4px 10px; border-radius:12px; border:1px solid var(--border);">▼ Hide Quizzes</span>
+        </div>
+        <div id="quizBody" style="margin-top:14px; display:block;"></div>
+      `;
 
+      const qBody = document.getElementById('quizBody');
       currentStory.quiz.forEach((q, idx) => {
         const item = document.createElement('div');
         item.className = 'quiz-item';
@@ -858,8 +867,21 @@
             item.appendChild(btn);
           });
         }
-        qArea.appendChild(item);
+        qBody.appendChild(item);
       });
+    }
+
+    function toggleQuizCollapse() {
+      isQuizCollapsed = !isQuizCollapsed;
+      const qBody = document.getElementById('quizBody');
+      const toggleIcon = document.getElementById('quizToggleIcon');
+      if (isQuizCollapsed) {
+        qBody.style.display = 'none';
+        toggleIcon.innerText = "▶ Show Quizzes";
+      } else {
+        qBody.style.display = 'block';
+        toggleIcon.innerText = "▼ Hide Quizzes";
+      }
     }
 
     // AI STORY GENERATOR
