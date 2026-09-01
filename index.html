@@ -353,7 +353,7 @@
 
   <script>
     // Initial story featuring learner Alex
-    let allStories = JSON.parse(localStorage.getItem('lingo_stories_v3')) || [
+    let allStories = JSON.parse(localStorage.getItem('lingo_stories_v4')) || [
       {
         id: "alex_journey_1",
         title: "Alex's First Journey to London",
@@ -362,10 +362,13 @@
         description: "Alex's first adventure exploring London",
         // IMAGE URL ADDED HERE
         imageUrl: "https://image.pollinations.ai/prompt/London%20Big%20Ben%20travel%20illustration%20storybook?width=800&height=400&nologo=true",
-        raw: "[N:Alex](Subject Noun - Main traveler) [T:wakes up](Present Simple - Routine & habit) [ADV:early](Adverb of Time - Modifies 'wakes up') today [C:because](Subordinating Conjunction - Explains cause) it is his [ADJ:first](Ordinal Adjective - Modifies 'day') day in [N:London](Proper Noun - Destination city). He [T:feels](Present Simple - Stative verb of emotion) a bit [L:nervous](Anxious or worried - A2) about navigating the underground, [C:but](Coordinating Conjunction - Shows contrast) his [N:enthusiasm](Abstract Noun - Key motivation) keeps him going. After a [L:hearty](Substantial and satisfying - A2) [N:breakfast](Concrete Noun - Morning meal) at a [ADJ:cozy](Descriptive Adjective - Warm & comfortable) local cafe, he decides to visit Big Ben. [S:Relative Clause:While he is waiting for the bus](Dependent temporal clause describing simultaneous actions), an [ADJ:elderly](Descriptive Adjective - Modifies 'lady') lady [ADV:kindly](Adverb of Manner - Modifies 'offers') offers directions. She [T:explains](Present Simple - General truth) the city route with great detail. Alex thanks her [ADV:warmly](Adverb of Manner - Expressing gratitude) [C:and](Coordinating Conjunction - Connects actions) walks [P:towards](Preposition of Direction - Indicates movement to destination) the station. He feels [L:confident](Feeling sure of oneself - A2) that this trip will be unforgettable.",
+        raw: "[N:Alex](Subject Noun - Main traveler) [T:wakes up](Present Simple - Routine & habit) [ADV:early](Adverb of Time - Modifies 'wakes up') today [C:because](Subordinating Conjunction - Explains cause) it is his [ADJ:first](Ordinal Adjective - Modifies 'day') day in [N:London](Proper Noun - Destination city). He [T:feels](Present Simple - Stative verb of emotion) a bit [L:nervous](Anxious or worried - A2) about navigating the underground, [C:but](Coordinating Conjunction - Shows contrast) his [N:enthusiasm](Abstract Noun - Key motivation) keeps him going.\n\nAfter a [L:hearty](Substantial and satisfying - A2) [N:breakfast](Concrete Noun - Morning meal) at a [ADJ:cozy](Descriptive Adjective - Warm & comfortable) local cafe, he decides to visit Big Ben. [S:Relative Clause:While he is waiting for the bus](Dependent temporal clause describing simultaneous actions), an [ADJ:elderly](Descriptive Adjective - Modifies 'lady') lady [ADV:kindly](Adverb of Manner - Modifies 'offers') offers directions. She [T:explains](Present Simple - General truth) the city route with great detail. \n\nAlex thanks her [ADV:warmly](Adverb of Manner - Expressing gratitude) [C:and](Coordinating Conjunction - Connects actions) walks [P:towards](Preposition of Direction - Indicates movement to destination) the station. He feels [L:confident](Feeling sure of oneself - A2) that this trip will be unforgettable. It is the beginning of a beautiful journey.",
         quiz: [
-          { question: "Why does Alex wake up early?", options: ["Because he has a flight to catch", "Because it is his first day in London", "Because his alarm rings continuously"], correct: 1, explanation: "The text states: 'Alex wakes up early today because it is his first day in London.'" },
-          { question: "What part of speech is 'warmly' in 'Alex thanks her warmly'?", options: ["Adverb of Manner", "Proper Noun", "Conjunction"], correct: 0, explanation: "'warmly' is an Adverb of Manner describing how Alex thanks the lady." }
+          { type: "mc", question: "Reference: What does 'it' refer to in the sentence 'It is the beginning of a beautiful journey'?", options: ["The bus", "The trip to London", "The breakfast"], correct: 1, explanation: "'It' refers back to the overall trip and experience he is having." },
+          { type: "mc", question: "Sequence: What is the correct chronological order of events?", options: ["Wakes up -> Eats breakfast -> Waits for bus -> Thanks lady", "Eats breakfast -> Wakes up -> Waits for bus -> Thanks lady", "Waits for bus -> Wakes up -> Eats breakfast -> Thanks lady"], correct: 0, explanation: "Alex wakes up, then has a hearty breakfast, then waits for the bus, and finally thanks the elderly lady." },
+          { type: "mc", question: "Character: Which adjective best describes the elderly lady?", options: ["Selfish", "Helpful", "Nervous"], correct: 1, explanation: "She is helpful because she kindly offers directions and explains the route in detail." },
+          { type: "mc", question: "Vocabulary Table: Complete the word family table: Noun: Confidence, Verb: Confide, Adjective: [?]", options: ["Confidently", "Confidant", "Confident"], correct: 2, explanation: "The adjective form of confidence is 'confident'." },
+          { type: "open", question: "Personal Opinion: Have you ever been nervous on a trip? How did you handle it?" }
         ]
       }
     ];
@@ -514,21 +517,26 @@
         item.className = 'quiz-item';
         item.innerHTML = `<div class="quiz-q">${idx + 1}. ${q.question}</div>`;
 
-        q.options.forEach((opt, optIdx) => {
-          const btn = document.createElement('button');
-          btn.className = 'quiz-opt';
-          btn.innerText = opt;
-          btn.onclick = () => {
-            if (optIdx === q.correct) {
-              btn.className = 'quiz-opt correct';
-              btn.innerHTML = `✅ ${opt} <div class="quiz-exp">${q.explanation}</div>`;
-            } else {
-              btn.className = 'quiz-opt wrong';
-              btn.innerText = `❌ ${opt}`;
-            }
-          };
-          item.appendChild(btn);
-        });
+        if (q.type === 'open') {
+          item.innerHTML += `<textarea class="form-input" rows="3" placeholder="Write your thoughts here..."></textarea>
+                             <button class="btn-pill" style="margin-top:8px; background:var(--primary); color:white; padding: 8px 16px;" onclick="this.innerText='Saved!'; this.disabled=true;">Save Answer</button>`;
+        } else {
+          q.options.forEach((opt, optIdx) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-opt';
+            btn.innerText = opt;
+            btn.onclick = () => {
+              if (optIdx === q.correct) {
+                btn.className = 'quiz-opt correct';
+                btn.innerHTML = `✅ ${opt} <div class="quiz-exp">${q.explanation}</div>`;
+              } else {
+                btn.className = 'quiz-opt wrong';
+                btn.innerText = `❌ ${opt}`;
+              }
+            };
+            item.appendChild(btn);
+          });
+        }
         qArea.appendChild(item);
       });
     }
@@ -551,15 +559,18 @@
 
         if (apiKey) {
           // TRUE GEMINI API CALL FOR UNLIMITED GENERATIONS
-          const prompt = `Generate an English CEFR ${level} story about ${theme} featuring protagonist ${protagonist}. 
+          const prompt = `Write a detailed, multi-paragraph English CEFR ${level} story (at least 300 words) about ${theme} featuring protagonist ${protagonist}. 
           Format the response strictly as a JSON object with this structure:
           {
             "title": "Story Title",
             "description": "Short description",
             "raw": "The annotated story text using [TYPE:word](explanation) format. Include types N, T, L, ADJ, ADV, P, C, S.",
             "quiz": [
-              { "question": "Q1", "options": ["Opt1", "Opt2", "Opt3"], "correct": 0, "explanation": "Reasoning" },
-              { "question": "Q2", "options": ["Opt1", "Opt2", "Opt3"], "correct": 1, "explanation": "Reasoning" }
+              { "type": "mc", "question": "Reference: What does 'it' refer to in paragraph 2?", "options": ["Opt1", "Opt2", "Opt3"], "correct": 0, "explanation": "Reasoning" },
+              { "type": "mc", "question": "Character: Which adjective best describes ${protagonist}?", "options": ["Opt1", "Opt2", "Opt3"], "correct": 1, "explanation": "Reasoning" },
+              { "type": "mc", "question": "Sequence: What is the correct chronological order of events?", "options": ["Event B -> A -> C", "Event A -> B -> C", "Event C -> A -> B"], "correct": 0, "explanation": "Reasoning" },
+              { "type": "mc", "question": "Vocabulary Table: Complete the word family table: Noun: Success, Verb: Succeed, Adjective: [?]", "options": ["Successful", "Succession", "Successfully"], "correct": 0, "explanation": "Reasoning" },
+              { "type": "open", "question": "Personal Opinion: How would you have handled the situation ${protagonist} faced?" }
             ]
           }
           Do NOT wrap the JSON in markdown code blocks. Just output raw JSON.`;
@@ -593,23 +604,14 @@
             {
               title: `${protagonist}'s Breakthrough in ${theme}`,
               description: `${protagonist} achieves a key milestone in ${theme.toLowerCase()}`,
-              raw: `[N:${protagonist}](Subject Noun - Protagonist) [T:has achieved](Present Perfect - Completed milestone with present relevance) an [ADJ:extraordinary](Descriptive Adjective - Remarkable & impressive) triumph in [N:${theme}](Proper Noun - Field of study). [C:Although](Subordinating Conjunction - Shows concession) the initial obstacles were [L:daunting](Intimidating or difficult - ${level}), his [N:dedication](Abstract Noun - Key strength) remained [ADJ:unwavering](Descriptive Adjective - Steady and resolute). [S:Participial Clause:Working diligently each day](Participial clause describing continuous effort), he [ADV:successfully](Adverb of Manner - Modifies 'mastered') [T:mastered](Past Simple - Definite completed accomplishment) complex concepts. He [T:looks](Present Simple - State of anticipation) [ADV:confidently](Adverb of Manner - Expressing self-assurance) [P:towards](Preposition of Direction - Future orientation) his next great adventure.`,
-              q: `What did ${protagonist} achieve?`, o: [`A breakthrough triumph in ${theme}`, "A vacation trip", "A routine exercise"], c: 0,
-              q2: "What is the function of 'Although'?", o2: ["Subordinating conjunction expressing concession", "Preposition of time", "Proper noun"], c2: 0
-            },
-            {
-              title: `The Mystery of ${theme}`,
-              description: `${protagonist} uncovers a hidden secret about ${theme.toLowerCase()}`,
-              raw: `One [ADJ:quiet](Descriptive Adjective - Modifies 'evening') evening, [N:${protagonist}](Proper Noun - Protagonist) [T:was exploring](Past Continuous - Interrupted action) the archives of [N:${theme}](Proper Noun - Topic). [ADV:Suddenly](Adverb of Time/Manner), a [ADJ:strange](Descriptive Adjective - Unusual) document [T:fell](Past Simple - Main event) [P:from](Preposition - Shows origin) the shelf. [S:Conditional Clause:If he had ignored it](Past Unreal Conditional), the secret would have been lost forever. [C:Instead](Conjunctive Adverb - Shows contrast), he [ADV:carefully](Adverb of Manner - Modifies 'opened') [T:opened](Past Simple - Sequential action) the envelope. Inside was a [L:profound](Deeply meaningful - ${level}) revelation that changed everything.`,
-              q: `What did ${protagonist} find?`, o: ["A strange document", "A lost key", "An old friend"], c: 0,
-              q2: "What is 'carefully' in the story?", o2: ["Adverb of Manner", "Proper Noun", "Adjective"], c2: 0
-            },
-            {
-              title: `A Challenge in ${theme}`,
-              description: `${protagonist} faces a difficult choice.`,
-              raw: `[N:${protagonist}](Proper Noun - Protagonist) [T:stood](Past Simple - State) [P:at](Preposition of Place) a crossroads in his journey involving [N:${theme}](Proper Noun). He [T:needed](Past Simple - Necessity) to make a [L:crucial](Extremely important - ${level}) decision. [S:Infinitive Phrase:To succeed in this field](Purpose clause), one must be [ADJ:resilient](Descriptive Adjective - Able to withstand challenges). [C:Because](Subordinating Conjunction - Shows reason) he had prepared [ADV:thoroughly](Adverb of Degree - Modifies 'prepared'), the choice became [ADJ:clear](Descriptive Adjective - Evident). He [T:stepped](Past Simple - Action) [ADV:boldly](Adverb of Manner - Modifies 'stepped') into the future.`,
-              q: `Why did the choice become clear?`, o: ["Because he prepared thoroughly", "Because it was easy", "Because someone told him what to do"], c: 0,
-              q2: "What is 'boldly'?", o2: ["Adverb of Manner", "Conjunction", "Verb"], c2: 0
+              raw: `[N:${protagonist}](Subject Noun - Protagonist) [T:has achieved](Present Perfect - Completed milestone with present relevance) an [ADJ:extraordinary](Descriptive Adjective - Remarkable & impressive) triumph in [N:${theme}](Proper Noun - Field of study). [C:Although](Subordinating Conjunction - Shows concession) the initial obstacles were [L:daunting](Intimidating or difficult - ${level}), his [N:dedication](Abstract Noun - Key strength) remained [ADJ:unwavering](Descriptive Adjective - Steady and resolute).\n\n[S:Participial Clause:Working diligently each day](Participial clause describing continuous effort), he [ADV:successfully](Adverb of Manner - Modifies 'mastered') [T:mastered](Past Simple - Definite completed accomplishment) complex concepts. It was a rigorous journey, but totally worth the effort.\n\nHe [T:looks](Present Simple - State of anticipation) [ADV:confidently](Adverb of Manner - Expressing self-assurance) [P:towards](Preposition of Direction - Future orientation) his next great adventure, knowing that perseverance is the key.`,
+              q: [
+                { type: "mc", question: "Reference: What does 'It' refer to in the phrase 'It was a rigorous journey'?", options: ["The complex concepts", "The overall process of mastering the concepts", "The next adventure"], correct: 1, explanation: "'It' refers to the journey of working diligently and mastering the concepts." },
+                { type: "mc", question: "Sequence: What is the correct order of events?", options: ["Faces daunting obstacles -> Works diligently -> Achieves triumph", "Achieves triumph -> Faces daunting obstacles -> Works diligently", "Works diligently -> Faces daunting obstacles -> Achieves triumph"], correct: 0, explanation: "He faced daunting initial obstacles, worked diligently each day, and finally achieved an extraordinary triumph." },
+                { type: "mc", question: "Character: Which adjective best describes the protagonist?", options: ["Lazy", "Dedicated", "Confused"], correct: 1, explanation: "He is described as having unwavering dedication." },
+                { type: "mc", question: "Vocabulary Table: Complete the word family table: Noun: Confidence, Verb: Confide, Adjective: [?]", options: ["Confidently", "Confident", "Confiding"], correct: 1, explanation: "The adjective form is 'confident'." },
+                { type: "open", question: "Personal Opinion: What do you think is the best way to overcome daunting obstacles in your own life?" }
+              ]
             }
           ];
           
@@ -625,10 +627,7 @@
             description: t.description,
             imageUrl: generatedImageUrl,
             raw: t.raw,
-            quiz: [
-              { question: t.q, options: t.o, correct: t.c, explanation: `The story explains this detail.` },
-              { question: t.q2, options: t.o2, correct: t.c2, explanation: `Grammar rule applied in context.` }
-            ]
+            quiz: t.q
           };
         }
 
