@@ -352,8 +352,40 @@
   </div>
 
   <script>
-    // Initial story featuring learner Alex
-    let allStories = JSON.parse(localStorage.getItem('lingo_stories_v4')) || [
+    // Initial stories featuring learner Alex and Classic Fairy Tales
+    let allStories = JSON.parse(localStorage.getItem('lingo_stories_v5')) || [
+      {
+        id: "cinderella_1",
+        title: "Cinderella and the Glass Slipper",
+        level: "B1",
+        theme: "Fairy Tale",
+        description: "A classic tale of kindness, magic, and a lost shoe.",
+        imageUrl: "https://image.pollinations.ai/prompt/Cinderella%20running%20away%20from%20castle%20leaving%20glass%20slipper%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "Once upon a time, there [T:lived](Past Simple - State of being) a [ADJ:kind-hearted](Descriptive Adjective - Compassionate) girl named [N:Cinderella](Proper Noun - Main character). She [T:was forced](Past Simple Passive - Action done to her) to work [ADV:endlessly](Adverb of Frequency - Without stopping) by her [ADJ:cruel](Descriptive Adjective - Mean) stepmother. [C:Despite](Preposition/Conjunction - Shows contrast) her difficult life, she [T:remained](Past Simple - Continued to be) [ADJ:hopeful](Descriptive Adjective - Full of hope).\n\nOne evening, the King [T:invited](Past Simple - Action of offering an invitation) everyone [P:to](Preposition of Direction) a royal ball. Cinderella [T:could not go](Modal Verb - Lack of ability) because she had no dress. [ADV:Suddenly](Adverb of Manner - Unexpectedly), her Fairy Godmother [T:appeared](Past Simple - Sudden action). With a wave of her [ADJ:magic](Descriptive Adjective) wand, she [T:transformed](Past Simple - Changed completely) a pumpkin into a [L:magnificent](Extremely beautiful - B1) carriage.\n\n\"You must return [P:by](Preposition of Time) midnight,\" the Godmother [T:warned](Past Simple - Gave a caution). At the ball, the Prince [T:was captivated](Past Simple Passive - Deeply attracted) by her. [C:However](Conjunctive Adverb - Shows contrast), when the clock [T:struck](Past Simple - Sounded) twelve, she [T:fled](Past Simple - Ran away quickly), leaving [P:behind](Preposition of Place) a single glass slipper. The Prince used it to find her, and they lived [ADV:happily](Adverb of Manner) ever after.",
+        quiz: [
+          { type: "mc", question: "Reference: What does 'it' refer to in the sentence 'The Prince used it to find her'?", options: ["The carriage", "The glass slipper", "The pumpkin"], correct: 1, explanation: "'It' refers back to the single glass slipper she left behind." },
+          { type: "mc", question: "Sequence: What is the correct chronological order of events?", options: ["Godmother appears -> Cinderella goes to the ball -> Leaves slipper", "Leaves slipper -> Godmother appears -> Cinderella goes to the ball", "Cinderella goes to the ball -> Godmother appears -> Leaves slipper"], correct: 0, explanation: "First the Godmother transforms the pumpkin, then Cinderella attends the ball, and finally she flees leaving the slipper." },
+          { type: "mc", question: "Character: Which adjective best describes the stepmother?", options: ["Cruel", "Kind-hearted", "Magnificent"], correct: 0, explanation: "The text explicitly states she was forced to work endlessly by her 'cruel' stepmother." },
+          { type: "mc", question: "Vocabulary Table: Complete the word family table: Noun: Magic, Adjective: Magical, Adverb: [?]", options: ["Magicalness", "Magic", "Magically"], correct: 2, explanation: "The adverb form of magic is 'magically'." },
+          { type: "open", question: "Personal Opinion: Do you think Cinderella should have forgiven her stepmother at the end?" }
+        ]
+      },
+      {
+        id: "red_riding_hood_1",
+        title: "Little Red Riding Hood",
+        level: "A2",
+        theme: "Fairy Tale",
+        description: "A young girl's journey through the forest to visit her grandmother.",
+        imageUrl: "https://image.pollinations.ai/prompt/Little%20Red%20Riding%20Hood%20walking%20in%20a%20dark%20forest%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "[N:Little Red Riding Hood](Proper Noun - Main character) [T:was walking](Past Continuous - Ongoing action in the past) through the [ADJ:dark](Descriptive Adjective) forest to visit her sick [N:grandmother](Noun - Family member). She [T:carried](Past Simple - Action) a [L:basket](A container for carrying things - A2) full of sweet treats. [S:Relative Clause:While she was picking flowers](Dependent clause showing simultaneous action), a [ADJ:cunning](Descriptive Adjective - Clever and deceitful) wolf [T:approached](Past Simple - Moved closer) her.\n\n\"Where are you going?\" the wolf [T:asked](Past Simple) [ADV:slyly](Adverb of Manner - In a sneaky way). She [T:told](Past Simple) him the truth [C:because](Subordinating Conjunction - Shows reason) she was [ADJ:innocent](Descriptive Adjective - Naive or pure). The wolf [T:ran](Past Simple) ahead [P:to](Preposition of Direction) the cottage, intending to trick them.\n\n[ADV:Fortunately](Adverb of Evaluation - Luckily), a [ADJ:brave](Descriptive Adjective - Courageous) woodcutter [T:heard](Past Simple - Perceived sound) the noise and [T:rescued](Past Simple - Saved from danger) them just in time. Little Red Riding Hood [T:learned](Past Simple - Acquired knowledge) never to speak to strangers [P:in](Preposition of Place) the woods again.",
+        quiz: [
+          { type: "mc", question: "Reference: Who does 'him' refer to in the sentence 'She told him the truth'?", options: ["The woodcutter", "The wolf", "Her grandmother"], correct: 1, explanation: "'Him' refers to the cunning wolf she was talking to." },
+          { type: "mc", question: "Sequence: What is the correct chronological order of events?", options: ["Meets wolf -> Wolf runs to cottage -> Woodcutter rescues them", "Woodcutter rescues them -> Meets wolf -> Wolf runs to cottage", "Wolf runs to cottage -> Meets wolf -> Woodcutter rescues them"], correct: 0, explanation: "She meets the wolf while picking flowers, the wolf runs ahead, and then the woodcutter saves them." },
+          { type: "mc", question: "Character: Which adjective best describes the wolf?", options: ["Brave", "Innocent", "Cunning"], correct: 2, explanation: "The story specifically describes the wolf as 'cunning' and speaking 'slyly'." },
+          { type: "mc", question: "Vocabulary Table: Complete the word family table: Noun: Innocence, Adjective: Innocent, Adverb: [?]", options: ["Innocently", "Innocent", "Innocents"], correct: 0, explanation: "The adverb form of innocent is 'innocently'." },
+          { type: "open", question: "Personal Opinion: Why is it important to be careful when talking to strangers?" }
+        ]
+      },
       {
         id: "alex_journey_1",
         title: "Alex's First Journey to London",
@@ -611,6 +643,18 @@
                 { type: "mc", question: "Character: Which adjective best describes the protagonist?", options: ["Lazy", "Dedicated", "Confused"], correct: 1, explanation: "He is described as having unwavering dedication." },
                 { type: "mc", question: "Vocabulary Table: Complete the word family table: Noun: Confidence, Verb: Confide, Adjective: [?]", options: ["Confidently", "Confident", "Confiding"], correct: 1, explanation: "The adjective form is 'confident'." },
                 { type: "open", question: "Personal Opinion: What do you think is the best way to overcome daunting obstacles in your own life?" }
+              ]
+            },
+            {
+              title: `The Magic of ${theme}`,
+              description: `${protagonist} discovers a magical secret.`,
+              raw: `Once upon a time, [N:${protagonist}](Proper Noun - Protagonist) [T:stumbled](Past Simple - Found by accident) upon a hidden realm of [N:${theme}](Proper Noun - Topic). The world was [ADJ:enchanting](Descriptive Adjective - Magically attractive), filled with [L:mysterious](Difficult to understand - ${level}) creatures and glowing forests.\n\n[S:Conditional Clause:If they had not taken that path](Past Unreal Conditional), the secret would have remained hidden forever. [C:Instead](Conjunctive Adverb - Shows contrast), ${protagonist} [ADV:bravely](Adverb of Manner - Modifies 'stepped') [T:stepped](Past Simple - Sequential action) into the unknown. A wise old owl [T:spoke](Past Simple) in riddles, revealing a [L:profound](Deeply meaningful - ${level}) truth.\n\n[P:In](Preposition of Place) the end, ${protagonist} [T:realized](Past Simple) that true magic comes from within. It was an unforgettable adventure.`,
+              q: [
+                { type: "mc", question: "Reference: What does 'It' refer to in 'It was an unforgettable adventure'?", options: ["The wise old owl", "The entire journey into the hidden realm", "The glowing forest"], correct: 1, explanation: "'It' refers back to the whole adventure they just experienced." },
+                { type: "mc", question: "Sequence: What happens first in the story?", options: ["Owl speaks in riddles", "Steps bravely into the unknown", "Stumbles upon a hidden realm"], correct: 2, explanation: "First they stumble upon the realm, then step into it, and then the owl speaks." },
+                { type: "mc", question: "Character: Which adjective best describes the protagonist's action?", options: ["Brave", "Cowardly", "Careless"], correct: 0, explanation: "The text says they 'bravely stepped into the unknown'." },
+                { type: "mc", question: "Vocabulary Table: Complete the word family table: Noun: Magic, Adjective: Magical, Adverb: [?]", options: ["Magically", "Magic", "Magicalness"], correct: 0, explanation: "The adverb form of magic is 'magically'." },
+                { type: "open", question: "Personal Opinion: If you found a hidden realm, what would you do first?" }
               ]
             }
           ];
