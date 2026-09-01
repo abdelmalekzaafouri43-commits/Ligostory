@@ -41,23 +41,27 @@ object GeminiStoryGenerator {
 Act as an expert English language teacher and pedagogical engineer.
 Create an original interactive English story (100 to 150 words) suitable for target level ${level.label} (${level.name}) on the theme '${theme.label}'.
 
-The story text MUST include three key elements tagged with exact textual markup:
-1. Lexicon: [L:word](simple definition in English - CEFR level)
+The story text MUST include rich grammar tags and sentence structures using exact textual markup:
+1. Target Lexicon: [L:word](simple definition in English - CEFR level)
 2. Target Verb Tenses: [T:verb](Tense Name - contextual explanation)
-3. Conjunctions: [C:word](role in the sentence)
+3. Conjunctions & Connectors: [C:word](role in the sentence)
+4. Key Nouns / Subjects: [N:word](Noun role / Subject info)
+5. Descriptive Adjectives: [ADJ:word](Adjective description)
+6. Adverbs: [ADV:word](Adverb of Manner/Time/Degree)
+7. Prepositions: [P:word](Prepositional function)
+8. Sentence Structures / Clauses: [S:Structure Name:clause text](Grammatical clause role and analysis)
 
 IMPORTANT QUIZ INSTRUCTIONS:
-The comprehension quiz MUST NOT test the grammar, lexicon, or conjunctions already explained in the text.
-Instead, the quiz MUST focus purely on reading comprehension based on the story content, including:
+The comprehension quiz MUST focus on reading comprehension based on the story content:
 - Characters and their motivations
 - Key events (beginning, middle, and ending)
 - The overall moral or lesson of the story
 
-Format your response strictly as valid JSON with no markdown wrapping or code ticks (or inside JSON format):
+Format your response strictly as valid JSON with no markdown wrapping or code ticks:
 {
   "title": "Title of story",
   "imagePrompt": "Detailed English image generation prompt for a vivid 3D illustration or 3D render to clarify the meaning of the story",
-  "storyText": "Full story text containing [L:...](...), [T:...](...), [C:...](...)",
+  "storyText": "Full story text containing [N:...](...), [T:...](...), [ADJ:...](...), [ADV:...](...), [P:...](...), [C:...](...), [S:...](...), [L:...](...)",
   "quiz": [
     {
       "question": "Question text in English?",
@@ -80,6 +84,7 @@ Format your response strictly as valid JSON with no markdown wrapping or code ti
   ]
 }
 """.trimIndent()
+
 
         try {
             val jsonPayload = JSONObject().apply {

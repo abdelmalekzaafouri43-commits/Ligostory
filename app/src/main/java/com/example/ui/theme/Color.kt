@@ -30,3 +30,33 @@ val TenseBorder = Color(0xFF3B82F6) // Blue 500
 val ConjunctionBg = Color(0xFFCCFBF1) // Teal 100
 val ConjunctionText = Color(0xFF115E59) // Teal 800
 val ConjunctionBorder = Color(0xFF14B8A6) // Teal 500
+
+// Extended Grammar Tag Colors
+val NounBg = Color(0xFFF3E8FF) // Purple 100
+val NounText = Color(0xFF6B21A8) // Purple 800
+val NounBorder = Color(0xFFA855F7) // Purple 500
+
+val AdjBg = Color(0xFFD1FAE5) // Emerald 100
+val AdjText = Color(0xFF065F46) // Emerald 800
+val AdjBorder = Color(0xFF10B981) // Emerald 500
+
+val AdvBg = Color(0xFFE0E7FF) // Indigo 100
+val AdvText = Color(0xFF3730A3) // Indigo 800
+val AdvBorder = Color(0xFF6366F1) // Indigo 500
+
+val PrepBg = Color(0xFFFCE7F3) // Pink 100
+val PrepText = Color(0xFF9D174D) // Pink 800
+val PrepBorder = Color(0xFFEC4899) // Pink 500
+
+val StructureBg = Color(0xFFFFE4E6) // Rose 100
+val StructureText = Color(0xFF9F1239) // Rose 800
+val StructureBorder = Color(0xFFF43F5E) // Rose 500
+
+// Gemstone Palette
+val Cobalt = Color(0xFF0047AB)
+val Sapphire = Color(0xFF0F52BA)
+val Emerald = Color(0xFF10B981) // Emerald 500
+val Ruby = Color(0xFFE0115F)
+val Amethyst = Color(0xFF9966CC)
+val Amber = Color(0xFFFFBF00)
+val Pearl = Color(0xFFEAE0C8)

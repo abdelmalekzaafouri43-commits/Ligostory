@@ -8,6 +8,9 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.*
+import androidx.compose.ui.layout.layout
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -52,9 +55,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -72,22 +78,42 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.FormatListBulleted
 import com.example.api.DictionaryApi
 import com.example.api.WordDefinition
 import androidx.compose.material3.CircularProgressIndicator
 import com.example.tts.EnglishAccent
+import com.example.data.GrammarCategory
 import com.example.data.ParsedPart
 import com.example.data.QuizQuestion
 import com.example.data.StoryData
 import com.example.parser.StoryMarkupParser
+import com.example.ui.theme.AdjBg
+import com.example.ui.theme.AdjBorder
+import com.example.ui.theme.AdjText
+import com.example.ui.theme.AdvBg
+import com.example.ui.theme.AdvBorder
+import com.example.ui.theme.AdvText
 import com.example.ui.theme.ConjunctionBg
 import com.example.ui.theme.ConjunctionBorder
 import com.example.ui.theme.ConjunctionText
 import com.example.ui.theme.LexiconBg
 import com.example.ui.theme.LexiconBorder
 import com.example.ui.theme.LexiconText
+import com.example.ui.theme.NounBg
+import com.example.ui.theme.NounBorder
+import com.example.ui.theme.NounText
+import com.example.ui.theme.PrepBg
+import com.example.ui.theme.PrepBorder
+import com.example.ui.theme.PrepText
 import com.example.ui.theme.PrimaryIndigo
 import com.example.ui.theme.SecondaryTeal
+import com.example.ui.theme.Sapphire
+import com.example.ui.theme.StructureBg
+import com.example.ui.theme.StructureBorder
+import com.example.ui.theme.StructureText
 import com.example.ui.theme.TenseBg
 import com.example.ui.theme.TenseBorder
 import com.example.ui.theme.TenseText
@@ -114,6 +140,15 @@ fun Bottom75Section(
     val userAnswers = remember(story.id) { mutableStateMapOf<Int, Int>() }
     var quizSubmitted by remember(story.id) { mutableStateOf(false) }
     
+    // Text Size & Accessibility State
+    var storyFontSize by remember { mutableFloatStateOf(16f) }
+    var showTextSizeSettings by remember { mutableStateOf(false) }
+
+    // Grammar Tag Highlight Toggle & Filter State
+    var isGrammarHighlightingEnabled by remember { mutableStateOf(true) }
+    var selectedGrammarFilter by remember { mutableStateOf<GrammarCategory?>(null) }
+    var showGrammarBreakdown by remember { mutableStateOf(false) }
+
     val coroutineScope = rememberCoroutineScope()
     var popupWordDef by remember { mutableStateOf<WordDefinition?>(null) }
     var isFetchingDefinition by remember { mutableStateOf(false) }
@@ -123,12 +158,7 @@ fun Bottom75Section(
         val ranges = mutableListOf<IntRange>()
         var currentIndex = 0
         parsedParts.forEach { part ->
-            val text = when (part) {
-                is ParsedPart.NormalText -> part.text
-                is ParsedPart.Lexicon -> part.word
-                is ParsedPart.VerbTense -> part.word
-                is ParsedPart.Conjunction -> part.word
-            }
+            val text = part.displayString
             val start = currentIndex
             val end = currentIndex + text.length
             ranges.add(start until end)
@@ -153,12 +183,7 @@ fun Bottom75Section(
             // Find sentence boundaries to split on
             val sentenceEndIndices = mutableListOf<Int>()
             pageParts.forEachIndexed { index, pagePart ->
-                val text = when (pagePart.part) {
-                    is ParsedPart.NormalText -> pagePart.part.text
-                    is ParsedPart.Lexicon -> pagePart.part.word
-                    is ParsedPart.VerbTense -> pagePart.part.word
-                    is ParsedPart.Conjunction -> pagePart.part.word
-                }
+                val text = pagePart.part.displayString
                 val trimmed = text.trim()
                 if (trimmed.endsWith(".") || trimmed.endsWith("!") || trimmed.endsWith("?") || trimmed.endsWith(".\"") || trimmed.endsWith("!\"") || trimmed.endsWith("?\"")) {
                     sentenceEndIndices.add(index)
@@ -351,15 +376,221 @@ fun Bottom75Section(
             }
         }
 
-        // --- 2. MARKUP LEGEND BAR ---
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
+        // --- 2. GRAMMAR TAGS & HIGHLIGHT FILTER BAR ---
+        Surface(
+            shape = RoundedCornerShape(16.dp),
+            color = MaterialTheme.colorScheme.surface,
+            border = androidx.compose.foundation.BorderStroke(
+                1.dp,
+                if (isGrammarHighlightingEnabled) PrimaryIndigo.copy(alpha = 0.35f) else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+            ),
+            modifier = Modifier.fillMaxWidth()
         ) {
-            LegendPill(label = "Vocabulary", bgColor = LexiconBg, textColor = LexiconText, borderColor = LexiconBorder)
-            LegendPill(label = "Verb Tense", bgColor = TenseBg, textColor = TenseText, borderColor = TenseBorder)
-            LegendPill(label = "Conjunction", bgColor = ConjunctionBg, textColor = ConjunctionText, borderColor = ConjunctionBorder)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.AutoAwesome,
+                            contentDescription = "Grammar Highlighting",
+                            tint = if (isGrammarHighlightingEnabled) PrimaryIndigo else MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Column {
+                            Text(
+                                text = "Grammar Highlighting",
+                                style = MaterialTheme.typography.titleSmall.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 13.sp,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            )
+                            Text(
+                                text = if (isGrammarHighlightingEnabled) "Study Mode (Tags On)" else "Clean Reading Mode (Off)",
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    fontSize = 10.sp,
+                                    color = if (isGrammarHighlightingEnabled) PrimaryIndigo else MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            )
+                        }
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        if (isGrammarHighlightingEnabled) {
+                            // Toggle breakdown stats
+                            Surface(
+                                shape = CircleShape,
+                                color = PrimaryIndigo.copy(alpha = 0.1f),
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .clickable { showGrammarBreakdown = !showGrammarBreakdown }
+                                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(
+                                        imageVector = Icons.Default.FormatListBulleted,
+                                        contentDescription = "Breakdown",
+                                        tint = PrimaryIndigo,
+                                        modifier = Modifier.size(12.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(
+                                        text = if (showGrammarBreakdown) "Hide" else "Stats",
+                                        style = MaterialTheme.typography.labelSmall.copy(
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 10.sp,
+                                            color = PrimaryIndigo
+                                        )
+                                    )
+                                }
+                            }
+                        }
+
+                        // Switch toggle
+                        Switch(
+                            checked = isGrammarHighlightingEnabled,
+                            onCheckedChange = { isGrammarHighlightingEnabled = it },
+                            modifier = Modifier.testTag("grammar_highlight_switch"),
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = Color.White,
+                                checkedTrackColor = PrimaryIndigo
+                            )
+                        )
+                    }
+                }
+
+                // Expandable category pills and statistics when highlighting is enabled
+                AnimatedVisibility(visible = isGrammarHighlightingEnabled) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        // Horizontal scrollable categories filter row
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            GrammarFilterPill(
+                                label = "All Tags",
+                                isSelected = selectedGrammarFilter == null,
+                                color = PrimaryIndigo,
+                                onClick = { selectedGrammarFilter = null }
+                            )
+                            GrammarFilterPill(
+                                label = "Nouns",
+                                isSelected = selectedGrammarFilter == GrammarCategory.NOUN,
+                                color = NounText,
+                                onClick = { selectedGrammarFilter = GrammarCategory.NOUN }
+                            )
+                            GrammarFilterPill(
+                                label = "Verbs & Tenses",
+                                isSelected = selectedGrammarFilter == GrammarCategory.VERB_TENSE,
+                                color = TenseText,
+                                onClick = { selectedGrammarFilter = GrammarCategory.VERB_TENSE }
+                            )
+                            GrammarFilterPill(
+                                label = "Adjectives",
+                                isSelected = selectedGrammarFilter == GrammarCategory.ADJECTIVE,
+                                color = AdjText,
+                                onClick = { selectedGrammarFilter = GrammarCategory.ADJECTIVE }
+                            )
+                            GrammarFilterPill(
+                                label = "Adverbs",
+                                isSelected = selectedGrammarFilter == GrammarCategory.ADVERB,
+                                color = AdvText,
+                                onClick = { selectedGrammarFilter = GrammarCategory.ADVERB }
+                            )
+                            GrammarFilterPill(
+                                label = "Prepositions",
+                                isSelected = selectedGrammarFilter == GrammarCategory.PREPOSITION,
+                                color = PrepText,
+                                onClick = { selectedGrammarFilter = GrammarCategory.PREPOSITION }
+                            )
+                            GrammarFilterPill(
+                                label = "Conjunctions",
+                                isSelected = selectedGrammarFilter == GrammarCategory.CONJUNCTION,
+                                color = ConjunctionText,
+                                onClick = { selectedGrammarFilter = GrammarCategory.CONJUNCTION }
+                            )
+                            GrammarFilterPill(
+                                label = "Clauses & Structures",
+                                isSelected = selectedGrammarFilter == GrammarCategory.SENTENCE_STRUCTURE,
+                                color = StructureText,
+                                onClick = { selectedGrammarFilter = GrammarCategory.SENTENCE_STRUCTURE }
+                            )
+                            GrammarFilterPill(
+                                label = "Target Vocab",
+                                isSelected = selectedGrammarFilter == GrammarCategory.VOCABULARY,
+                                color = LexiconText,
+                                onClick = { selectedGrammarFilter = GrammarCategory.VOCABULARY }
+                            )
+                        }
+
+                        // Collapsible Grammar Breakdown Stats
+                        AnimatedVisibility(visible = showGrammarBreakdown) {
+                            val nounsCount = parsedParts.count { it is ParsedPart.Noun }
+                            val verbsCount = parsedParts.count { it is ParsedPart.VerbTense }
+                            val adjCount = parsedParts.count { it is ParsedPart.Adjective }
+                            val advCount = parsedParts.count { it is ParsedPart.Adverb }
+                            val prepCount = parsedParts.count { it is ParsedPart.Preposition }
+                            val conjCount = parsedParts.count { it is ParsedPart.Conjunction }
+                            val structCount = parsedParts.count { it is ParsedPart.SentenceStructure }
+                            val vocabCount = parsedParts.count { it is ParsedPart.Lexicon }
+
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 4.dp)
+                                    .background(
+                                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+                                        RoundedCornerShape(10.dp)
+                                    )
+                                    .padding(10.dp),
+                                verticalArrangement = Arrangement.spacedBy(6.dp)
+                            ) {
+                                Text(
+                                    text = "📊 Grammar Inventory (${parsedParts.filterNot { it is ParsedPart.NormalText }.size} Total Elements)",
+                                    style = MaterialTheme.typography.labelMedium.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onSurface
+                                    )
+                                )
+                                FlowRow(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                                ) {
+                                    if (nounsCount > 0) TagStatBadge("Nouns", nounsCount, NounBg, NounText, NounBorder)
+                                    if (verbsCount > 0) TagStatBadge("Tenses", verbsCount, TenseBg, TenseText, TenseBorder)
+                                    if (adjCount > 0) TagStatBadge("Adjectives", adjCount, AdjBg, AdjText, AdjBorder)
+                                    if (advCount > 0) TagStatBadge("Adverbs", advCount, AdvBg, AdvText, AdvBorder)
+                                    if (prepCount > 0) TagStatBadge("Prepositions", prepCount, PrepBg, PrepText, PrepBorder)
+                                    if (conjCount > 0) TagStatBadge("Conjunctions", conjCount, ConjunctionBg, ConjunctionText, ConjunctionBorder)
+                                    if (structCount > 0) TagStatBadge("Structures", structCount, StructureBg, StructureText, StructureBorder)
+                                    if (vocabCount > 0) TagStatBadge("Vocabulary", vocabCount, LexiconBg, LexiconText, LexiconBorder)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         // --- 3. INTERACTIVE STORY READER CONTAINER ---
@@ -367,25 +598,209 @@ fun Bottom75Section(
             modifier = Modifier
                 .fillMaxWidth()
                 .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
+                    width = 1.5.dp,
+                    color = Sapphire.copy(alpha = 0.35f),
                     shape = RoundedCornerShape(20.dp)
                 )
                 .testTag("story_reader_card"),
             shape = RoundedCornerShape(20.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            colors = CardDefaults.cardColors(containerColor = Sapphire.copy(alpha = 0.07f)),
             elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
         ) {
             Column(modifier = Modifier.padding(18.dp)) {
-                Text(
-                    text = "📖 Story Text",
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontSize = 15.sp
-                    ),
-                    modifier = Modifier.padding(bottom = 12.dp)
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "📖 Story Text",
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = Sapphire,
+                            fontSize = 15.sp
+                        )
+                    )
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        // Text Size Quick Access Button
+                        Surface(
+                            shape = RoundedCornerShape(10.dp),
+                            color = if (showTextSizeSettings) Sapphire else Sapphire.copy(alpha = 0.12f),
+                            modifier = Modifier
+                                .clickable { showTextSizeSettings = !showTextSizeSettings }
+                                .testTag("text_size_setting_button")
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 9.dp, vertical = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Text(
+                                    text = "Aa",
+                                    style = MaterialTheme.typography.labelMedium.copy(
+                                        fontWeight = FontWeight.ExtraBold,
+                                        fontSize = 13.sp,
+                                        color = if (showTextSizeSettings) Color.White else Sapphire
+                                    )
+                                )
+                                Text(
+                                    text = "${storyFontSize.toInt()}sp",
+                                    style = MaterialTheme.typography.labelSmall.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 11.sp,
+                                        color = if (showTextSizeSettings) Color.White.copy(alpha = 0.9f) else Sapphire.copy(alpha = 0.8f)
+                                    )
+                                )
+                            }
+                        }
+
+                        Surface(
+                            shape = CircleShape,
+                            color = Sapphire.copy(alpha = 0.15f)
+                        ) {
+                            Text(
+                                text = "Page ${currentPageIndex + 1} of ${storyPages.size}",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Sapphire
+                                ),
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 3.dp)
+                            )
+                        }
+                    }
+                }
+
+                // Text Size & Accessibility Settings Panel
+                AnimatedVisibility(visible = showTextSizeSettings) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 14.dp)
+                            .background(
+                                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                                RoundedCornerShape(14.dp)
+                            )
+                            .padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "🔤 Story Text Size (${storyFontSize.toInt()} sp)",
+                                style = MaterialTheme.typography.labelMedium.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            )
+
+                            // Quick Stepper (- / +)
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                            ) {
+                                Surface(
+                                    shape = CircleShape,
+                                    color = Sapphire.copy(alpha = 0.15f),
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                        .clickable(enabled = storyFontSize > 13f) {
+                                            storyFontSize = (storyFontSize - 2f).coerceAtLeast(13f)
+                                        }
+                                        .testTag("decrease_font_size_button")
+                                ) {
+                                    Box(contentAlignment = Alignment.Center) {
+                                        Text(
+                                            text = "A-",
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 12.sp,
+                                            color = if (storyFontSize > 13f) Sapphire else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                                        )
+                                    }
+                                }
+
+                                Surface(
+                                    shape = CircleShape,
+                                    color = Sapphire.copy(alpha = 0.15f),
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                        .clickable(enabled = storyFontSize < 24f) {
+                                            storyFontSize = (storyFontSize + 2f).coerceAtMost(24f)
+                                        }
+                                        .testTag("increase_font_size_button")
+                                ) {
+                                    Box(contentAlignment = Alignment.Center) {
+                                        Text(
+                                            text = "A+",
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 13.sp,
+                                            color = if (storyFontSize < 24f) Sapphire else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                        // Presets
+                        val presets = listOf(
+                            14f to "Small",
+                            16f to "Regular",
+                            18f to "Large",
+                            21f to "X-Large",
+                            24f to "Huge"
+                        )
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            presets.forEach { (size, label) ->
+                                val isSelected = storyFontSize == size
+                                Surface(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .clickable { storyFontSize = size }
+                                        .testTag("font_size_preset_${size.toInt()}"),
+                                    shape = RoundedCornerShape(8.dp),
+                                    color = if (isSelected) Sapphire else MaterialTheme.colorScheme.surface,
+                                    border = androidx.compose.foundation.BorderStroke(
+                                        1.dp,
+                                        if (isSelected) Sapphire else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                                    )
+                                ) {
+                                    Column(
+                                        modifier = Modifier.padding(vertical = 6.dp),
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        Text(
+                                            text = "${size.toInt()}",
+                                            style = MaterialTheme.typography.labelMedium.copy(
+                                                fontWeight = FontWeight.Bold,
+                                                fontSize = 12.sp,
+                                                color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurface
+                                            )
+                                        )
+                                        Text(
+                                            text = label,
+                                            style = MaterialTheme.typography.labelSmall.copy(
+                                                fontSize = 9.sp,
+                                                color = if (isSelected) Color.White.copy(alpha = 0.85f) else MaterialTheme.colorScheme.onSurfaceVariant
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
                 AnimatedContent(
                     targetState = currentPageIndex,
@@ -405,22 +820,17 @@ fun Bottom75Section(
                     FlowRow(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Start,
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         activePageParts.forEach { pagePart ->
                             val index = pagePart.globalIndex
                             val part = pagePart.part
                             val charRange = partCharRanges.getOrNull(index) ?: IntRange.EMPTY
                             val isWordBeingRead = isPlayingAudio && currentWordRange != null && currentWordRange.first in charRange
+                            val isFilterMatched = selectedGrammarFilter == null || part.grammarCategory == selectedGrammarFilter
 
-                            if (isWordBeingRead) {
-                                Text(
-                                    text = "🪶",
-                                    fontSize = 18.sp,
-                                    modifier = Modifier.padding(end = 2.dp)
-                                )
-                            }
-                            when (part) {
+                            Box(contentAlignment = Alignment.Center) {
+                                when (part) {
                                 is ParsedPart.NormalText -> {
                                     val textBgColor by animateColorAsState(
                                         if (isWordBeingRead) PrimaryIndigo.copy(alpha = 0.5f) else Color.Transparent,
@@ -434,8 +844,8 @@ fun Bottom75Section(
                                         Text(
                                             text = part.text,
                                             style = MaterialTheme.typography.bodyLarge.copy(
-                                                fontSize = 16.sp,
-                                                lineHeight = 26.sp,
+                                                fontSize = storyFontSize.sp,
+                                                lineHeight = (storyFontSize * 1.6f).sp,
                                                 color = MaterialTheme.colorScheme.onSurface
                                             ),
                                             onTextLayout = { textLayoutResult = it },
@@ -492,42 +902,159 @@ fun Bottom75Section(
                                         )
                                     }
                                 }
-                                is ParsedPart.Lexicon -> {
-                                    AnnotationChip(
-                                        text = part.word,
-                                        badgeLabel = part.level,
-                                        bgColor = LexiconBg,
-                                        textColor = LexiconText,
-                                        borderColor = if (isWordBeingRead) PrimaryIndigo else LexiconBorder,
-                                        onClick = { onAnnotationClick(part) }
-                                    )
+                                else -> {
+                                    if (!isGrammarHighlightingEnabled) {
+                                        Text(
+                                            text = part.displayString,
+                                            style = MaterialTheme.typography.bodyLarge.copy(
+                                                fontSize = storyFontSize.sp,
+                                                lineHeight = (storyFontSize * 1.6f).sp,
+                                                color = if (isWordBeingRead) Color.White else MaterialTheme.colorScheme.onSurface
+                                            ),
+                                            modifier = Modifier
+                                                .then(
+                                                    if (isWordBeingRead) {
+                                                        Modifier
+                                                            .background(PrimaryIndigo, RoundedCornerShape(4.dp))
+                                                            .padding(horizontal = 4.dp, vertical = 2.dp)
+                                                    } else {
+                                                        Modifier
+                                                            .clip(RoundedCornerShape(4.dp))
+                                                            .clickable { onAnnotationClick(part) }
+                                                            .padding(horizontal = 1.dp)
+                                                    }
+                                                )
+                                        )
+                                    } else {
+                                        val chipFontSize = (storyFontSize * 0.94f).sp
+                                        when (part) {
+                                            is ParsedPart.NormalText -> { /* handled above */ }
+                                            is ParsedPart.Lexicon -> {
+                                                AnnotationChip(
+                                                    text = part.word,
+                                                    badgeLabel = part.level,
+                                                    bgColor = if (isFilterMatched) LexiconBg else LexiconBg.copy(alpha = 0.3f),
+                                                    textColor = if (isFilterMatched) LexiconText else LexiconText.copy(alpha = 0.6f),
+                                                    borderColor = if (isWordBeingRead) PrimaryIndigo else if (isFilterMatched) LexiconBorder else LexiconBorder.copy(alpha = 0.3f),
+                                                    fontSize = chipFontSize,
+                                                    onClick = { onAnnotationClick(part) }
+                                                )
+                                            }
+                                            is ParsedPart.VerbTense -> {
+                                                AnnotationChip(
+                                                    text = part.word,
+                                                    badgeLabel = "Tense",
+                                                    bgColor = if (isFilterMatched) TenseBg else TenseBg.copy(alpha = 0.3f),
+                                                    textColor = if (isFilterMatched) TenseText else TenseText.copy(alpha = 0.6f),
+                                                    borderColor = if (isWordBeingRead) PrimaryIndigo else if (isFilterMatched) TenseBorder else TenseBorder.copy(alpha = 0.3f),
+                                                    fontSize = chipFontSize,
+                                                    onClick = { onAnnotationClick(part) }
+                                                )
+                                            }
+                                            is ParsedPart.Conjunction -> {
+                                                AnnotationChip(
+                                                    text = part.word,
+                                                    badgeLabel = "Conj",
+                                                    bgColor = if (isFilterMatched) ConjunctionBg else ConjunctionBg.copy(alpha = 0.3f),
+                                                    textColor = if (isFilterMatched) ConjunctionText else ConjunctionText.copy(alpha = 0.6f),
+                                                    borderColor = if (isWordBeingRead) PrimaryIndigo else if (isFilterMatched) ConjunctionBorder else ConjunctionBorder.copy(alpha = 0.3f),
+                                                    fontSize = chipFontSize,
+                                                    onClick = { onAnnotationClick(part) }
+                                                )
+                                            }
+                                            is ParsedPart.Noun -> {
+                                                AnnotationChip(
+                                                    text = part.word,
+                                                    badgeLabel = "Noun",
+                                                    bgColor = if (isFilterMatched) NounBg else NounBg.copy(alpha = 0.3f),
+                                                    textColor = if (isFilterMatched) NounText else NounText.copy(alpha = 0.6f),
+                                                    borderColor = if (isWordBeingRead) PrimaryIndigo else if (isFilterMatched) NounBorder else NounBorder.copy(alpha = 0.3f),
+                                                    fontSize = chipFontSize,
+                                                    onClick = { onAnnotationClick(part) }
+                                                )
+                                            }
+                                            is ParsedPart.Adjective -> {
+                                                AnnotationChip(
+                                                    text = part.word,
+                                                    badgeLabel = "Adj",
+                                                    bgColor = if (isFilterMatched) AdjBg else AdjBg.copy(alpha = 0.3f),
+                                                    textColor = if (isFilterMatched) AdjText else AdjText.copy(alpha = 0.6f),
+                                                    borderColor = if (isWordBeingRead) PrimaryIndigo else if (isFilterMatched) AdjBorder else AdjBorder.copy(alpha = 0.3f),
+                                                    fontSize = chipFontSize,
+                                                    onClick = { onAnnotationClick(part) }
+                                                )
+                                            }
+                                            is ParsedPart.Adverb -> {
+                                                AnnotationChip(
+                                                    text = part.word,
+                                                    badgeLabel = "Adv",
+                                                    bgColor = if (isFilterMatched) AdvBg else AdvBg.copy(alpha = 0.3f),
+                                                    textColor = if (isFilterMatched) AdvText else AdvText.copy(alpha = 0.6f),
+                                                    borderColor = if (isWordBeingRead) PrimaryIndigo else if (isFilterMatched) AdvBorder else AdvBorder.copy(alpha = 0.3f),
+                                                    fontSize = chipFontSize,
+                                                    onClick = { onAnnotationClick(part) }
+                                                )
+                                            }
+                                            is ParsedPart.Preposition -> {
+                                                AnnotationChip(
+                                                    text = part.word,
+                                                    badgeLabel = "Prep",
+                                                    bgColor = if (isFilterMatched) PrepBg else PrepBg.copy(alpha = 0.3f),
+                                                    textColor = if (isFilterMatched) PrepText else PrepText.copy(alpha = 0.6f),
+                                                    borderColor = if (isWordBeingRead) PrimaryIndigo else if (isFilterMatched) PrepBorder else PrepBorder.copy(alpha = 0.3f),
+                                                    fontSize = chipFontSize,
+                                                    onClick = { onAnnotationClick(part) }
+                                                )
+                                            }
+                                            is ParsedPart.SentenceStructure -> {
+                                                AnnotationChip(
+                                                    text = part.text,
+                                                    badgeLabel = part.structureType,
+                                                    bgColor = if (isFilterMatched) StructureBg else StructureBg.copy(alpha = 0.3f),
+                                                    textColor = if (isFilterMatched) StructureText else StructureText.copy(alpha = 0.6f),
+                                                    borderColor = if (isWordBeingRead) PrimaryIndigo else if (isFilterMatched) StructureBorder else StructureBorder.copy(alpha = 0.3f),
+                                                    fontSize = chipFontSize,
+                                                    onClick = { onAnnotationClick(part) }
+                                                )
+                                            }
+                                        }
+                                    }
                                 }
-                                is ParsedPart.VerbTense -> {
-                                    AnnotationChip(
-                                        text = part.word,
-                                        badgeLabel = "Tense",
-                                        bgColor = TenseBg,
-                                        textColor = TenseText,
-                                        borderColor = if (isWordBeingRead) PrimaryIndigo else TenseBorder,
-                                        onClick = { onAnnotationClick(part) }
-                                    )
-                                }
-                                is ParsedPart.Conjunction -> {
-                                    AnnotationChip(
-                                        text = part.word,
-                                        badgeLabel = "Conj",
-                                        bgColor = ConjunctionBg,
-                                        textColor = ConjunctionText,
-                                        borderColor = if (isWordBeingRead) PrimaryIndigo else ConjunctionBorder,
-                                        onClick = { onAnnotationClick(part) }
-                                    )
-                                }
+                            }
+                            if (isWordBeingRead) {
+                                val infiniteTransition = rememberInfiniteTransition(label = "finger_transition")
+                                val bounce by infiniteTransition.animateFloat(
+                                    initialValue = 0f,
+                                    targetValue = -12f,
+                                    animationSpec = infiniteRepeatable(
+                                        animation = tween(400, easing = FastOutSlowInEasing),
+                                        repeatMode = RepeatMode.Reverse
+                                    ),
+                                    label = "bounce"
+                                )
+                                Text(
+                                    text = "👇",
+                                    fontSize = 24.sp,
+                                    modifier = Modifier
+                                        .align(Alignment.TopCenter)
+                                        .offset { androidx.compose.ui.unit.IntOffset(0, (-32 + bounce).toInt()) }
+                                        .layout { measurable, constraints ->
+                                            val placeable = measurable.measure(constraints)
+                                            layout(0, 0) {
+                                                placeable.placeRelative(
+                                                    x = -placeable.width / 2,
+                                                    y = -placeable.height / 2
+                                                )
+                                            }
+                                        }
+                                )
                             }
                         }
                     }
                 }
+            }
 
-                Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(14.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -621,14 +1148,32 @@ fun Bottom75Section(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = if (isQuizExpanded) "Quiz & Practice (Tap to Collapse)" else "Story Comprehension & Quiz (Tap to Expand)",
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp,
-                            color = if (isQuizExpanded) MaterialTheme.colorScheme.onSurface else PrimaryIndigo
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        Surface(
+                            shape = CircleShape,
+                            color = PrimaryIndigo.copy(alpha = 0.1f)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Quiz,
+                                contentDescription = "Quiz",
+                                tint = PrimaryIndigo,
+                                modifier = Modifier
+                                    .padding(10.dp)
+                                    .size(20.dp)
+                            )
+                        }
+                        Text(
+                            text = if (isQuizExpanded) "Quiz & Practice" else "Story Comprehension",
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp,
+                                color = if (isQuizExpanded) MaterialTheme.colorScheme.onSurface else PrimaryIndigo
+                            )
                         )
-                    )
+                    }
 
                     if (quizSubmitted) {
                         val score = story.quizQuestions.indices.count { idx ->
@@ -649,8 +1194,8 @@ fun Bottom75Section(
                         }
                     } else {
                         Text(
-                            text = if (isQuizExpanded) "Active" else "Tap to Open",
-                            style = MaterialTheme.typography.labelSmall.copy(
+                            text = if (isQuizExpanded) "Hide" else "Start",
+                            style = MaterialTheme.typography.labelMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = if (isQuizExpanded) PrimaryIndigo else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                             )
@@ -899,6 +1444,73 @@ fun Bottom75Section(
 }
 
 @Composable
+private fun GrammarFilterPill(
+    label: String,
+    isSelected: Boolean,
+    color: Color,
+    onClick: () -> Unit
+) {
+    Surface(
+        shape = CircleShape,
+        color = if (isSelected) color else color.copy(alpha = 0.08f),
+        border = androidx.compose.foundation.BorderStroke(
+            1.dp,
+            if (isSelected) color else color.copy(alpha = 0.35f)
+        ),
+        modifier = Modifier
+            .clip(CircleShape)
+            .clickable { onClick() }
+    ) {
+        Text(
+            text = label,
+            color = if (isSelected) Color.White else color,
+            style = MaterialTheme.typography.labelSmall.copy(
+                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                fontSize = 11.sp
+            ),
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+        )
+    }
+}
+
+@Composable
+private fun TagStatBadge(
+    label: String,
+    count: Int,
+    bgColor: Color,
+    textColor: Color,
+    borderColor: Color
+) {
+    Surface(
+        shape = RoundedCornerShape(6.dp),
+        color = bgColor,
+        border = androidx.compose.foundation.BorderStroke(1.dp, borderColor)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+        ) {
+            Text(
+                text = "$label: ",
+                color = textColor,
+                style = MaterialTheme.typography.labelSmall.copy(
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Normal
+                )
+            )
+            Text(
+                text = "$count",
+                color = textColor,
+                style = MaterialTheme.typography.labelSmall.copy(
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
+    }
+}
+
+@Composable
 private fun LegendPill(
     label: String,
     bgColor: Color,
@@ -929,8 +1541,13 @@ private fun AnnotationChip(
     bgColor: Color,
     textColor: Color,
     borderColor: Color,
+    fontSize: androidx.compose.ui.unit.TextUnit = 15.sp,
     onClick: () -> Unit
 ) {
+    val badgeSize = (fontSize.value * 0.58f).coerceAtLeast(8.5f).sp
+    val horizPadding = (fontSize.value * 0.5f).dp.coerceIn(6.dp, 10.dp)
+    val vertPadding = (fontSize.value * 0.2f).dp.coerceIn(2.dp, 5.dp)
+
     Surface(
         modifier = Modifier
             .padding(horizontal = 2.dp)
@@ -941,14 +1558,14 @@ private fun AnnotationChip(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+            modifier = Modifier.padding(horizontal = horizPadding, vertical = vertPadding)
         ) {
             Text(
                 text = text,
                 color = textColor,
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp
+                    fontSize = fontSize
                 )
             )
             Spacer(modifier = Modifier.width(4.dp))
@@ -960,7 +1577,7 @@ private fun AnnotationChip(
                     text = badgeLabel,
                     color = textColor,
                     style = MaterialTheme.typography.labelSmall.copy(
-                        fontSize = 9.sp,
+                        fontSize = badgeSize,
                         fontWeight = FontWeight.ExtraBold
                     ),
                     modifier = Modifier.padding(horizontal = 4.dp, vertical = 1.dp)
@@ -980,139 +1597,164 @@ private fun QuizQuestionCard(
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Text(
-            text = "$index. ${question.question}",
-            style = MaterialTheme.typography.titleSmall.copy(
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp
+        Row(verticalAlignment = Alignment.Top) {
+            Text(
+                text = "$index.",
+                style = MaterialTheme.typography.titleSmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp,
+                    color = PrimaryIndigo
+                ),
+                modifier = Modifier.padding(end = 8.dp, top = 1.dp)
             )
-        )
+            Text(
+                text = question.question,
+                style = MaterialTheme.typography.titleSmall.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp,
+                    lineHeight = 22.sp
+                )
+            )
+        }
 
-        question.options.forEachIndexed { optIndex, optionText ->
-            val isSelected = selectedOption == optIndex
-            val isCorrect = optIndex == question.correctAnswerIndex
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            question.options.forEachIndexed { optIndex, optionText ->
+                val isSelected = selectedOption == optIndex
+                val isCorrect = optIndex == question.correctAnswerIndex
 
-            val optionBgColor = when {
-                isSubmitted && isCorrect -> Color(0xFFD1FAE5) // Light Emerald
-                isSubmitted && isSelected && !isCorrect -> Color(0xFFFEE2E2) // Light Red
-                isSelected -> PrimaryIndigo.copy(alpha = 0.1f)
-                else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-            }
+                val optionBgColor = when {
+                    isSubmitted && isCorrect -> Color(0xFFD1FAE5) // Light Emerald
+                    isSubmitted && isSelected && !isCorrect -> Color(0xFFFEE2E2) // Light Red
+                    isSelected -> PrimaryIndigo.copy(alpha = 0.12f)
+                    else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                }
 
-            val optionBorderColor = when {
-                isSubmitted && isCorrect -> Color(0xFF10B981)
-                isSubmitted && isSelected && !isCorrect -> Color(0xFFEF4444)
-                isSelected -> PrimaryIndigo
-                else -> MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f)
-            }
+                val optionBorderColor = when {
+                    isSubmitted && isCorrect -> Color(0xFF10B981)
+                    isSubmitted && isSelected && !isCorrect -> Color(0xFFEF4444)
+                    isSelected -> PrimaryIndigo
+                    else -> MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f)
+                }
 
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(10.dp))
-                    .clickable { onSelectOption(optIndex) },
-                color = optionBgColor,
-                border = androidx.compose.foundation.BorderStroke(1.dp, optionBorderColor)
-            ) {
-                Row(
+                Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 12.dp, vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        .clip(RoundedCornerShape(12.dp))
+                        .clickable(enabled = !isSubmitted) { onSelectOption(optIndex) },
+                    color = optionBgColor,
+                    border = androidx.compose.foundation.BorderStroke(if (isSelected || isSubmitted && isCorrect) 1.5.dp else 1.dp, optionBorderColor)
                 ) {
-                    val optionLetter = when (optIndex) {
-                        0 -> "A"
-                        1 -> "B"
-                        2 -> "C"
-                        else -> ""
-                    }
-                    val letterCircleBg = when {
-                        isSubmitted && isCorrect -> Color(0xFF10B981)
-                        isSubmitted && isSelected && !isCorrect -> Color(0xFFEF4444)
-                        isSelected -> PrimaryIndigo
-                        else -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.15f)
-                    }
-                    val letterCircleTextColor = when {
-                        isSelected || (isSubmitted && isCorrect) || (isSubmitted && isSelected && !isCorrect) -> Color.White
-                        else -> MaterialTheme.colorScheme.onSurface
-                    }
-
-                    Box(
+                    Row(
                         modifier = Modifier
-                            .size(24.dp)
-                            .clip(CircleShape)
-                            .background(letterCircleBg),
-                        contentAlignment = Alignment.Center
+                            .fillMaxWidth()
+                            .padding(horizontal = 14.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            text = optionLetter,
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 11.sp,
-                                color = letterCircleTextColor
-                            )
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(
-                        text = optionText,
-                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 13.sp),
-                        modifier = Modifier.weight(1f)
-                    )
+                        val optionLetter = when (optIndex) {
+                            0 -> "A"
+                            1 -> "B"
+                            2 -> "C"
+                            3 -> "D"
+                            else -> ""
+                        }
+                        
+                        val circleBg = when {
+                            isSubmitted && isCorrect -> Color(0xFF10B981)
+                            isSubmitted && isSelected && !isCorrect -> Color(0xFFEF4444)
+                            isSelected -> PrimaryIndigo
+                            else -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.15f)
+                        }
 
-                    if (isSubmitted && isCorrect) {
-                        Surface(
-                            shape = RoundedCornerShape(6.dp),
-                            color = Color(0xFF10B981),
-                            modifier = Modifier.padding(start = 8.dp)
+                        Box(
+                            modifier = Modifier
+                                .size(26.dp)
+                                .clip(CircleShape)
+                                .background(circleBg),
+                            contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = "Correct",
-                                color = Color.White,
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 10.sp
-                                ),
-                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                            )
+                            if (isSubmitted && isCorrect) {
+                                Icon(
+                                    imageVector = Icons.Default.Check,
+                                    contentDescription = "Correct",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            } else if (isSubmitted && isSelected && !isCorrect) {
+                                Icon(
+                                    imageVector = Icons.Default.Close,
+                                    contentDescription = "Incorrect",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            } else {
+                                Text(
+                                    text = optionLetter,
+                                    style = MaterialTheme.typography.bodyMedium.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 12.sp,
+                                        color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurface
+                                    )
+                                )
+                            }
                         }
-                    } else if (isSubmitted && isSelected && !isCorrect) {
-                        Surface(
-                            shape = RoundedCornerShape(6.dp),
-                            color = Color(0xFFEF4444),
-                            modifier = Modifier.padding(start = 8.dp)
-                        ) {
-                            Text(
-                                text = "Incorrect",
-                                color = Color.White,
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 10.sp
-                                ),
-                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                            )
-                        }
+                        
+                        Spacer(modifier = Modifier.width(12.dp))
+                        
+                        Text(
+                            text = optionText,
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                fontSize = 14.sp,
+                                fontWeight = if (isSelected || (isSubmitted && isCorrect)) FontWeight.SemiBold else FontWeight.Normal,
+                                color = if (isSubmitted && isSelected && !isCorrect) Color(0xFF991B1B) 
+                                        else if (isSubmitted && isCorrect) Color(0xFF065F46)
+                                        else MaterialTheme.colorScheme.onSurface
+                            ),
+                            modifier = Modifier.weight(1f)
+                        )
                     }
                 }
             }
         }
 
-        if (isSubmitted) {
+        AnimatedVisibility(visible = isSubmitted) {
             Surface(
-                shape = RoundedCornerShape(8.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f),
-                modifier = Modifier.fillMaxWidth()
+                shape = RoundedCornerShape(12.dp),
+                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+                border = androidx.compose.foundation.BorderStroke(
+                    1.dp,
+                    MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                ),
+                modifier = Modifier.fillMaxWidth().padding(top = 4.dp)
             ) {
-                Text(
-                    text = "Explanation: ${question.explanation}",
-                    style = MaterialTheme.typography.bodySmall.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontSize = 12.sp
-                    ),
-                    modifier = Modifier.padding(10.dp)
-                )
+                Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.Top) {
+                    Icon(
+                        imageVector = Icons.Default.Lightbulb,
+                        contentDescription = "Explanation",
+                        tint = MaterialTheme.colorScheme.tertiary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Column {
+                        Text(
+                            text = "Explanation",
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = question.explanation,
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = MaterialTheme.colorScheme.onSurface,
+                                fontSize = 13.sp,
+                                lineHeight = 18.sp
+                            )
+                        )
+                    }
+                }
             }
         }
     }

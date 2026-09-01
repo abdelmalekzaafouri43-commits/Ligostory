@@ -3,6 +3,7 @@ package com.example.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -21,7 +22,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.DeleteOutline
+import androidx.compose.material.icons.filled.OfflinePin
+import androidx.compose.material.icons.filled.Storage
+import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -33,9 +37,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -53,19 +61,26 @@ import com.example.data.PresetStories
 import com.example.data.StoryData
 import com.example.data.StoryTheme
 import com.example.ui.theme.PrimaryIndigo
+import com.example.ui.theme.Sapphire
+import com.example.ui.theme.SecondaryTeal
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun StorySelectorDialog(
     currentStory: StoryData,
     savedStories: List<StoryData> = emptyList(),
+    cachedStories: List<StoryData> = emptyList(),
     onSelectStory: (StoryData) -> Unit,
+    onDeleteCachedStory: (String) -> Unit = {},
+    onClearCache: () -> Unit = {},
     onGenerateAiStory: (CefrLevel, StoryTheme) -> Unit,
     isGenerating: Boolean,
     onDismiss: () -> Unit
 ) {
     var selectedLevel by remember { mutableStateOf(currentStory.level) }
     var selectedTheme by remember { mutableStateOf(currentStory.theme) }
+    var libraryFilterLevel by remember { mutableStateOf<CefrLevel?>(null) }
+    var selectedTab by remember { mutableIntStateOf(0) } // 0: Library & Offline, 1: Generate AI
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(
@@ -91,12 +106,12 @@ fun StorySelectorDialog(
                         Icon(
                             imageVector = Icons.Default.Book,
                             contentDescription = "Library",
-                            tint = PrimaryIndigo,
+                            tint = Sapphire,
                             modifier = Modifier.size(22.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "Story Library & Level",
+                            text = "Story Hub & Offline Cache",
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 17.sp
@@ -109,123 +124,274 @@ fun StorySelectorDialog(
                     }
                 }
 
-                Divider()
-
-                // Level Selection
-                Text(
-                    text = "1. Target Level (CEFR)",
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                )
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                // Tab Row for Navigation
+                TabRow(
+                    selectedTabIndex = selectedTab,
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+                    contentColor = Sapphire,
+                    modifier = Modifier.clip(RoundedCornerShape(12.dp))
                 ) {
-                    CefrLevel.entries.forEach { level ->
-                        val isSelected = selectedLevel == level
-                        Surface(
-                            modifier = Modifier
-                                .weight(1f)
-                                .clip(RoundedCornerShape(10.dp))
-                                .clickable { selectedLevel = level },
-                            color = if (isSelected) Color(level.badgeColorHex) else MaterialTheme.colorScheme.surfaceVariant,
-                            shape = RoundedCornerShape(10.dp)
-                        ) {
+                    Tab(
+                        selected = selectedTab == 0,
+                        onClick = { selectedTab = 0 },
+                        text = {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.OfflinePin,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Text(
+                                    text = "Library (${cachedStories.size} Cached)",
+                                    fontWeight = if (selectedTab == 0) FontWeight.Bold else FontWeight.Normal,
+                                    fontSize = 12.sp
+                                )
+                            }
+                        }
+                    )
+                    Tab(
+                        selected = selectedTab == 1,
+                        onClick = { selectedTab = 1 },
+                        text = {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.AutoAwesome,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Text(
+                                    text = "AI Generator",
+                                    fontWeight = if (selectedTab == 1) FontWeight.Bold else FontWeight.Normal,
+                                    fontSize = 12.sp
+                                )
+                            }
+                        }
+                    )
+                }
+
+                if (selectedTab == 0) {
+                    // TAB 0: LIBRARY & OFFLINE CACHE
+                    
+                    // Difficulty Filter
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        val filterOptions = listOf(null, CefrLevel.A2, CefrLevel.B1, CefrLevel.C1)
+                        filterOptions.forEach { level ->
+                            val isSelected = libraryFilterLevel == level
+                            Surface(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .clickable { libraryFilterLevel = level },
+                                color = if (isSelected) Sapphire else MaterialTheme.colorScheme.surfaceVariant,
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                val levelLabel = when(level) {
+                                    null -> "All"
+                                    CefrLevel.A2 -> "Beginner"
+                                    CefrLevel.B1 -> "Intermediate"
+                                    CefrLevel.C1 -> "Advanced"
+                                }
+                                Text(
+                                    text = levelLabel,
+                                    color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    style = MaterialTheme.typography.labelSmall.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 11.sp
+                                    ),
+                                    modifier = Modifier.padding(vertical = 6.dp),
+                                    maxLines = 1,
+                                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                )
+                            }
+                        }
+                    }
+
+                    // Section 1: Offline Cached Stories (From Room)
+                    val filteredCached = cachedStories.filter {
+                        libraryFilterLevel == null || it.level == libraryFilterLevel
+                    }.sortedBy { it.level }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Icon(
+                                imageVector = Icons.Default.Storage,
+                                contentDescription = null,
+                                tint = Sapphire,
+                                modifier = Modifier.size(16.dp)
+                            )
                             Text(
-                                text = level.label.split(" ").last(), // e.g. A2, B1, C1
-                                color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
+                                text = "Offline Room Cache (${filteredCached.size})",
                                 style = MaterialTheme.typography.labelMedium.copy(
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 13.sp
-                                ),
-                                modifier = Modifier.padding(vertical = 8.dp),
-                                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                    color = Sapphire
+                                )
                             )
                         }
+
+                        if (cachedStories.isNotEmpty()) {
+                            TextButton(
+                                onClick = onClearCache,
+                                modifier = Modifier.padding(0.dp)
+                            ) {
+                                Text(
+                                    text = "Clear Cache",
+                                    style = MaterialTheme.typography.labelSmall.copy(
+                                        color = MaterialTheme.colorScheme.error,
+                                        fontSize = 10.sp
+                                    )
+                                )
+                            }
+                        }
                     }
-                }
 
-                // Theme Selection
-                Text(
-                    text = "2. Theme",
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                )
-
-                FlowRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    StoryTheme.entries.forEach { theme ->
-                        val isSelected = selectedTheme == theme
+                    if (filteredCached.isEmpty()) {
                         Surface(
-                            shape = CircleShape,
-                            color = if (isSelected) PrimaryIndigo else MaterialTheme.colorScheme.surfaceVariant,
-                            modifier = Modifier.clickable { selectedTheme = theme }
+                            shape = RoundedCornerShape(10.dp),
+                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+                            modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(
-                                text = theme.label,
-                                color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    fontWeight = FontWeight.SemiBold,
+                                text = "No cached stories yet. Stories you read are automatically saved locally with Room for offline reading.",
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     fontSize = 11.sp
                                 ),
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                                modifier = Modifier.padding(10.dp)
                             )
                         }
-                    }
-                }
-
-                Divider()
-
-                // Generate AI Story Button
-                Button(
-                    onClick = { onGenerateAiStory(selectedLevel, selectedTheme) },
-                    enabled = !isGenerating,
-                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryIndigo),
-                    shape = RoundedCornerShape(12.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .testTag("dialog_generate_ai_button")
-                ) {
-                    if (isGenerating) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(18.dp),
-                            color = Color.White,
-                            strokeWidth = 2.dp
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Generating AI Story...")
                     } else {
-                        Icon(imageVector = Icons.Default.AutoAwesome, contentDescription = "Generate")
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("✨ Generate New AI Story")
-                    }
-                }
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(140.dp),
+                            verticalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            items(filteredCached) { story ->
+                                val isCurrent = story.id == currentStory.id
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            onSelectStory(story)
+                                            onDismiss()
+                                        }
+                                        .testTag("cached_story_${story.id}"),
+                                    shape = RoundedCornerShape(10.dp),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = if (isCurrent) Sapphire.copy(alpha = 0.15f) else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
+                                    ),
+                                    border = if (isCurrent) androidx.compose.foundation.BorderStroke(1.5.dp, Sapphire) else null
+                                ) {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 10.dp, vertical = 8.dp),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Column(modifier = Modifier.weight(1f)) {
+                                            Row(
+                                                verticalAlignment = Alignment.CenterVertically,
+                                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                            ) {
+                                                Text(
+                                                    text = story.title,
+                                                    style = MaterialTheme.typography.bodyMedium.copy(
+                                                        fontWeight = FontWeight.Bold,
+                                                        fontSize = 13.sp
+                                                    )
+                                                )
+                                                Surface(
+                                                    shape = CircleShape,
+                                                    color = Color(0xFF10B981).copy(alpha = 0.15f)
+                                                ) {
+                                                    Text(
+                                                        text = "📶 Offline Ready",
+                                                        color = Color(0xFF059669),
+                                                        style = MaterialTheme.typography.labelSmall.copy(
+                                                            fontSize = 9.sp,
+                                                            fontWeight = FontWeight.Bold
+                                                        ),
+                                                        modifier = Modifier.padding(horizontal = 5.dp, vertical = 1.dp)
+                                                    )
+                                                }
+                                            }
+                                            Text(
+                                                text = "${story.level.label} • ${story.theme.label}",
+                                                style = MaterialTheme.typography.bodySmall.copy(
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                    fontSize = 11.sp
+                                                )
+                                            )
+                                        }
 
-                // Saved / Bookmarked Stories List
-                if (savedStories.isNotEmpty()) {
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            if (isCurrent) {
+                                                Surface(shape = CircleShape, color = Sapphire) {
+                                                    Text(
+                                                        text = "Active",
+                                                        color = Color.White,
+                                                        style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
+                                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                                                    )
+                                                }
+                                            }
+
+                                            IconButton(
+                                                onClick = { onDeleteCachedStory(story.id) },
+                                                modifier = Modifier.size(28.dp)
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.DeleteOutline,
+                                                    contentDescription = "Delete from cache",
+                                                    tint = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
+                                                    modifier = Modifier.size(16.dp)
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Divider()
+
+                    // Section 2: Preset / Curated Library Stories
                     Text(
-                        text = "Saved Stories (${savedStories.size}):",
+                        text = "Curated Library Stories:",
                         style = MaterialTheme.typography.labelMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = PrimaryIndigo
+                            fontWeight = FontWeight.Bold
                         )
                     )
+
+                    val filteredPresetStories = PresetStories.stories.filter {
+                        libraryFilterLevel == null || it.level == libraryFilterLevel
+                    }.sortedBy { it.level }
+
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(100.dp),
+                            .height(130.dp),
                         verticalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
-                        items(savedStories) { story ->
+                        items(filteredPresetStories) { story ->
                             val isCurrent = story.id == currentStory.id
+                            val isCached = cachedStories.any { it.id == story.id }
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -235,8 +401,9 @@ fun StorySelectorDialog(
                                     },
                                 shape = RoundedCornerShape(10.dp),
                                 colors = CardDefaults.cardColors(
-                                    containerColor = if (isCurrent) PrimaryIndigo.copy(alpha = 0.2f) else MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-                                )
+                                    containerColor = if (isCurrent) Sapphire.copy(alpha = 0.15f) else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
+                                ),
+                                border = if (isCurrent) androidx.compose.foundation.BorderStroke(1.5.dp, Sapphire) else null
                             ) {
                                 Row(
                                     modifier = Modifier
@@ -247,7 +414,7 @@ fun StorySelectorDialog(
                                 ) {
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
-                                            text = "💾 ${story.title}",
+                                            text = story.title,
                                             style = MaterialTheme.typography.bodyMedium.copy(
                                                 fontWeight = FontWeight.Bold,
                                                 fontSize = 13.sp
@@ -261,90 +428,139 @@ fun StorySelectorDialog(
                                             )
                                         )
                                     }
-                                    if (isCurrent) {
-                                        Surface(shape = CircleShape, color = PrimaryIndigo) {
-                                            Text(
-                                                text = "Active",
-                                                color = Color.White,
-                                                style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
-                                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
-                                            )
+                                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                        if (isCached) {
+                                            Surface(
+                                                shape = CircleShape,
+                                                color = Color(0xFF10B981).copy(alpha = 0.15f)
+                                            ) {
+                                                Text(
+                                                    text = "💾 Cached",
+                                                    color = Color(0xFF059669),
+                                                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 9.sp),
+                                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                                )
+                                            }
+                                        }
+                                        if (isCurrent) {
+                                            Surface(shape = CircleShape, color = Sapphire) {
+                                                Text(
+                                                    text = "Active",
+                                                    color = Color.White,
+                                                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
+                                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                                                )
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(4.dp))
-                }
 
-                // Preset Stories List
-                Text(
-                    text = "Curated Library Stories:",
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.Bold
+                } else {
+                    // TAB 1: AI GENERATOR
+
+                    // Level Selection (For AI)
+                    Text(
+                        text = "1. AI Target Difficulty",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     )
-                )
 
-                val filteredStories = PresetStories.stories.filter {
-                    it.level == selectedLevel || it.theme == selectedTheme
-                }.ifEmpty { PresetStories.stories }
-
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(160.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(filteredStories) { story ->
-                        val isCurrent = story.id == currentStory.id
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    onSelectStory(story)
-                                    onDismiss()
-                                },
-                            shape = RoundedCornerShape(12.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = if (isCurrent) PrimaryIndigo.copy(alpha = 0.15f) else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-                            ),
-                            border = if (isCurrent) androidx.compose.foundation.BorderStroke(1.5.dp, PrimaryIndigo) else null
-                        ) {
-                            Row(
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        CefrLevel.entries.forEach { level ->
+                            val isSelected = selectedLevel == level
+                            Surface(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(12.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
+                                    .weight(1f)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .clickable { selectedLevel = level },
+                                color = if (isSelected) Color(level.badgeColorHex) else MaterialTheme.colorScheme.surfaceVariant,
+                                shape = RoundedCornerShape(10.dp)
                             ) {
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text(
-                                        text = story.title,
-                                        style = MaterialTheme.typography.bodyMedium.copy(
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 14.sp
-                                        )
-                                    )
-                                    Text(
-                                        text = "${story.level.label} • ${story.theme.label}",
-                                        style = MaterialTheme.typography.bodySmall.copy(
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            fontSize = 11.sp
-                                        )
-                                    )
+                                val levelLabel = when(level) {
+                                    CefrLevel.A2 -> "Beginner"
+                                    CefrLevel.B1 -> "Intermediate"
+                                    CefrLevel.C1 -> "Advanced"
                                 }
-                                if (isCurrent) {
-                                    Surface(shape = CircleShape, color = PrimaryIndigo) {
-                                        Text(
-                                            text = "Active",
-                                            color = Color.White,
-                                            style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
-                                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
-                                        )
-                                    }
-                                }
+                                Text(
+                                    text = levelLabel,
+                                    color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    style = MaterialTheme.typography.labelMedium.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 13.sp
+                                    ),
+                                    modifier = Modifier.padding(vertical = 8.dp),
+                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                )
                             }
+                        }
+                    }
+
+                    // Theme Selection (For AI)
+                    Text(
+                        text = "2. Theme",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    )
+
+                    FlowRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        StoryTheme.entries.forEach { theme ->
+                            val isSelected = selectedTheme == theme
+                            Surface(
+                                shape = CircleShape,
+                                color = if (isSelected) Sapphire else MaterialTheme.colorScheme.surfaceVariant,
+                                modifier = Modifier.clickable { selectedTheme = theme }
+                            ) {
+                                Text(
+                                    text = theme.label,
+                                    color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    style = MaterialTheme.typography.labelSmall.copy(
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 11.sp
+                                    ),
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                                )
+                            }
+                        }
+                    }
+
+                    Divider()
+
+                    // Generate AI Story Button
+                    Button(
+                        onClick = { onGenerateAiStory(selectedLevel, selectedTheme) },
+                        enabled = !isGenerating,
+                        colors = ButtonDefaults.buttonColors(containerColor = Sapphire),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag("dialog_generate_ai_button")
+                    ) {
+                        if (isGenerating) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(18.dp),
+                                color = Color.White,
+                                strokeWidth = 2.dp
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Generating AI Story...")
+                        } else {
+                            Icon(imageVector = Icons.Default.AutoAwesome, contentDescription = "Generate")
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("✨ Generate New AI Story")
                         }
                     }
                 }
