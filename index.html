@@ -155,7 +155,7 @@
     }
     .filter-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    .reader-scroll { flex: 1; overflow-y: auto; padding: 16px 16px 60px 16px; line-height: 1.9; }
+    .reader-scroll { flex: 1; overflow-y: auto; padding: 16px 16px 60px 16px; line-height: 1.9; pointer-events: auto; }
     .font-14 { font-size: 14px; } .font-16 { font-size: 16px; } .font-18 { font-size: 18px; } .font-21 { font-size: 21px; }
 
     /* IMAGE STYLING */
@@ -450,27 +450,7 @@
       <button class="filter-pill" onclick="setGrammarFilter('S', this)">Structures</button>
     </div>
 
-    <!-- ADAPTIVE SOUNDSCAPE CONTROL BAR -->
-    <div id="soundscapeBar" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:6px; padding:8px 12px; background:var(--surface); border:1px solid var(--border); border-radius:12px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
-      <div style="display:flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700;">
-        <span id="soundBadgeIcon">🎧</span>
-        <span id="soundBadgeText" style="color:var(--primary);">Adaptive Soundscape Active</span>
-      </div>
-      <div style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
-        <button class="sound-chip" onclick="triggerSoundEffect('rain')" title="Rain soundscape">🌧️ Rain</button>
-        <button class="sound-chip" onclick="triggerSoundEffect('wind')" title="Wind soundscape">💨 Wind</button>
-        <button class="sound-chip" onclick="triggerSoundEffect('lion')" title="Lion roar event">🦁 Lion</button>
-        <button class="sound-chip" onclick="triggerSoundEffect('laugh')" title="Laugh event">😆 Laugh</button>
-        <button class="sound-chip" onclick="triggerSoundEffect('birds')" title="Birds soundscape">🌲 Birds</button>
-        <button class="sound-chip" onclick="triggerSoundEffect('thunder')" title="Thunder effect">⚡ Thunder</button>
-        <button class="sound-chip" onclick="triggerSoundEffect('waves')" title="Waves soundscape">🌊 Waves</button>
-        <button id="autoToggleBtn" class="sound-chip active-auto" onclick="toggleAutoAdaptive()">🎵 Auto: ON</button>
-      </div>
-    </div>
-
-    <!-- SKEUOMORPHIC PAGE TURN WRAPPER -->
-    <div id="pageTurnWrapper" class="page-turn-wrapper">
-      <div id="readerArea" class="reader-scroll font-16">
+    <div id="readerArea" class="reader-scroll font-16">
         <img id="storyHeroImage" class="story-hero-image" src="" alt="Story Illustration" />
         
         <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px 22px; margin-bottom:20px; box-shadow:0 2px 10px rgba(0,0,0,0.04);">
@@ -548,17 +528,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Real-Time Skeuomorphic Page Curl Canvas Overlay -->
-      <canvas id="pageCurlCanvas"></canvas>
-
-      <!-- Corner Dog-Ear Hint -->
-      <div id="pageCornerHint" class="page-corner-hint" title="Drag corner to turn page ➔">
-        <div class="dog-ear">
-          <span class="dog-ear-text">Turn ➔</span>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- AI Generator Dialog -->
@@ -2051,24 +2020,6 @@
         hint.addEventListener('mousedown', startCurl);
         hint.addEventListener('touchstart', startCurl, { passive: true });
       }
-
-      container.addEventListener('mousedown', (e) => {
-        const rect = container.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        if (x > rect.width - 90 || x < 90 || y > rect.height - 90) {
-          startCurl(e);
-        }
-      });
-
-      container.addEventListener('touchstart', (e) => {
-        const rect = container.getBoundingClientRect();
-        const x = e.touches[0].clientX - rect.left;
-        const y = e.touches[0].clientY - rect.top;
-        if (x > rect.width - 90 || x < 90 || y > rect.height - 90) {
-          startCurl(e);
-        }
-      }, { passive: true });
 
       window.addEventListener('mousemove', moveCurl);
       window.addEventListener('touchmove', moveCurl, { passive: true });
