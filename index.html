@@ -292,15 +292,19 @@
       animation: storySlideIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     @keyframes storySlideIn {
-      0% {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      0% { opacity: 0; transform: translateY(18px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
+    
+    .premium-reveal {
+      opacity: 0;
+      animation: premiumWordReveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes premiumWordReveal {
+      0% { opacity: 0; transform: translateY(6px); filter: blur(4px); }
+      100% { opacity: var(--final-opacity, 1); transform: translateY(0); filter: blur(0); }
+    }
+    
     .form-group { margin-bottom: 12px; }
     .form-label { font-size: 12px; font-weight: 700; margin-bottom: 4px; display: block; color: var(--text-main); }
     .form-input, .form-select { width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-variant); color: var(--text-main); font-size: 13px; outline: none; }
@@ -1415,6 +1419,8 @@
     function renderFullStory() {
       const content = document.getElementById('storyContent');
       content.innerHTML = "";
+      
+      let wordIndex = 0;
 
       parsedTokens.forEach((token) => {
         if (token.type === 'WS') {
@@ -1422,23 +1428,39 @@
         } else if (token.type === 'TEXT') {
           const span = document.createElement('span');
           span.innerText = token.text;
-          span.className = 'story-word';
+          span.className = 'story-word premium-reveal';
+          
+          // Cap the delay at ~0.8s so long stories don't take forever to render
+          const delay = Math.min(wordIndex * 0.015, 0.8);
+          span.style.animationDelay = `${delay}s`;
+          span.style.setProperty('--final-opacity', '1');
+          
           span.dataset.start = token.charStart;
           span.dataset.end = token.charEnd;
           content.appendChild(span);
+          wordIndex++;
         } else {
           const span = document.createElement('span');
           span.innerText = token.text;
-          span.className = `story-word part part-${token.type.toLowerCase()}`;
+          span.className = `story-word premium-reveal part part-${token.type.toLowerCase()}`;
+          
+          const delay = Math.min(wordIndex * 0.015, 0.8);
+          span.style.animationDelay = `${delay}s`;
+          
+          const finalOpacity = (activeFilter && activeFilter !== token.type) ? "0.35" : "1";
+          span.style.setProperty('--final-opacity', finalOpacity);
+          // Set initial opacity so it looks right if animation isn't fully supported
+          span.style.opacity = finalOpacity;
+          
           span.dataset.start = token.charStart;
           span.dataset.end = token.charEnd;
-          span.style.opacity = (activeFilter && activeFilter !== token.type) ? "0.35" : "1";
           span.onclick = (e) => {
             e.stopPropagation();
             checkSpokenWordForSoundEffects(token.text.toLowerCase());
             showAnnotationModal(token);
           };
           content.appendChild(span);
+          wordIndex++;
         }
       });
     }
