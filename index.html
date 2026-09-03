@@ -278,8 +278,7 @@
     /* Premium Story Effect */
     #storyContent {
       font-family: 'Georgia', 'Times New Roman', serif;
-      font-size: 19px;
-      color: #1e293b;
+      color: var(--text-main);
       letter-spacing: 0.3px;
       text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     }
@@ -507,7 +506,7 @@
       <div id="scrollProgressBar" style="width: 100%; height: 100%; background: var(--primary); transform-origin: left; transform: scaleX(0); transition: transform 0.1s ease-out;"></div>
     </div>
 
-    <div id="readerArea" class="reader-scroll font-16">
+    <div id="readerArea" class="reader-scroll font-18">
         <img id="storyHeroImage" class="story-hero-image" src="" alt="Story Illustration" />
         
         <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px 22px; margin-bottom:20px; box-shadow:0 2px 10px rgba(0,0,0,0.04);">
@@ -1264,7 +1263,7 @@
     let pages = [];
     let currentPage = 0;
     let activeFilter = null;
-    let currentFontSizeIdx = 1;
+    let currentFontSizeIdx = 2;
     const fontSizes = ['font-14', 'font-16', 'font-18', 'font-21'];
     let isSpeaking = false;
     let currentSpeed = 1.0;
@@ -1492,7 +1491,20 @@
       "swift": { syn: ["fast", "rapid", "quick"], ant: ["slow", "sluggish"], example: "The swift river rushed down the mountain valley." },
       "peacefully": { syn: ["quietly", "calmly", "serenely"], ant: ["noisily", "turbulently", "restlessly"], example: "The baby slept peacefully in her crib." },
       "desperately": { syn: ["urgently", "frantically", "intensely"], ant: ["calmly", "indifferently"], example: "He searched desperately for his lost keys before the meeting." },
-      "accidentally": { syn: ["unintentionally", "inadvertently", "by chance"], ant: ["deliberately", "purposely", "intentionally"], example: "She accidentally dropped her favorite coffee mug." }
+      "accidentally": { syn: ["unintentionally", "inadvertently", "by chance"], ant: ["deliberately", "purposely", "intentionally"], example: "She accidentally dropped her favorite coffee mug." },
+      "kindhearted": { syn: ["compassionate", "generous", "caring"], ant: ["cruel", "selfish", "mean"], example: "The kind-hearted woman adopted three rescue dogs." },
+      "cruel": { syn: ["brutal", "heartless", "vicious"], ant: ["kind", "compassionate", "gentle"], example: "It was a cruel twist of fate that led to their separation." },
+      "hopeful": { syn: ["optimistic", "positive", "confident"], ant: ["pessimistic", "despairing", "hopeless"], example: "She felt hopeful about her chances of passing the exam." },
+      "suddenly": { syn: ["abruptly", "unexpectedly", "instantly"], ant: ["gradually", "slowly", "predictably"], example: "Suddenly, the lights went out in the entire building." },
+      "magic": { syn: ["enchantment", "sorcery", "wizardry"], ant: ["reality", "science", "logic"], example: "The wizard used his magic to conjure a beautiful glowing light." },
+      "magnificent": { syn: ["splendid", "spectacular", "glorious"], ant: ["ordinary", "unimpressive", "modest"], example: "The palace was a magnificent display of ancient architecture." },
+      "happily": { syn: ["joyfully", "cheerfully", "gladly"], ant: ["sadly", "miserably", "reluctantly"], example: "They lived happily ever after in their cozy cottage." },
+      "dark": { syn: ["dim", "shadowy", "pitch-black"], ant: ["bright", "light", "luminous"], example: "The dark forest was full of mysterious sounds." },
+      "constantly": { syn: ["always", "continually", "persistently"], ant: ["rarely", "occasionally", "never"], example: "He was constantly checking his phone for new messages." },
+      "teamwork": { syn: ["collaboration", "cooperation", "partnership"], ant: ["individualism", "opposition", "conflict"], example: "Their success was entirely due to great teamwork." },
+      "friendship": { syn: ["companionship", "camaraderie", "bond"], ant: ["hostility", "enmity", "rivalry"], example: "Their friendship lasted for over fifty years." },
+      "beautiful": { syn: ["gorgeous", "stunning", "lovely"], ant: ["ugly", "hideous", "unattractive"], example: "She wore a beautiful dress to the grand ball." },
+      "endlessly": { syn: ["ceaselessly", "infinitely", "perpetually"], ant: ["briefly", "temporarily", "fleetingly"], example: "The ocean seemed to stretch on endlessly." }
     };
 
     function getSmartLexis(word, type, info) {
@@ -1507,7 +1519,7 @@
       };
     }
 
-    function showAnnotationModal(token) {
+    async function showAnnotationModal(token) {
       currentAnnotationWord = token.text;
       currentAnnotationObj = token;
       document.getElementById('sheetWord').innerText = token.text;
@@ -1515,52 +1527,116 @@
       document.getElementById('sheetBadge').innerText = token.type;
       document.getElementById('sheetDesc').innerText = token.info;
 
-      const lexis = getSmartLexis(token.text, token.type, token.info);
-      
       const synEl = document.getElementById('sheetSynonyms');
       const antEl = document.getElementById('sheetAntonyms');
-      
       const lexisBox = document.getElementById('sheetSynonyms').parentElement.parentElement;
       const lexisTitle = lexisBox.querySelector('div:first-child');
-      
-      if ((!lexis.syn || lexis.syn.length === 0) && (!lexis.ant || lexis.ant.length === 0)) {
-        lexisTitle.innerText = "📖 Contextual Usage";
-        synEl.parentElement.style.display = 'none';
-        antEl.parentElement.style.display = 'none';
-      } else {
-        lexisTitle.innerText = "💡 Smart Lexis Analysis";
-        
-        if (lexis.syn && lexis.syn.length > 0) {
+      const exampleEl = document.getElementById('sheetExample');
+
+      // Set Loading State
+      lexisTitle.innerText = "⏳ Fetching Expanded Lexis...";
+      synEl.parentElement.style.display = 'none';
+      antEl.parentElement.style.display = 'none';
+      exampleEl.innerText = "Loading...";
+
+      openModal('annotationModal');
+
+      try {
+        const cleanWord = token.text.toLowerCase().replace(/[^a-z]/g, '');
+        const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${cleanWord}`);
+        if (!res.ok) throw new Error("Not found");
+        const data = await res.json();
+
+        let allSyns = [];
+        let allAnts = [];
+        let firstExample = "";
+        let firstDef = "";
+
+        data.forEach(entry => {
+          entry.meanings.forEach(meaning => {
+            if (meaning.synonyms) allSyns.push(...meaning.synonyms);
+            if (meaning.antonyms) allAnts.push(...meaning.antonyms);
+            meaning.definitions.forEach(def => {
+              if (def.synonyms) allSyns.push(...def.synonyms);
+              if (def.antonyms) allAnts.push(...def.antonyms);
+              if (!firstDef && def.definition) firstDef = def.definition;
+              if (!firstExample && def.example) firstExample = def.example;
+            });
+          });
+        });
+
+        allSyns = [...new Set(allSyns)].slice(0, 5);
+        allAnts = [...new Set(allAnts)].slice(0, 5);
+
+        if (firstDef) {
+          document.getElementById('sheetDesc').innerText = firstDef;
+          token.info = firstDef;
+        }
+
+        lexisTitle.innerText = "💡 Expanded Lexis Analysis";
+
+        if (allSyns.length > 0) {
           synEl.parentElement.style.display = 'block';
-          synEl.innerText = lexis.syn.join(', ');
+          synEl.innerText = allSyns.join(', ');
         } else {
           synEl.parentElement.style.display = 'none';
         }
-        
-        if (lexis.ant && lexis.ant.length > 0) {
+
+        if (allAnts.length > 0) {
           antEl.parentElement.style.display = 'block';
-          antEl.innerText = lexis.ant.join(', ');
+          antEl.innerText = allAnts.join(', ');
         } else {
           antEl.parentElement.style.display = 'none';
         }
-      }
-      
-      document.getElementById('sheetExample').innerText = `"${lexis.example}"`;
 
-      openModal('annotationModal');
+        exampleEl.innerText = firstExample ? `"${firstExample}"` : `In this context, "${cleanWord}" means: ${token.info.toLowerCase()}`;
+
+        // Save for notebook
+        currentAnnotationObj.fetchedSyn = allSyns;
+        currentAnnotationObj.fetchedAnt = allAnts;
+        currentAnnotationObj.fetchedExample = firstExample || `In this context, "${cleanWord}" means: ${token.info.toLowerCase()}`;
+
+      } catch (e) {
+        // Fallback to local
+        const lexis = getSmartLexis(token.text, token.type, token.info);
+        
+        if ((!lexis.syn || lexis.syn.length === 0) && (!lexis.ant || lexis.ant.length === 0)) {
+          lexisTitle.innerText = "📖 Contextual Usage";
+          synEl.parentElement.style.display = 'none';
+          antEl.parentElement.style.display = 'none';
+        } else {
+          lexisTitle.innerText = "💡 Smart Lexis Analysis";
+          if (lexis.syn && lexis.syn.length > 0) {
+            synEl.parentElement.style.display = 'block';
+            synEl.innerText = lexis.syn.join(', ');
+          } else {
+            synEl.parentElement.style.display = 'none';
+          }
+          if (lexis.ant && lexis.ant.length > 0) {
+            antEl.parentElement.style.display = 'block';
+            antEl.innerText = lexis.ant.join(', ');
+          } else {
+            antEl.parentElement.style.display = 'none';
+          }
+        }
+        
+        exampleEl.innerText = `"${lexis.example}"`;
+        currentAnnotationObj.fetchedSyn = lexis.syn;
+        currentAnnotationObj.fetchedAnt = lexis.ant;
+        currentAnnotationObj.fetchedExample = lexis.example;
+      }
     }
 
     function saveCurrentWordToVocab() {
       if (!currentAnnotationObj) return;
-      const lexis = getSmartLexis(currentAnnotationObj.text, currentAnnotationObj.type, currentAnnotationObj.info);
       const item = {
         word: currentAnnotationObj.text,
         type: currentAnnotationObj.type,
         extra: currentAnnotationObj.extra || '',
         info: currentAnnotationObj.info,
-        syn: lexis.syn && lexis.syn.length > 0 ? lexis.syn.join(', ') : '',
-        ant: lexis.ant && lexis.ant.length > 0 ? lexis.ant.join(', ') : '',
-        example: lexis.example,
+        syn: currentAnnotationObj.fetchedSyn && currentAnnotationObj.fetchedSyn.length > 0 ? currentAnnotationObj.fetchedSyn.join(', ') : '',
+        ant: currentAnnotationObj.fetchedAnt && currentAnnotationObj.fetchedAnt.length > 0 ? currentAnnotationObj.fetchedAnt.join(', ') : '',
+        example: currentAnnotationObj.fetchedExample || '',
         date: new Date().toLocaleDateString()
       };
       // Prevent duplicates
@@ -3053,6 +3129,14 @@
       area.classList.remove(fontSizes[currentFontSizeIdx]);
       currentFontSizeIdx = (currentFontSizeIdx + 1) % fontSizes.length;
       area.classList.add(fontSizes[currentFontSizeIdx]);
+      
+      // Also apply explicitly to story content for overriding any inherited limits
+      const storyText = document.getElementById('storyContent');
+      if (storyText) {
+        const sizesMap = ['15px', '18px', '21px', '26px'];
+        storyText.style.fontSize = sizesMap[currentFontSizeIdx];
+        storyText.style.lineHeight = currentFontSizeIdx === 3 ? '1.8' : '2.05';
+      }
     }
 
     function toggleTheme() {
