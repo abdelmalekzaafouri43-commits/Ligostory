@@ -2293,7 +2293,7 @@
 
   <script>
     // Initial stories featuring learner Alex and Classic Fairy Tales
-    let allStories = JSON.parse(localStorage.getItem('lingo_stories_v6')) || [
+    const defaultStories = [
       {
       "id": "lamb_to_the_slaughter",
       "title": "Lamb to the Slaughter",
@@ -3515,9 +3515,1301 @@
           { type: "open", question: "Personal Opinion: If you could control time with a pocket watch, what would you change?" }
         ]
       }
+,
+{
+        "id": "sleeping_beauty",
+        "title": "Sleeping Beauty",
+        "author": "Brothers Grimm",
+        "level": "A2",
+        "theme": "Classic Fairy Tale",
+        "description": "A princess falls into a hundred-year sleep after a curse, awaiting a prince to break the spell.",
+        "imageUrl": "https://image.pollinations.ai/prompt/sleeping%20beauty%20princess%20in%20enchanted%20castle%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "curse",
+                        "meaning": "A spell intended to cause harm or bad luck",
+                        "type": "noun"
+                },
+                {
+                        "word": "spindle",
+                        "meaning": "A slender rod used in spinning thread",
+                        "type": "noun"
+                },
+                {
+                        "word": "enchanted",
+                        "meaning": "Under a magical spell or charm",
+                        "type": "adj"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Passive Voice in Fairy Tales",
+                        "explanation": "Used when the action is emphasized over the performer, e.g. 'was cursed'."
+                }
+        ],
+        "raw": "[C:Long ago](Adverbial of Time), a [ADJ:fair](Descriptive Adjective) princess named [N:Aurora](Proper Noun) [T:was cursed](Past Simple Passive) by an [ADJ:evil](Descriptive Adjective) fairy. The curse [T:stated](Past Simple) that on her sixteenth birthday, she [T:would prick](Modal Conditional) her finger on a spinning [L:spindle](Slender rod for spinning thread - A2) and fall asleep.\n\n[C:Despite](Preposition) the king's efforts [P:to destroy](Infinitive of Purpose) every wheel, Aurora [T:found](Past Simple) a hidden tower room and [T:touched](Past Simple) a spindle. She [ADV:instantly](Adverb of Manner) [T:fell](Past Simple) into a deep [L:enchanted](Under a magical spell - A2) slumber. Thorny vines [T:grew](Past Simple) around the castle, hiding it [P:from](Preposition) the world.\n\nAfter a hundred years, a [ADJ:brave](Descriptive Adjective) prince [T:heard](Past Simple) the legend and [T:knelt](Past Simple) beside her. With a gentle kiss, the spell [T:was broken](Past Simple Passive), and the kingdom [T:awakened](Past Simple) with joy.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: What caused Aurora to fall asleep?",
+                        "options": [
+                                "Pricking her finger on a spindle",
+                                "Eating a poisoned apple",
+                                "Drinking a potion"
+                        ],
+                        "correct": 0,
+                        "explanation": "Aurora pricked her finger on a spinning spindle."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: How long did the castle stay asleep?",
+                        "options": [
+                                "One hundred years",
+                                "Fifty years",
+                                "Ten years"
+                        ],
+                        "correct": 0,
+                        "explanation": "The story states 'After a hundred years... the kingdom awakened'."
+                },
+                {
+                        "type": "mc",
+                        "question": "Character: Who broke the magical spell?",
+                        "options": [
+                                "A brave prince",
+                                "The king",
+                                "A good fairy"
+                        ],
+                        "correct": 0,
+                        "explanation": "A brave prince broke the spell."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Verb: Enchant, Noun: Enchantment, Adjective: [?]",
+                        "options": [
+                                "Enchanted",
+                                "Enchantly",
+                                "Enchanter"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adjective form is 'Enchanted'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: Why do you think fairy tales like Sleeping Beauty remain popular across generations?"
+                }
+        ]
+},
+{
+        "id": "snow_white",
+        "title": "Snow White and the Seven Dwarfs",
+        "author": "Brothers Grimm",
+        "level": "A2",
+        "theme": "Classic Fairy Tale",
+        "description": "A kind princess takes refuge in the forest with seven dwarfs to escape a jealous queen.",
+        "imageUrl": "https://image.pollinations.ai/prompt/snow%20white%20in%20a%20magical%20forest%20with%20small%20cottage%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "vanity",
+                        "meaning": "Excessive pride in one's appearance",
+                        "type": "noun"
+                },
+                {
+                        "word": "refuge",
+                        "meaning": "A place offering shelter or safety",
+                        "type": "noun"
+                },
+                {
+                        "word": "poisoned",
+                        "meaning": "Containing a toxic substance",
+                        "type": "adj"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Comparative & Superlative",
+                        "explanation": "Comparing beauty: 'fairest of them all'."
+                }
+        ],
+        "raw": "[N:Snow White](Proper Noun) [T:was](Past Simple) a [ADJ:gentle](Descriptive Adjective) princess whose beauty [T:aroused](Past Simple) the jealousy of the Wicked Queen. The Queen [T:consulted](Past Simple) her magic mirror every morning, asking who [T:was](Past Simple) the [ADJ:fairest](Superlative Adjective) in the land.\n\n[C:When](Conjunction) the mirror named Snow White, the Queen [T:ordered](Past Simple) her huntsman to remove her. [C:However](Conjunction), the huntsman [T:spared](Past Simple) her life. Deep [P:in](Preposition) the forest, Snow White [T:discovered](Past Simple) a tiny cottage belonging to seven hard-working dwarfs who [ADV:warmly](Adverb of Manner) [T:welcomed](Past Simple) her.\n\nDisguised as an old woman, the Queen [T:tricked](Past Simple) Snow White into biting a [L:poisoned](Containing toxic substance - A2) apple. Snow White fell into a magic sleep until a handsome prince [T:awakened](Past Simple) her, and she lived happily ever after.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: Who welcomed Snow White into the forest cottage?",
+                        "options": [
+                                "Seven dwarfs",
+                                "A friendly bear",
+                                "Three woodcutters"
+                        ],
+                        "correct": 0,
+                        "explanation": "Seven hard-working dwarfs welcomed her."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: What object revealed Snow White's beauty to the Queen?",
+                        "options": [
+                                "A magic mirror",
+                                "A crystal ball",
+                                "A golden book"
+                        ],
+                        "correct": 0,
+                        "explanation": "The Queen consulted her magic mirror every morning."
+                },
+                {
+                        "type": "mc",
+                        "question": "Character: Why did the Queen dislike Snow White?",
+                        "options": [
+                                "Because of jealousy over her beauty",
+                                "Because she stole gold",
+                                "Because she ran away"
+                        ],
+                        "correct": 0,
+                        "explanation": "The Queen felt intense jealousy towards Snow White."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Jealousy, Adjective: Jealous, Adverb: [?]",
+                        "options": [
+                                "Jealously",
+                                "Jealousness",
+                                "Jealousing"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb form is 'Jealously'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: What lesson can we learn about kindness from Snow White?"
+                }
+        ]
+},
+{
+        "id": "three_little_pigs",
+        "title": "The Three Little Pigs",
+        "author": "Classic Fable",
+        "level": "A1",
+        "theme": "Classic Fairy Tale",
+        "description": "Three pig brothers build houses of straw, sticks, and bricks to protect themselves from a big bad wolf.",
+        "imageUrl": "https://image.pollinations.ai/prompt/three%20little%20pigs%20building%20brick%20house%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "straw",
+                        "meaning": "Dried stalks of grain used for building or bedding",
+                        "type": "noun"
+                },
+                {
+                        "word": "sturdy",
+                        "meaning": "Strongly built and solid",
+                        "type": "adj"
+                },
+                {
+                        "word": "brick",
+                        "meaning": "A hard rectangular block used in building",
+                        "type": "noun"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Repetitive Phrasal Verbs",
+                        "explanation": "Phrases like 'blow down' show physical actions in simple narratives."
+                }
+        ],
+        "raw": "Three little pigs [T:decided](Past Simple) [P:to build](Infinitive) their own houses. The first pig built a house of [L:straw](Dried stalks - A1) [C:because](Conjunction) it was fast. The second pig built a house of sticks. [C:But](Conjunction) the third pig [T:worked](Past Simple) hard and built a [ADJ:sturdy](Strongly built - A1) house of red [L:bricks](Hard building blocks - A1).\n\nSoon, a hungry wolf [T:came](Past Simple) to the straw house and [T:huffed](Past Simple) and [T:puffed](Past Simple) until he [T:blew](Past Simple) it down! The first pig [T:ran](Past Simple) to his brother's stick house, [C:but](Conjunction) the wolf blew that house down too.\n\nBoth pigs ran to the brick house. The wolf tried [ADV:furiouly](Adverb of Manner) to blow down the brick house, [C:but](Conjunction) it [T:was](Past Simple) too strong. The three pigs lived [ADV:safely](Adverb of Manner) together, learning that hard work pays off.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: Which material made the strongest house?",
+                        "options": [
+                                "Bricks",
+                                "Straw",
+                                "Sticks"
+                        ],
+                        "correct": 0,
+                        "explanation": "The third pig built a sturdy house of red bricks."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: What happened to the straw house?",
+                        "options": [
+                                "The wolf blew it down",
+                                "It caught fire",
+                                "It fell in the rain"
+                        ],
+                        "correct": 0,
+                        "explanation": "The wolf huffed and puffed and blew it down."
+                },
+                {
+                        "type": "mc",
+                        "question": "Moral: What is the main lesson of the story?",
+                        "options": [
+                                "Hard work and effort lead to safety",
+                                "Build houses quickly to play",
+                                "Wolves dislike bricks"
+                        ],
+                        "correct": 0,
+                        "explanation": "The pigs learned that hard work and planning pay off."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Strength, Adjective: Strong, Adverb: [?]",
+                        "options": [
+                                "Strongly",
+                                "Strengthen",
+                                "Strongness"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb is 'Strongly'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: Do you prefer doing tasks quickly or taking time to do them thoroughly?"
+                }
+        ]
+},
+{
+        "id": "goldilocks_three_bears",
+        "title": "Goldilocks and the Three Bears",
+        "author": "Robert Southey",
+        "level": "A1",
+        "theme": "Classic Fairy Tale",
+        "description": "A curious young girl wanders into a cozy forest cottage owned by three bears.",
+        "imageUrl": "https://image.pollinations.ai/prompt/goldilocks%20in%20cozy%20bear%20cottage%20with%20bowls%20of%20porridge%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "porridge",
+                        "meaning": "A dish made of oatmeal boiled in milk or water",
+                        "type": "noun"
+                },
+                {
+                        "word": "curious",
+                        "meaning": "Eager to know or learn something",
+                        "type": "adj"
+                },
+                {
+                        "word": "cozy",
+                        "meaning": "Comfortable, warm, and secure",
+                        "type": "adj"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Graded Adjectives",
+                        "explanation": "Comparing degrees: 'too hot', 'too cold', 'just right'."
+                }
+        ],
+        "raw": "A [ADJ:curious](Eager to learn - A1) girl named [N:Goldilocks](Proper Noun) [T:was walking](Past Continuous) [P:through](Preposition) the woods when she [T:spied](Past Simple) a [ADJ:cozy](Comfortable - A1) wooden cottage. She [T:knocked](Past Simple) on the door, [C:but](Conjunction) nobody answered. She stepped inside and saw three bowls of delicious [L:porridge](Oatmeal cereal - A1) on the table.\n\nThe first bowl was too hot, the second was too cold, [C:but](Conjunction) the third was [ADJ:just right](Perfectly suited - A1), so she ate it all up! Next, she tried three chairs, finding the smallest chair comfortable until it broke. Feeling sleepy, Goldilocks went upstairs and fell asleep in Little Bear's bed.\n\nWhen the three bears returned home, Little Bear cried, \"Someone is sleeping in my bed!\" Goldilocks [T:woke](Past Simple) up in alarm, [T:jumped](Past Simple) out the window, and ran safely home.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: Which bowl of porridge did Goldilocks eat completely?",
+                        "options": [
+                                "The third bowl (just right)",
+                                "The first bowl (too hot)",
+                                "The second bowl (too cold)"
+                        ],
+                        "correct": 0,
+                        "explanation": "She found the third bowl 'just right' and ate it all."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: What did Goldilocks do after eating porridge?",
+                        "options": [
+                                "Tried sitting in the three chairs",
+                                "Went straight to sleep",
+                                "Left the house"
+                        ],
+                        "correct": 0,
+                        "explanation": "Next, she tried three chairs."
+                },
+                {
+                        "type": "mc",
+                        "question": "Character: Whose bed did Goldilocks fall asleep in?",
+                        "options": [
+                                "Little Bear's bed",
+                                "Papa Bear's bed",
+                                "Mama Bear's bed"
+                        ],
+                        "correct": 0,
+                        "explanation": "She fell asleep in Little Bear's bed."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Curiosity, Adjective: Curious, Adverb: [?]",
+                        "options": [
+                                "Curiously",
+                                "Curiousness",
+                                "Curio"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb form is 'Curiously'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: Should Goldilocks have entered the bears' house without permission?"
+                }
+        ]
+},
+{
+        "id": "puss_in_boots",
+        "title": "Puss in Boots",
+        "author": "Charles Perrault",
+        "level": "B1",
+        "theme": "Classic Fairy Tale",
+        "description": "A clever and resourceful cat uses wit to gain wealth and a castle for his poor master.",
+        "imageUrl": "https://image.pollinations.ai/prompt/clever%20puss%20in%20boots%20cat%20wearing%20leather%20boots%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "resourceful",
+                        "meaning": "Having the ability to find quick and clever ways to overcome difficulties",
+                        "type": "adj"
+                },
+                {
+                        "word": "cunning",
+                        "meaning": "Skill in achieving one's ends by deceit or evasion",
+                        "type": "adj"
+                },
+                {
+                        "word": "estate",
+                        "meaning": "An extensive area of land in the country, usually owned by one person",
+                        "type": "noun"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Direct Speech and Persuasion",
+                        "explanation": "Using clever dialogue to trick characters into agreements."
+                }
+        ],
+        "raw": "A poor miller's son [T:inherited](Past Simple) nothing except a small cat. However, this was no ordinary feline—the cat asked for a pair of sturdy boots and a leather bag. With [L:cunning](Wit and cleverness - B1) tricks, Puss in Boots began presenting gifts of game to the King, claiming they came from his noble master, the \"Marquis of Carabas.\"\n\nOne day, Puss [T:arranged](Past Simple) for his master to bathe in the river as the King's carriage passed. Puss shouted that robbers had stolen his master's clothes. The King [ADV:generously](Adverb of Manner) provided royal garments, impressing the King's daughter.\n\nFinally, Puss visited a fearsome ogre who could shape-shift. Puss challenged the ogre [P:to turn](Infinitive) into a mouse. When the ogre did, Puss [ADV:swiftly](Adverb of Manner) pounced and ate him! The miller's son inherited the grand castle and married the princess.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: What items did the cat ask his master for?",
+                        "options": [
+                                "A pair of boots and a leather bag",
+                                "A sword and a shield",
+                                "Gold coins and a horse"
+                        ],
+                        "correct": 0,
+                        "explanation": "The cat asked for a pair of sturdy boots and a leather bag."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: How did Puss defeat the fearsome ogre?",
+                        "options": [
+                                "Tricked him into becoming a mouse and ate him",
+                                "Chased him with a sword",
+                                "Locked him in a dungeon"
+                        ],
+                        "correct": 0,
+                        "explanation": "He challenged the ogre to become a mouse and swiftly ate him."
+                },
+                {
+                        "type": "mc",
+                        "question": "Character: Which word best describes Puss?",
+                        "options": [
+                                "Resourceful and clever",
+                                "Lazy and quiet",
+                                "Scared and weak"
+                        ],
+                        "correct": 0,
+                        "explanation": "Puss is famous for being clever, resourceful, and cunning."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Verb: Inherit, Noun: Inheritance, Adjective: [?]",
+                        "options": [
+                                "Inherited",
+                                "Inheritly",
+                                "Inheriting"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adjective form is 'Inherited'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: Do you think cleverness is more valuable than strength when solving problems?"
+                }
+        ]
+},
+{
+        "id": "beauty_and_the_beast",
+        "title": "Beauty and the Beast",
+        "author": "Gabrielle-Suzanne de Villeneuve",
+        "level": "B1",
+        "theme": "Classic Fairy Tale",
+        "description": "A selfless young woman learns to see beyond physical appearance to break a curse on a enchanted prince.",
+        "imageUrl": "https://image.pollinations.ai/prompt/beauty%20and%20the%20beast%20in%20a%20grand%20enchanted%20ballroom%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "selfless",
+                        "meaning": "Concerned more with the needs and wishes of others than with one's own",
+                        "type": "adj"
+                },
+                {
+                        "word": "monstrous",
+                        "meaning": "Resembling a monster; hideous or frightening",
+                        "type": "adj"
+                },
+                {
+                        "word": "compassion",
+                        "meaning": "Sympathetic pity and concern for the sufferings or misfortunes of others",
+                        "type": "noun"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Contrast Words",
+                        "explanation": "Words like 'despite', 'however', and 'although' show internal growth."
+                }
+        ],
+        "raw": "To save her father's life, a kind young woman named [N:Bella](Proper Noun) agreed [P:to live](Infinitive) in an enchanted castle with a [L:monstrous](Hideous or frightening - B1) Beast. Though frightened at first, Bella soon discovered that beneath his terrifying appearance, the Beast possessed a gentle heart.\n\nThey spent peaceful evenings chatting, listening to music, and strolling through rose gardens. Over time, Bella's fear turned into deep friendship and [L:compassion](Sympathy and concern - B1). When the Beast fell gravely ill from sorrow, Bella wept and declared her true love for him.\n\nHer sincere declaration immediately broke an ancient curse. The Beast transformed into a handsome prince, proving that true beauty lies within the heart.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: Why did Bella go to live in the Beast's castle?",
+                        "options": [
+                                "To save her father's life",
+                                "To search for hidden gold",
+                                "To learn magic"
+                        ],
+                        "correct": 0,
+                        "explanation": "Bella agreed to live there to save her father."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: What transformed the Beast back into a prince?",
+                        "options": [
+                                "Bella's declaration of true love",
+                                "A magic wand",
+                                "A golden rose"
+                        ],
+                        "correct": 0,
+                        "explanation": "Bella's declaration of true love broke the curse."
+                },
+                {
+                        "type": "mc",
+                        "question": "Theme: What is the primary moral of Beauty and the Beast?",
+                        "options": [
+                                "True beauty lies within the heart",
+                                "Always stay away from roses",
+                                "Castles are full of danger"
+                        ],
+                        "correct": 0,
+                        "explanation": "The story teaches that inner character matters more than external appearance."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Compassion, Adjective: Compassionate, Adverb: [?]",
+                        "options": [
+                                "Compassionately",
+                                "Compassionness",
+                                "Compassioning"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb form is 'Compassionately'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: Why is it important not to judge people solely by their appearance?"
+                }
+        ]
+},
+{
+        "id": "bremen_town_musicians",
+        "title": "The Bremen Town Musicians",
+        "author": "Brothers Grimm",
+        "level": "A2",
+        "theme": "Animal Tale",
+        "description": "Four aging domestic animals team up to become musicians and outsmart a gang of robbers.",
+        "imageUrl": "https://image.pollinations.ai/prompt/donkey%20dog%20cat%20and%20rooster%20stacked%20on%20top%20of%20each%20other%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "outsmart",
+                        "meaning": "Defeat or gain an advantage over someone by being cleverer",
+                        "type": "verb"
+                },
+                {
+                        "word": "band",
+                        "meaning": "A group of musicians playing together",
+                        "type": "noun"
+                },
+                {
+                        "word": "robber",
+                        "meaning": "A person who steals from others",
+                        "type": "noun"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Sequential Narrative Structure",
+                        "explanation": "Joining characters one by one using 'Next', 'Then', and 'Along the way'."
+                }
+        ],
+        "raw": "An old donkey, feeling neglected, decided to run away to the city of Bremen to become a street musician. Along the way, he met a dog, a cat, and a rooster, all facing similar hardships. They joined forces, deciding that together they could form a wonderful musical [L:band](Group of musicians - A2).\n\nAs night fell in the forest, they spotted a dimly lit cottage occupied by a band of rough [L:robbers](Thieves - A2) eating a feast. Wanting shelter and food, the animals hatched a clever plan. The donkey stood near the window, the dog climbed on the donkey's back, the cat climbed on the dog, and the rooster perched on top.\n\nOn the count of three, they made a terrifying noise together—braying, barking, meowing, and crowing—and crashed through the window! The terrified robbers fled into the woods, and the four animal friends settled happily in the cozy cottage.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: Which four animals formed the group?",
+                        "options": [
+                                "Donkey, dog, cat, and rooster",
+                                "Horse, pig, duck, and cow",
+                                "Lion, tiger, bear, and fox"
+                        ],
+                        "correct": 0,
+                        "explanation": "The four animals were a donkey, a dog, a cat, and a rooster."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: How did the animals scare the robbers away?",
+                        "options": [
+                                "By making a loud combined noise and crashing through the window",
+                                "By threatening them with sticks",
+                                "By casting a magic spell"
+                        ],
+                        "correct": 0,
+                        "explanation": "They made a terrifying noise together and crashed through the window."
+                },
+                {
+                        "type": "mc",
+                        "question": "Theme: What value is displayed by the four animals?",
+                        "options": [
+                                "Teamwork and solidarity",
+                                "Greed and ambition",
+                                "Solitude and independence"
+                        ],
+                        "correct": 0,
+                        "explanation": "Working together allowed them to overcome obstacles."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Verb: Protect, Noun: Protection, Adjective: [?]",
+                        "options": [
+                                "Protective",
+                                "Protectly",
+                                "Protectness"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adjective form is 'Protective'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: How can combining different talents help a group achieve success?"
+                }
+        ]
+},
+{
+        "id": "city_mouse_country_mouse",
+        "title": "The City Mouse and the Country Mouse",
+        "author": "Aesop's Fable",
+        "level": "A1",
+        "theme": "Animal Fable",
+        "description": "Two mouse cousins compare the peaceful simplicity of country life with the luxurious danger of the city.",
+        "imageUrl": "https://image.pollinations.ai/prompt/city%20mouse%20and%20country%20mouse%20dining%20at%20a%20table%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "peaceful",
+                        "meaning": "Free from disturbance; tranquil",
+                        "type": "adj"
+                },
+                {
+                        "word": "luxurious",
+                        "meaning": "Extremely comfortable, elegant, or enjoyable",
+                        "type": "adj"
+                },
+                {
+                        "word": "cousin",
+                        "meaning": "A child of one's uncle or aunt",
+                        "type": "noun"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Comparing Lifestyles",
+                        "explanation": "Using 'whereas', 'but', and simple comparative structures."
+                }
+        ],
+        "raw": "A Country Mouse invited his City Mouse cousin to dinner in his quiet grass burrow. He served simple grains and clean spring water. The City Mouse turned up his nose and said, \"Come with me to the city, where we can feast like kings!\"\n\nThe Country Mouse agreed and traveled to a magnificent city mansion. They found a dining table filled with cheese, pastries, and roasted meats. Just as the Country Mouse took a bite, two ferocious dogs barked loudly and barged into the dining room.\n\nThe mice scrambled frantically into a tiny crack in the wall to hide. Trembling with fear, the Country Mouse packed his bag and whispered, \"I prefer my quiet, [L:peaceful](Free from disturbance - A1) meals in safety over [L:luxurious](Elegant and fancy - A1) feasts in constant danger.\"",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: What did the Country Mouse serve his cousin for dinner?",
+                        "options": [
+                                "Simple grains and spring water",
+                                "Cheese and chocolate cake",
+                                "Roasted meat and fruit"
+                        ],
+                        "correct": 0,
+                        "explanation": "He served simple grains and clean spring water."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: What interrupted the feast in the city?",
+                        "options": [
+                                "Two barking dogs barged in",
+                                "A cat caught them",
+                                "The owner swept the floor"
+                        ],
+                        "correct": 0,
+                        "explanation": "Two ferocious dogs barged into the room."
+                },
+                {
+                        "type": "mc",
+                        "question": "Moral: What did the Country Mouse realize at the end?",
+                        "options": [
+                                "Peace and safety are better than risky luxury",
+                                "City food is always superior",
+                                "Never visit family"
+                        ],
+                        "correct": 0,
+                        "explanation": "He preferred peaceful meals in safety over luxurious feasts in danger."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Peace, Adjective: Peaceful, Adverb: [?]",
+                        "options": [
+                                "Peacefully",
+                                "Peacing",
+                                "Peacefulness"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb form is 'Peacefully'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: Would you rather live in a quiet countryside or a bustling city? Why?"
+                }
+        ]
+},
+{
+        "id": "crow_and_pitcher",
+        "title": "The Crow and the Pitcher",
+        "author": "Aesop's Fable",
+        "level": "A1",
+        "theme": "Animal Wisdom",
+        "description": "A thirsty crow uses problem-solving and patience to raise the water level in a tall pitcher.",
+        "imageUrl": "https://image.pollinations.ai/prompt/thirsty%20smart%20crow%20dropping%20pebbles%20into%20water%20pitcher%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "pitcher",
+                        "meaning": "A large container with a handle used for holding liquids",
+                        "type": "noun"
+                },
+                {
+                        "word": "pebble",
+                        "meaning": "A small, smooth, rounded stone",
+                        "type": "noun"
+                },
+                {
+                        "word": "ingenuity",
+                        "meaning": "The quality of being clever, original, and inventive",
+                        "type": "noun"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Problem & Solution Clause",
+                        "explanation": "Connecting cause and effect using 'By dropping pebbles, the water rose'."
+                }
+        ],
+        "raw": "On a hot summer afternoon, a thirsty crow flew across the fields searching for water. Finally, he spotted a tall glass [L:pitcher](Container for liquids - A1) resting in a garden. The crow flew down eagerly, but discovered that the water was near the bottom, far out of reach of his beak.\n\nHe tried to tip the pitcher over, but it was too heavy. Thinking carefully, the clever crow noticed a pile of small [L:pebbles](Small stones - A1) on the ground. One by one, he picked up pebbles with his beak and dropped them into the pitcher.\n\nWith every pebble dropped, the water level slowly rose higher and higher. At last, the water reached the brim, and the crow drank his fill. Through patience and intelligence, he saved his own life.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: Why couldn't the crow drink the water initially?",
+                        "options": [
+                                "The water was too low at the bottom",
+                                "The water was frozen",
+                                "The pitcher was covered"
+                        ],
+                        "correct": 0,
+                        "explanation": "The water was near the bottom and out of reach."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: How did the crow raise the water level?",
+                        "options": [
+                                "By dropping pebbles into the pitcher one by one",
+                                "By breaking the glass",
+                                "By calling other birds"
+                        ],
+                        "correct": 0,
+                        "explanation": "He picked up pebbles and dropped them into the pitcher."
+                },
+                {
+                        "type": "mc",
+                        "question": "Moral: What proverb matches this fable?",
+                        "options": [
+                                "Necessity is the mother of invention",
+                                "Haste makes waste",
+                                "Look before you leap"
+                        ],
+                        "correct": 0,
+                        "explanation": "Solving problems through clever thinking demonstrates ingenuity when facing necessity."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Patience, Adjective: Patient, Adverb: [?]",
+                        "options": [
+                                "Patiently",
+                                "Patience-like",
+                                "Patientness"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb form is 'Patiently'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: Can you think of a time when creative thinking helped you solve a difficult problem?"
+                }
+        ]
+},
+{
+        "id": "wise_little_hen",
+        "title": "The Wise Little Hen",
+        "author": "Classic Fable",
+        "level": "A1",
+        "theme": "Animal Fable",
+        "description": "A industrious little hen plants wheat and bakes bread while lazy farm animals refuse to help.",
+        "imageUrl": "https://image.pollinations.ai/prompt/wise%20little%20red%20hen%20baking%20fresh%20bread%20in%20kitchen%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "wheat",
+                        "meaning": "A cereal plant grain used to make flour",
+                        "type": "noun"
+                },
+                {
+                        "word": "industrious",
+                        "meaning": "Hard-working and diligent",
+                        "type": "adj"
+                },
+                {
+                        "word": "harvest",
+                        "meaning": "The process or period of gathering crops",
+                        "type": "noun"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Future vs Past Actions",
+                        "explanation": "Contrasting 'Who will help me?' with 'Then I will do it myself'."
+                }
+        ],
+        "raw": "A hard-working Little Hen found some grains of wheat in the farmyard. She asked her friends, the Pig, the Cat, and the Duck, \"Who will help me plant this wheat?\" Each animal lazily replied, \"Not I!\"\n\nSo the hen planted the wheat herself. When the wheat grew tall, she asked, \"Who will help me harvest the wheat?\" Again, the animals answered, \"Not I!\" The hen harvested, ground the grain into flour, and baked a loaf of delicious warm bread all on her own.\n\nWhen the aroma filled the farmyard, she asked, \"Who will help me eat this bread?\" All the animals shouted, \"I will!\" But the wise hen smiled and said, \"No, I worked alone, so my chicks and I will enjoy the bread.\" The animals learned the importance of contributing.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: What did the Little Hen find in the farmyard?",
+                        "options": [
+                                "Grains of wheat",
+                                "A golden coin",
+                                "A lost key"
+                        ],
+                        "correct": 0,
+                        "explanation": "She found grains of wheat in the farmyard."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: What did the pig, cat, and duck say when asked to work?",
+                        "options": [
+                                "\"Not I!\"",
+                                "\"Yes, right away!\"",
+                                "\"Later today\""
+                        ],
+                        "correct": 0,
+                        "explanation": "Each lazy animal answered 'Not I!'."
+                },
+                {
+                        "type": "mc",
+                        "question": "Character: Who ate the freshly baked bread in the end?",
+                        "options": [
+                                "The Little Hen and her chicks",
+                                "All the farm animals",
+                                "Only the duck"
+                        ],
+                        "correct": 0,
+                        "explanation": "The hen shared the bread with her chicks because she did the work."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Industry, Adjective: Industrious, Adverb: [?]",
+                        "options": [
+                                "Industriously",
+                                "Industriable",
+                                "Industry-like"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb form is 'Industriously'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: Do you agree with the hen's decision not to share the bread with those who refused to work?"
+                }
+        ]
+},
+{
+        "id": "golden_goose",
+        "title": "The Golden Goose",
+        "author": "Brothers Grimm",
+        "level": "A2",
+        "theme": "Fairy Tale",
+        "description": "A kind-hearted young man receives a magical goose with golden feathers that brings laughter to a sad princess.",
+        "imageUrl": "https://image.pollinations.ai/prompt/young%20man%20carrying%20golden%20goose%20followed%20by%20stuck%20people%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "generous",
+                        "meaning": "Showing readiness to give more of something than is necessary",
+                        "type": "adj"
+                },
+                {
+                        "word": "feather",
+                        "meaning": "One of the flat light structures covering a bird's body",
+                        "type": "noun"
+                },
+                {
+                        "word": "comical",
+                        "meaning": "Amusing or funny",
+                        "type": "adj"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Result Clauses",
+                        "explanation": "Connecting actions to consequences: 'He was so kind that he was rewarded'."
+                }
+        ],
+        "raw": "A young man named Simpleton was known for his kind heart. One day in the forest, he shared his modest meal with an old man. In return for his generosity, the old man gifted him a magical goose with pure golden feathers.\n\nWhen Simpleton stayed at an inn, a greedy girl tried to steal one of the golden feathers. The moment she touched the goose, her hand stuck fast! Her sister tried to pull her away and got stuck too. Soon, seven people were stuck in a comical line behind Simpleton as he walked through town.\n\nIn the kingdom lived a princess who had never laughed in her life. When she saw the absurd procession of people stuck to the golden goose, she burst into loud laughter! The delighted king rewarded Simpleton, and they lived happily together.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: Why was Simpleton rewarded with the golden goose?",
+                        "options": [
+                                "Because he kindly shared his meal with an old man",
+                                "Because he bought it at market",
+                                "Because he found it in a cave"
+                        ],
+                        "correct": 0,
+                        "explanation": "He shared his modest meal with an old man in the forest."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: What happened when people tried to touch the golden goose?",
+                        "options": [
+                                "They got stuck to each other in a line",
+                                "The goose flew away",
+                                "They turned into gold"
+                        ],
+                        "correct": 0,
+                        "explanation": "Anyone touching the goose or person stuck to it became stuck fast."
+                },
+                {
+                        "type": "mc",
+                        "question": "Character: What made the serious princess laugh?",
+                        "options": [
+                                "The funny parade of stuck people following the goose",
+                                "A jester's joke",
+                                "A puppet show"
+                        ],
+                        "correct": 0,
+                        "explanation": "She burst into laughter seeing the absurd procession."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Generosity, Adjective: Generous, Adverb: [?]",
+                        "options": [
+                                "Generously",
+                                "Generousness",
+                                "Generosive"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb form is 'Generously'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: Why do simple acts of kindness often bring unexpected joy?"
+                }
+        ]
+},
+{
+        "id": "grasshopper_and_ant",
+        "title": "The Ant and the Grasshopper",
+        "author": "Aesop's Fable",
+        "level": "A1",
+        "theme": "Moral Animal Tale",
+        "description": "A merry grasshopper sings through summer while a disciplined ant prepares for winter.",
+        "imageUrl": "https://image.pollinations.ai/prompt/ant%20storing%20grain%20and%20grasshopper%20playing%20violin%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "diligence",
+                        "meaning": "Careful and persistent work or effort",
+                        "type": "noun"
+                },
+                {
+                        "word": "famine",
+                        "meaning": "Extreme scarcity of food",
+                        "type": "noun"
+                },
+                {
+                        "word": "carefree",
+                        "meaning": "Free from anxiety or responsibility",
+                        "type": "adj"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Present vs Future Preparation",
+                        "explanation": "Contrasting present pleasure with future responsibility."
+                }
+        ],
+        "raw": "All through the warm summer months, a carefree grasshopper spent his days singing and dancing in the tall grass. He watched a tiny ant carrying heavy grains of corn to her underground nest day after day.\n\n\"Why work so hard?\" chirped the grasshopper. \"Come dance with me! We have plenty of food today.\" The ant replied, \"I am storing food for the cold winter ahead, and I suggest you do the same.\"\n\nWhen winter arrived with icy winds and snow, the grasshopper found no food anywhere. Freezing and weak, he went to the ant's cozy home. The ant shared her grain, but advised him, \"If you sing all summer, you must prepare to dance hungry in winter unless you learn foresight.\"",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: What was the ant doing during summer?",
+                        "options": [
+                                "Carrying grains to store for winter",
+                                "Sleeping under leaves",
+                                "Swimming in the pond"
+                        ],
+                        "correct": 0,
+                        "explanation": "The ant was storing food for the upcoming winter."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: What happened when winter arrived?",
+                        "options": [
+                                "The grasshopper had no food and was freezing",
+                                "The grasshopper built a warm house",
+                                "The ant ran out of food"
+                        ],
+                        "correct": 0,
+                        "explanation": "The grasshopper found no food during winter."
+                },
+                {
+                        "type": "mc",
+                        "question": "Moral: What is the primary moral of the story?",
+                        "options": [
+                                "It is wise to plan and prepare for the future",
+                                "Dancing is more important than work",
+                                "Winter is the best season"
+                        ],
+                        "correct": 0,
+                        "explanation": "Foresight and diligence prepare us for future hardships."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Diligence, Adjective: Diligent, Adverb: [?]",
+                        "options": [
+                                "Diligently",
+                                "Diligenciness",
+                                "Diligence-like"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb form is 'Diligently'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: How do you balance enjoying the present moment with preparing for future goals?"
+                }
+        ]
+},
+{
+        "id": "puss_and_mouse",
+        "title": "The Cat and Mouse in Partnership",
+        "author": "Brothers Grimm",
+        "level": "A2",
+        "theme": "Animal Fable",
+        "description": "A cat and mouse agree to live together, but the cat's sneaky appetite tests their alliance.",
+        "imageUrl": "https://image.pollinations.ai/prompt/cat%20and%20mouse%20looking%20at%20a%20pot%20of%20fat%20in%20a%20pantry%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "partnership",
+                        "meaning": "An association of two or more people or animals",
+                        "type": "noun"
+                },
+                {
+                        "word": "greedy",
+                        "meaning": "Having an excessive desire for food or wealth",
+                        "type": "adj"
+                },
+                {
+                        "word": "pantry",
+                        "meaning": "A small room or cupboard where food is kept",
+                        "type": "noun"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Expressing Suspicion",
+                        "explanation": "Using indirect questions to reveal broken trust."
+                }
+        ],
+        "raw": "A cat once convinced a trusting mouse to form a partnership and live together in the same house. To prepare for winter, they bought a pot of fat and hid it safely in the cool cellar of a nearby church.\n\nAfter a few weeks, the cat pretended to be invited to a christening party. Instead of attending a party, he sneaked into the church cellar and licked off the top layer of fat. When he returned, the mouse asked the name of his new godchild. The cat replied, \"Top-off!\"\n\nSoon, the greedy cat went back two more times, naming imaginary godchildren \"Half-done\" and \"All-gone.\" When winter came and the mouse went to check the pot, she found it empty and realized the truth too late. Caution is necessary when making alliances.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: Where did the cat and mouse hide their pot of fat?",
+                        "options": [
+                                "In a church cellar",
+                                "Under the kitchen table",
+                                "In a tree hollow"
+                        ],
+                        "correct": 0,
+                        "explanation": "They hid it in the cool cellar of a nearby church."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: What names did the sneaky cat give his fake godchildren?",
+                        "options": [
+                                "\"Top-off\", \"Half-done\", and \"All-gone\"",
+                                "\"Fluffy\", \"Tiny\", and \"Spot\"",
+                                "\"First\", \"Second\", and \"Third\""
+                        ],
+                        "correct": 0,
+                        "explanation": "The names revealed how much fat he had secretly eaten."
+                },
+                {
+                        "type": "mc",
+                        "question": "Moral: What caution does this tale teach?",
+                        "options": [
+                                "Be careful about who you trust in a partnership",
+                                "Fat is bad for mice",
+                                "Churches are cold"
+                        ],
+                        "correct": 0,
+                        "explanation": "It teaches vigilance when forming partnerships."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Greed, Adjective: Greedy, Adverb: [?]",
+                        "options": [
+                                "Greedily",
+                                "Greedness",
+                                "Greeding"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb form is 'Greedily'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: What traits make a partner or friend trustworthy?"
+                }
+        ]
+},
+{
+        "id": "puss_in_boots_adventure",
+        "title": "Puss in Boots and the Ogre's Castle",
+        "author": "Charles Perrault",
+        "level": "A2",
+        "theme": "Fairy Tale",
+        "description": "Puss in Boots demonstrates his wit by claiming lands and securing a castle for his master.",
+        "imageUrl": "https://image.pollinations.ai/prompt/puss%20in%20boots%20standing%20outside%20grand%20castle%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "majestic",
+                        "meaning": "Having or showing impressive beauty or dignity",
+                        "type": "adj"
+                },
+                {
+                        "word": "ogre",
+                        "meaning": "A man-eating giant in folklore",
+                        "type": "noun"
+                },
+                {
+                        "word": "garment",
+                        "meaning": "An item of clothing",
+                        "type": "noun"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Adverbial Clauses of Time",
+                        "explanation": "Using 'as soon as', 'whenever', and 'while'."
+                }
+        ],
+        "raw": "Puss in Boots ran ahead of the King's royal carriage, telling all the farmers in the fields, \"If you do not tell the King these lands belong to the Marquis of Carabas, you will be chopped into tiny pieces!\" Frightened, the farmers obeyed.\n\nWhen the King passed, he was amazed by the vast estates belonging to the young Marquis. Next, Puss arrived at a majestic castle owned by a wealthy ogre. Puss politely bowed and said, \"I hear you can transform into any animal, even a giant lion!\"\n\nThe ogre proudly transformed into a roaring lion. Puss pretended to be terrified and said, \"Ah, but surely you cannot turn into a tiny mouse!\" To prove his power, the ogre became a mouse, and Puss instantly devoured him, securing the grand castle.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: How did Puss convince the farmers to lie to the King?",
+                        "options": [
+                                "By threatening them with consequences if they didn't",
+                                "By offering gold",
+                                "By singing a song"
+                        ],
+                        "correct": 0,
+                        "explanation": "He warned them that they must say the fields belonged to the Marquis."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: What small animal did the ogre transform into last?",
+                        "options": [
+                                "A mouse",
+                                "A frog",
+                                "A bird"
+                        ],
+                        "correct": 0,
+                        "explanation": "The ogre turned into a mouse to prove his magic."
+                },
+                {
+                        "type": "mc",
+                        "question": "Character: What quality allowed Puss to defeat the ogre?",
+                        "options": [
+                                "Clever intelligence and trickery",
+                                "Brute force",
+                                "Magic spells"
+                        ],
+                        "correct": 0,
+                        "explanation": "Puss used cleverness to trick the ogre."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Majesty, Adjective: Majestic, Adverb: [?]",
+                        "options": [
+                                "Majestically",
+                                "Majestiness",
+                                "Majesting"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb form is 'Majestically'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: Why do trickster characters like Puss in Boots appeal to readers?"
+                }
+        ]
+},
+{
+        "id": "ugly_duckling_story",
+        "title": "The Ugly Duckling's Transformation",
+        "author": "Hans Christian Andersen",
+        "level": "A2",
+        "theme": "Animal Tale",
+        "description": "A little bird who feels awkward and rejected discovers his true identity as a majestic swan.",
+        "imageUrl": "https://image.pollinations.ai/prompt/ugly%20duckling%20becoming%20a%20beautiful%20white%20swan%20on%20lake%20storybook%20illustration?width=800&height=400&nologo=true",
+        "vocab": [
+                {
+                        "word": "awkward",
+                        "meaning": "Lacking grace or skill in movement",
+                        "type": "adj"
+                },
+                {
+                        "word": "reflection",
+                        "meaning": "An image seen in a mirror or water surface",
+                        "type": "noun"
+                },
+                {
+                        "word": "swan",
+                        "meaning": "A large waterbird with a long flexible neck and white feathers",
+                        "type": "noun"
+                }
+        ],
+        "grammarNotes": [
+                {
+                        "concept": "Expressing Transformation",
+                        "explanation": "Verbs like 'grow into', 'turn into', and 'discover'."
+                }
+        ],
+        "raw": "Born in a barnyard, a small gray chick looked completely different from his yellow duckling brothers. The other barnyard animals laughed at his awkward movements and called him the Ugly Duckling. Feeling lonely, he ran away into the marshes.\n\nHe survived a harsh winter hiding among reeds, enduring cold winds and loneliness. When spring arrived, he flew towards a clear blue lake where three graceful white birds were swimming peacefully.\n\nFearing they would reject him too, he bowed his head low. But looking into the crystal water, he saw his own reflection: he was no longer a gray duckling, but a magnificent, graceful white swan! The other swans welcomed him with joy.",
+        "quiz": [
+                {
+                        "type": "mc",
+                        "question": "Reference: Why did the barnyard animals tease the little bird?",
+                        "options": [
+                                "Because he looked different and gray",
+                                "Because he couldn't swim",
+                                "Because he was noisy"
+                        ],
+                        "correct": 0,
+                        "explanation": "He looked different from his yellow duckling brothers."
+                },
+                {
+                        "type": "mc",
+                        "question": "Sequence: What did he see when he looked into the lake water?",
+                        "options": [
+                                "His reflection as a beautiful white swan",
+                                "A fish swimming",
+                                "A reflection of a duck"
+                        ],
+                        "correct": 0,
+                        "explanation": "He saw his reflection as a magnificent white swan."
+                },
+                {
+                        "type": "mc",
+                        "question": "Theme: What lesson does the Ugly Duckling teach us?",
+                        "options": [
+                                "True beauty unfolds over time as we find our true place",
+                                "Barnyards are noisy",
+                                "Swans cannot swim"
+                        ],
+                        "correct": 0,
+                        "explanation": "Belonging and inner beauty reveal themselves over time."
+                },
+                {
+                        "type": "mc",
+                        "question": "Vocabulary Table: Complete: Noun: Grace, Adjective: Graceful, Adverb: [?]",
+                        "options": [
+                                "Gracefully",
+                                "Graceness",
+                                "Gracing"
+                        ],
+                        "correct": 0,
+                        "explanation": "The adverb form is 'Gracefully'."
+                },
+                {
+                        "type": "open",
+                        "question": "Personal Opinion: How can we help people who feel different or left out feel welcomed?"
+                }
+        ]
+}
     ];
 
-    let currentStory = allStories[0];
+    function getStoryRawText(story) {
+      if (!story) return "";
+      if (story.raw && typeof story.raw === 'string' && story.raw.trim().length > 0) return story.raw;
+      if (Array.isArray(story.pages) && story.pages.length > 0) {
+        const pText = story.pages.map(p => (p && p.content) ? p.content : '').join('\n\n').trim();
+        if (pText.length > 0) return pText;
+      }
+      if (story.content && typeof story.content === 'string' && story.content.trim().length > 0) return story.content;
+      if (story.text && typeof story.text === 'string' && story.text.trim().length > 0) return story.text;
+      if (story.description) return story.description;
+      return "";
+    }
+
+    // Always ensure ALL default stories exist in allStories with complete text & quizzes!
+    let savedStories = [];
+    try {
+      savedStories = JSON.parse(localStorage.getItem('lingo_stories_v8') || localStorage.getItem('lingo_stories_v7') || localStorage.getItem('lingo_stories_v6')) || [];
+    } catch (e) {
+      savedStories = [];
+    }
+
+    const defaultStoriesMap = {};
+    defaultStories.forEach(s => { defaultStoriesMap[s.id] = s; });
+
+    let combinedStoriesMap = {};
+    // Populate with all built-in default stories
+    defaultStories.forEach(s => {
+      combinedStoriesMap[s.id] = Object.assign({}, s);
+    });
+
+    // Add any user-generated custom stories from localStorage
+    if (Array.isArray(savedStories)) {
+      savedStories.forEach(s => {
+        if (s && s.id && !defaultStoriesMap[s.id]) {
+          combinedStoriesMap[s.id] = s;
+        }
+      });
+    }
+
+    let allStories = Object.values(combinedStoriesMap);
+    try {
+      localStorage.setItem('lingo_stories_v8', JSON.stringify(allStories));
+      localStorage.setItem('lingo_stories_v7', JSON.stringify(allStories));
+      localStorage.setItem('lingo_stories_v6', JSON.stringify(allStories));
+    } catch(e) {}
+
+    let currentStory = allStories[0] || defaultStories[0];
     let parsedTokens = [];
     let pages = [];
     let currentPage = 0;
@@ -3652,7 +4944,7 @@
         imgEl.style.display = 'none';
       }
 
-      parseStoryMarkup(story.raw);
+      parseStoryMarkup(getStoryRawText(story));
       renderFullStory();
       renderQuiz();
       renderFeedbacks();
@@ -3668,8 +4960,12 @@
     let fullPlainString = "";
 
     function parseStoryMarkup(rawText) {
+      if (!rawText || typeof rawText !== 'string' || rawText.trim().length === 0) {
+        rawText = getStoryRawText(currentStory);
+      }
       parsedTokens = [];
       fullPlainString = "";
+      if (!rawText || rawText.trim().length === 0) return;
       const regex = /\[(L|T|C|N|ADJ|ADV|P|S)(?::([^:\]]+))?(?::([^\]]+))?\]\(([^)]+)\)/g;
       let lastIndex = 0;
       let match;
@@ -3744,9 +5040,20 @@
 
     function renderFullStory() {
       const content = document.getElementById('storyContent');
+      if (!content) return;
       content.innerHTML = "";
       
       let wordIndex = 0;
+
+      if (!parsedTokens || parsedTokens.length === 0) {
+        const raw = getStoryRawText(currentStory);
+        if (raw) {
+          content.innerHTML = `<div style="padding:16px; font-size:16px; line-height:1.7;">${escapeHtml(raw)}</div>`;
+        } else {
+          content.innerHTML = `<div style="padding:16px; font-size:15px; color:var(--text-muted);">No story text available for this item.</div>`;
+        }
+        return;
+      }
 
       parsedTokens.forEach((token) => {
         if (token.type === 'WS') {
@@ -7605,6 +8912,8 @@
         }
 
         allStories.unshift(newStory);
+        localStorage.setItem('lingo_stories_v8', JSON.stringify(allStories));
+        localStorage.setItem('lingo_stories_v7', JSON.stringify(allStories));
         localStorage.setItem('lingo_stories_v6', JSON.stringify(allStories));
         document.getElementById('libCount').innerText = allStories.length;
         loadStory(newStory);
@@ -7895,7 +9204,7 @@
       if (content) content.classList.add('is-reading-aloud');
 
       if (!fullPlainString) {
-        parseStoryMarkup(currentStory.raw);
+        parseStoryMarkup(getStoryRawText(currentStory));
       }
       const plain = fullPlainString;
 
@@ -8691,7 +10000,7 @@
       
       // Extract tagged tokens from currentStory.raw
       const regex = /\[([A-Z]+):([^\]]+)\](?:\(([^)]+)\))?/g;
-      const rawText = currentStory.raw;
+      const rawText = getStoryRawText(currentStory);
       const sentences = rawText.split(/(?<=[.?!])\s+/).filter(s => s.includes('[') && s.length > 25);
       
       clozeExerciseData = [];
@@ -8839,7 +10148,7 @@
       sbCurrentIndex = 0;
       document.getElementById('sbFeedbackArea').innerHTML = "";
       
-      const cleanText = currentStory.raw.replace(/\[([A-Z]+):([^\]]+)\](?:\(([^)]+)\))?/g, '$2');
+      const cleanText = getStoryRawText(currentStory).replace(/\[([A-Z]+):([^\]]+)\](?:\(([^)]+)\))?/g, '$2');
       const allSents = cleanText.split(/(?<=[.?!])\s+/).filter(s => s.length > 20 && s.length < 80);
       
       sbSentences = allSents.slice(0, 3).map((sent, i) => {
@@ -8978,7 +10287,7 @@
       lisSelectedOption = null;
       document.getElementById('lisFeedbackArea').innerHTML = "";
       
-      const cleanSentences = currentStory.raw.replace(/\[([A-Z]+):([^\]]+)\](?:\(([^)]+)\))?/g, '$2').split(/(?<=[.?!])\s+/).filter(s => s.length > 25);
+      const cleanSentences = getStoryRawText(currentStory).replace(/\[([A-Z]+):([^\]]+)\](?:\(([^)]+)\))?/g, '$2').split(/(?<=[.?!])\s+/).filter(s => s.length > 25);
       
       lisQuestions = [
         {
