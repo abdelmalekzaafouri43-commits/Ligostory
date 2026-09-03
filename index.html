@@ -1640,13 +1640,25 @@
                   <div class="glass-ai-status-dot"></div>
                 </div>
                 <div>
-                  <div style="font-size:1.1rem; font-weight:800; background:linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:-0.3px;">LingoBot AI Companion & Story Tutor</div>
+                  <div style="font-size:1.1rem; font-weight:800; background:linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:-0.3px;">LingoBot All-in-One English AI Companion</div>
                   <div style="font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:5px;">
-                    <span>⚡ Instant English & Story Answers</span> • <span style="color:#10b981; font-weight:700;">● Online Ready</span>
+                    <span>⚡ Universal English Tutor & Free Chat</span> • <span style="color:#10b981; font-weight:700;">● Online</span>
                   </div>
                 </div>
               </div>
               <button class="btn-pill" style="background:rgba(168,85,247,0.15); color:#a855f7; border:1px solid rgba(168,85,247,0.35); font-weight:700; font-size:11.5px; padding:6px 14px; box-shadow:0 2px 8px rgba(168,85,247,0.15);" onclick="openAiCompanion()">🔍 Full Companion Space</button>
+            </div>
+
+            <!-- Quick English Topic Chips -->
+            <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:8px; scrollbar-width:none; -webkit-overflow-scrolling:touch;">
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Tell me popular English idioms and phrasal verbs with examples')">💡 Idioms & Phrasal Verbs</button>
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Explain English tenses and grammar rules with clear formulas')">🎯 Grammar & Tenses</button>
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('How do I write a professional business email in English?')">💼 Business Email</button>
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Give me top tips and structures for IELTS Speaking and Writing')">🎓 IELTS Advice</button>
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Teach me key English pronunciation rules and silent letters')">🗣️ Pronunciation Tips</button>
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Check and polish my English sentence: I am learn English every days')">✍️ Sentence Check</button>
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('What are the main differences between British and American English?')">🇬🇧 vs 🇺🇸 Dialects</button>
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Hi LingoBot! Let us chat in English to practice conversation skills')">💬 Practice Free Chat</button>
             </div>
 
             <!-- In-Story Live Chat Feed -->
@@ -1654,7 +1666,7 @@
 
             <!-- In-Story Input Box -->
             <div class="glass-ai-input-wrap">
-              <input id="storyCompanionInput" type="text" class="glass-ai-input" placeholder="Type your question here (e.g. word meanings, grammar rules, story plot)..." onkeydown="if(event.key==='Enter') sendStoryCompanionMessage()" />
+              <input id="storyCompanionInput" type="text" class="glass-ai-input" placeholder="Ask LingoBot anything! (e.g. idioms, IELTS tips, grammar, email writing, sentence check)..." onkeydown="if(event.key==='Enter') sendStoryCompanionMessage()" />
               <button class="glass-ai-send-btn" onclick="sendStoryCompanionMessage()">Ask AI 🚀</button>
             </div>
           </div>
@@ -1958,13 +1970,26 @@
               <div class="glass-ai-status-dot"></div>
             </div>
             <div>
-              <h2 style="font-size:1.1rem; font-weight:800; background:linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:0;">LingoBot Glass AI Companion</h2>
+              <h2 style="font-size:1.1rem; font-weight:800; background:linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:0;">LingoBot All-in-One English AI Tutor</h2>
               <div style="font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:6px;">
-                <span>⚡ Instant Smart English Tutor</span> • <span style="color:#10b981; font-weight:700;">● Active</span>
+                <span>⚡ Universal English Assistant & Chat Partner</span> • <span style="color:#10b981; font-weight:700;">● Active</span>
               </div>
             </div>
           </div>
           <button class="btn-pill" style="padding:5px 12px; font-size:11.5px; background:rgba(255,255,255,0.7); backdrop-filter:blur(8px); border:1px solid rgba(168,85,247,0.3); color:var(--text-main);" onclick="closeModalDirect('aiCompanionModal')">✕ Close</button>
+        </div>
+
+        <!-- Quick English Topic Chips -->
+        <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:8px; scrollbar-width:none; -webkit-overflow-scrolling:touch;">
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Tell me popular English idioms and phrasal verbs with examples')">💡 Idioms & Phrasal Verbs</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Explain English tenses and grammar rules with clear formulas')">🎯 Grammar & Tenses</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('How do I write a professional business email in English?')">💼 Business Email</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Give me top tips and structures for IELTS Speaking and Writing')">🎓 IELTS Advice</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Teach me key English pronunciation rules and silent letters')">🗣️ Pronunciation Tips</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Check and polish this sentence: I am learn English every days')">✍️ Sentence Check</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('What are the main differences between British and American English?')">🇬🇧 vs 🇺🇸 Dialects</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Teach me essential English vocabulary and phrases for travel')">✈️ Travel Vocab</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Hi LingoBot! Let us chat in English to practice my conversation skills')">💬 Practice Free Chat</button>
         </div>
 
         <!-- Chat Messages Scroll Container -->
@@ -1973,7 +1998,7 @@
 
         <!-- Chat Input Box -->
         <div class="glass-ai-input-wrap">
-          <input id="companionInput" type="text" class="glass-ai-input" placeholder="Ask LingoBot anything about English, vocabulary, or this story..." onkeydown="if(event.key==='Enter') sendCompanionMessage()" />
+          <input id="companionInput" type="text" class="glass-ai-input" placeholder="Ask LingoBot anything about English, idioms, IELTS, emails, grammar, or free chat..." onkeydown="if(event.key==='Enter') sendCompanionMessage()" />
           <button class="glass-ai-send-btn" onclick="sendCompanionMessage()">Send 🚀</button>
         </div>
       </div>
@@ -9608,11 +9633,13 @@
         
         if (companionHistory.length === 0) {
           const emptyDiv = document.createElement('div');
-          emptyDiv.style = "text-align:center; color:var(--text-muted); font-size:12px; padding:32px 14px; line-height:1.6; opacity:0.85;";
+          emptyDiv.style = "text-align:center; color:var(--text-muted); font-size:12px; padding:28px 14px; line-height:1.6; opacity:0.9;";
           emptyDiv.innerHTML = `
-            <div style="font-size:24px; margin-bottom:6px;">⚡</div>
-            <strong style="color:var(--primary); font-size:13px;">LingoBot Instant English Tutor</strong><br/>
-            Type any question below — ask about word meanings, grammar tenses, story characters, or sentence corrections. Answers appear instantly!
+            <div style="font-size:28px; margin-bottom:6px;">🤖⚡</div>
+            <strong style="color:var(--primary); font-size:14px;">LingoBot All-in-One AI English Companion</strong><br/>
+            <span style="display:block; margin-top:6px; opacity:0.9; max-width:440px; margin-left:auto; margin-right:auto;">
+              Ask me <strong>anything</strong> about the English language! I can explain <strong>idioms & phrasal verbs</strong>, break down <strong>grammar tenses</strong>, check your <strong>sentences & essays</strong>, give <strong>IELTS / TOEFL tips</strong>, craft <strong>business emails</strong>, guide <strong>pronunciation</strong>, or engage in <strong>free conversation</strong>!
+            </span>
           `;
           container.appendChild(emptyDiv);
           return;
@@ -9695,7 +9722,7 @@
         const storyLevel = story ? story.level : "B1";
         const storyText = story ? (story.raw || story.content || "") : "";
 
-        const systemPrompt = `You are LingoBot, an encouraging English language tutor companion in the LingoStory app. The user is learning English at ${storyLevel} level. The current story being read is "${storyTitle}". Story context:\n"${storyText.substring(0, 900)}"\n\nAnswer the user's inquiry concisely (2-4 sentences), warmly and with high educational value. Highlight key vocabulary with **bold** text.`;
+        const systemPrompt = `You are LingoBot, an expert, encouraging, and versatile English language AI tutor companion in the LingoStory app. The user is practicing English (Current story level: ${storyLevel}, Active story: "${storyTitle}"). You can answer ANY question about the English language, including general conversation, idioms, phrasal verbs, grammar tenses, vocabulary, business English, IELTS/TOEFL exam tips, pronunciation/phonetics, essay writing, sentence corrections, slang, American vs British English, or story inquiries. Provide clear, educational, and friendly answers (3-6 sentences or bullet points) with **bold** key vocabulary and practical examples.`;
 
         const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
           method: 'POST',
@@ -9703,7 +9730,7 @@
           body: JSON.stringify({
             contents: [{ parts: [{ text: `${systemPrompt}\n\nUser Inquiry: ${userText}` }] }]
           }),
-          signal: AbortSignal.timeout(1800)
+          signal: AbortSignal.timeout(2800)
         });
 
         const data = await resp.json();
@@ -9719,7 +9746,7 @@
       }
     }
 
-    // Comprehensive Natural Language Story & English Companion Engine
+    // Comprehensive Natural Language All-in-One English Language & Story Companion Engine
     function generateInstantCompanionResponse(query, story) {
       const q = query.trim();
       const lower = q.toLowerCase();
@@ -9728,16 +9755,89 @@
       const storyRaw = story ? (story.raw || "") : "";
       const storyPlain = story ? storyRaw.replace(/\[[A-Z]+:([^\]]+)\]\([^)]*\)/g, '$1') : "";
 
-      // 1. GREETINGS & INTRODUCTIONS
-      if (/^(hi|hello|hey|greetings|good morning|good evening|howdy)\b/i.test(lower)) {
-        return `👋 Hello Abdelmalek! I am **LingoBot**, your 24/7 AI English Tutor. We are reading **"${storyTitle}"** (${storyLevel} Level). Ask me any question about vocabulary definitions, grammar rules, story characters, or sentence corrections!`;
+      // 1. GREETINGS & GENERAL CONVERSATION
+      if (/^(hi|hello|hey|greetings|good morning|good evening|howdy|what's up|sup)\b/i.test(lower)) {
+        return `👋 Hello Abdelmalek! I am **LingoBot**, your 24/7 AI English Tutor & Companion.\n\nI can help you master **everything related to the English language**:\n• 💡 **Idioms & Phrasal Verbs**\n• 🎯 **Grammar Rules & Tenses**\n• 💼 **Business Email & Interview Prep**\n• 🎓 **IELTS & TOEFL Exam Strategies**\n• 🗣️ **Pronunciation & Silent Letters**\n• ✍️ **Sentence & Writing Corrections**\n• 💬 **Free English Chat & Conversation**\n\nWhat would you like to explore today?`;
       }
 
-      if (/how are you|how's it going|who are you/i.test(lower)) {
-        return `🤖 I am feeling energetic and ready to help you master English! I can explain any word in **"${storyTitle}"**, break down grammar tenses, check your sentences, or answer questions about the plot.`;
+      if (/how are you|how's it going|who are you|what can you do|about you|help me/i.test(lower)) {
+        return `🤖 I am **LingoBot**, your enthusiastic AI English Companion! I am trained to chat about **any topic in English**, explain complex grammar rules simply, proofread your sentences, teach business vocabulary, guide your IELTS preparation, or analyze stories like **"${storyTitle}"** (${storyLevel} Level).`;
       }
 
-      // 2. STORY MORAL & LESSONS
+      // 2. IDIOMS, PHRASAL VERBS & SLANG
+      if (lower.includes('idiom') || lower.includes('phrasal verb') || lower.includes('expression') || lower.includes('slang') || lower.includes('saying') ||
+          /break a leg|piece of cake|hit the nail|under the weather|bite the bullet|spill the beans|call it a day|burn the midnight oil|cost an arm|once in a blue moon|give up|look forward to|run out of|turn down|bring up|figure out|catch up|hang out|carry on|set up|find out/i.test(lower)) {
+        if (lower.includes('piece of cake')) {
+          return `💡 **"A Piece of Cake"** (Idiom)\n• **Meaning**: Something very easy to do or accomplish.\n• **Example**: "Don't worry about the English reading test; it will be a **piece of cake**!"\n• **Origin**: Derived from 19th-century traditions where cakes were awarded as prizes for easy competitions.`;
+        } else if (lower.includes('break a leg')) {
+          return `💡 **"Break a Leg"** (Idiom)\n• **Meaning**: Good luck! (Used especially before a performance or presentation).\n• **Example**: "You have your job interview today? **Break a leg**!"\n• **Note**: In theater superstition, wishing someone direct good luck is thought to bring bad luck!`;
+        } else if (lower.includes('under the weather')) {
+          return `💡 **"Under the Weather"** (Idiom)\n• **Meaning**: Feeling slightly sick, tired, or unwell.\n• **Example**: "Abdelmalek stayed home today because he felt a bit **under the weather**."`;
+        } else if (lower.includes('spill the beans')) {
+          return `💡 **"Spill the Beans"** (Idiom)\n• **Meaning**: To reveal a secret prematurely or accidentally.\n• **Example**: "We were planning a surprise birthday party, but Sarah **spilled the beans**!"`;
+        } else if (lower.includes('call it a day')) {
+          return `💡 **"Call It a Day"** (Idiom)\n• **Meaning**: To stop working on something for the rest of the day.\n• **Example**: "We've been studying English tenses for four hours; let's **call it a day**!"`;
+        } else if (lower.includes('phrasal verb') || lower.includes('look forward') || lower.includes('give up') || lower.includes('figure out')) {
+          return `💡 **Top English Phrasal Verbs Essentials**:\n1. **Look forward to (+ -ing)**: To be excited about a future event (*"I look forward to **meeting** you."*)\n2. **Give up**: Stop doing or trying (*"Never **give up** on learning!"*)\n3. **Figure out**: Understand or solve (*"We need to **figure out** this grammar rule."*)\n4. **Run out of**: Have no more left (*"We **ran out of** coffee."*)\n5. **Turn down**: Reject an offer (*"She **turned down** the offer."*)`;
+        } else {
+          return `💡 **Popular English Idioms to Sound Native**:\n• **Hit the nail on the head**: To describe exactly what is right.\n• **Burn the midnight oil**: To study or work late into the night.\n• **Bite the bullet**: To face a difficult situation with courage.\n• **Once in a blue moon**: Very rarely.\n• **Cost an arm and a leg**: Exceptionally expensive.`;
+        }
+      }
+
+      // 3. COMPREHENSIVE GRAMMAR MASTER & SYNTAX
+      // Conditionals
+      if (lower.includes('conditional') || lower.includes('if clause') || lower.includes('if clauses') || lower.includes('would have')) {
+        return `🎯 **Mastering English Conditionals**:\n• **Zero Conditional** (General Truths): *If + Present Simple, Present Simple*\n  👉 *"If you heat ice, it melts."*\n• **1st Conditional** (Real Future Possibility): *If + Present Simple, Will + Verb*\n  👉 *"If Abdelmalek studies daily, he will speak fluent English."*\n• **2nd Conditional** (Unreal Present/Future): *If + Past Simple, Would + Verb*\n  👉 *"If I won the lottery, I would travel the world."*\n• **3rd Conditional** (Unreal Past Regret): *If + Past Perfect, Would Have + V3*\n  👉 *"If she had left earlier, she wouldn't have missed the train."*`;
+      }
+
+      // Modal Verbs
+      if (lower.includes('modal') || (lower.includes('can') && lower.includes('could')) || lower.includes('must') || lower.includes('should') || lower.includes('might') || lower.includes('ought to')) {
+        return `🎯 **English Modal Verbs Guide**:\n• **Ability**: *Can* (Present) / *Could* (Past) — *"I **can** read English stories."*\n• **Obligation**: *Must* (Strong requirement) / *Have to* — *"You **must** practice speaking."*\n• **Advice**: *Should* / *Ought to* — *"You **should** review vocabulary daily."*\n• **Possibility**: *May* / *Might* / *Could* — *"It **might** rain later."*\n• **Past Deduction**: *Must have + V3* — *"She was absent; she **must have been** sick."*`;
+      }
+
+      // Articles (A, An, The)
+      if (lower.includes('article') || lower.includes('a vs an') || lower.includes('a or an') || lower.includes('when to use the')) {
+        return `🎯 **Articles (A, An, The, Zero Article)**:\n• **Indefinite (A / An)**: Used for non-specific singular countable nouns.\n  - **A**: Before consonant *sounds* (*a book, a **u**niversity* - /juː/ sound!)\n  - **An**: Before vowel *sounds* (*an apple, an **h**our* - silent h!)\n• **Definite (The)**: Used for specific, unique, or previously mentioned nouns.\n  👉 *"Look at **the** moon!"* / *"I bought a book. **The** book is amazing."*\n• **Zero Article**: Used for general plurals, uncountable nouns, or abstract concepts (*"**Love** is patient"*, *"I like **cats**"*).`;
+      }
+
+      // Irregular Verbs
+      if (lower.includes('irregular verb') || lower.includes('v1 v2 v3') || lower.includes('past simple of')) {
+        return `🎯 **Key Irregular Verbs Triple List (V1 - Base | V2 - Past | V3 - Participle)**:\n• **Go** $\rightarrow$ **Went** $\rightarrow$ **Gone**\n• **Eat** $\rightarrow$ **Ate** $\rightarrow$ **Eaten**\n• **Write** $\rightarrow$ **Wrote** $\rightarrow$ **Written**\n• **Freeze** $\rightarrow$ **Froze** $\rightarrow$ **Frozen**\n• **Speak** $\rightarrow$ **Spoke** $\rightarrow$ **Spoken**\n• **Break** $\rightarrow$ **Broke** $\rightarrow$ **Broken**\n• **Begin** $\rightarrow$ **Began** $\rightarrow$ **Begun**\n• **Drive** $\rightarrow$ **Drove** $\rightarrow$ **Driven**`;
+      }
+
+      // Tenses Breakdown
+      if (lower.includes('present perfect') || lower.includes('past simple') || lower.includes('tense') || lower.includes('grammar rule')) {
+        if (lower.includes('present perfect')) {
+          return `🎯 **Present Perfect vs. Past Simple**:\n• **Past Simple** (Completed time in the past): *Subject + V2*\n  👉 *"I visited London **in 2022**."* (Specific past time finished!)\n• **Present Perfect** (Past connection to Present / Unspecified time): *Subject + Have/Has + V3*\n  👉 *"I **have visited** London three times."* (Life experience, ongoing connection!)`;
+        }
+      }
+
+      // 4. EXAM PREPARATION (IELTS, TOEFL, CAMBRIDGE)
+      if (lower.includes('ielts') || lower.includes('toefl') || lower.includes('cambridge') || lower.includes('speaking part') || lower.includes('writing task') || lower.includes('band 7') || lower.includes('band 8') || lower.includes('exam')) {
+        return `🎓 **IELTS & TOEFL Success Strategies**:\n\n🗣️ **Speaking Strategy (PPF Formula)**:\n• **Past**: *"In the past, I used to..."*\n• **Present**: *"However, nowadays I tend to..."*\n• **Future**: *"In the foreseeable future, I hope to..."*\n\n✍️ **Writing Task 2 Band 7+ Cohesive Connectors**:\n• **Adding Ideas**: *Furthermore, In addition, Consequently*\n• **Contrasting**: *Conversely, On the flip side, Notwithstanding*\n• **Examples**: *To exemplify, Notably, A case in point is...*\n• **Conclusion**: *To conclude, Weighing all arguments, It is evident that...*`;
+      }
+
+      // 5. BUSINESS ENGLISH & PROFESSIONAL EMAILS
+      if (lower.includes('business') || lower.includes('email') || lower.includes('professional') || lower.includes('job interview') || lower.includes('resume') || lower.includes('formal english') || lower.includes('work')) {
+        return `💼 **Business English & Professional Emails**:\n\n📧 **Standard Formal Email Template**:\n*Subject*: Request for Project Details - Abdelmalek Zaafouri\n\n*Dear [Name],*\n\n*I hope this email finds you well.*\n\n*I am writing to inquire about the timeline for the upcoming project. Could you please share the relevant documents when you have a moment?*\n\n*Thank you for your assistance, and I look forward to your reply.*\n\n*Best regards,*\n*Abdelmalek Zaafouri*\n\n💡 **Polite Softening Tip**: Instead of *"Send me the report"*, use *"Would you mind sharing the report when convenient?"*`;
+      }
+
+      // 6. PRONUNCIATION, PHONETICS & SILENT LETTERS
+      if (lower.includes('pronunciation') || lower.includes('phonetic') || lower.includes('accent') || lower.includes('silent letter') || lower.includes('silent letters') || lower.includes('linking') || lower.includes('stress')) {
+        return `🗣️ **English Pronunciation & Silent Letters Guide**:\n\n🤫 **Common Silent Letters**:\n• **Silent K**: *Knee, Knife, Knight, Know* (K is silent before N)\n• **Silent B**: *Climb, Doubt, Debt, Subtle, Comb* (B is silent after M or before T)\n• **Silent W**: *Write, Wrong, Answer, Sword, Whole*\n• **Silent P**: *Receipt, Psychology, Pneumonia*\n• **Silent L**: *Half, Walk, Talk, Salmon, Could*\n\n🔊 **Connected Speech**: When a word ends with a consonant sound and the next starts with a vowel, link them! (*"Check it out"* sounds like *"Che-ki-tout"*).`;
+      }
+
+      // 7. BRITISH VS AMERICAN ENGLISH
+      if (lower.includes('british') || lower.includes('american') || lower.includes('uk vs us') || lower.includes('us vs uk') || lower.includes('dialect')) {
+        return `🇬🇧 **British vs 🇺🇸 American English Key Differences**:\n\n| Concept | 🇺🇸 American | 🇬🇧 British |\n| :--- | :--- | :--- |\n| **Housing** | Apartment | Flat |\n| **Transport** | Elevator | Lift |\n| **Car Parts** | Trunk | Boot |\n| **Snacks** | Cookie | Biscuit |\n| **Vacation** | Vacation | Holiday |\n| **Footwear** | Sneakers | Trainers |\n| **Spelling** | Color / Center | Colour / Centre |\n| **Spelling** | Realize / Organize | Realise / Organise |`;
+      }
+
+      // 8. THEMATIC VOCABULARY LISTS (Travel, Tech, Feelings)
+      if (lower.includes('travel') || lower.includes('airport') || lower.includes('hotel') || lower.includes('dining') || lower.includes('tech')) {
+        return `✈️ **Essential Travel & Daily Conversation Vocabulary**:\n• **Boarding Pass** [A2]: Document giving permission to enter an aircraft.\n• **Itinerary** [B2]: A planned route or detailed travel schedule.\n• **Layover** [B1]: A period of waiting between connecting flights.\n• **Gourmet** [B2]: High quality, sophisticated food or cuisine.\n• **Accommodating** [B2]: Helpful and willing to fit in with someone's wishes.`;
+      }
+
+      // 9. STORY MORAL & LESSONS
       if (lower.includes('moral') || lower.includes('lesson') || lower.includes('teach us') || lower.includes('main idea')) {
         if (storyTitle.includes('Cinderella')) {
           return `💡 **Core Moral of "Cinderella"**:\nKindness, patience, and inner integrity prevail over cruelty and hardship. Despite facing adversity from her stepmother, Cinderella remains hopeful, and her virtue is rewarded.`;
@@ -9752,7 +9852,7 @@
         }
       }
 
-      // 3. STORY SUMMARY & PLOT QUESTIONS
+      // 10. STORY SUMMARY & PLOT QUESTIONS
       if (lower.includes('summary') || lower.includes('summarize') || lower.includes('what is the story about') || lower.includes('plot')) {
         if (storyTitle.includes('Cinderella')) {
           return `⚡ **Summary of "Cinderella"**:\n1. **Beginning**: Cinderella is forced to work endlessly by her cruel stepmother but remains hopeful.\n2. **Climax**: Her Fairy Godmother creates a carriage for the royal ball, where she captivates the Prince before fleeing at midnight.\n3. **Resolution**: The Prince uses her lost glass slipper to find her, and they live happily ever after.`;
@@ -9767,8 +9867,7 @@
         }
       }
 
-      // 4. SPECIFIC CHARACTER & EVENT INQUIRIES
-      // Cinderella Characters
+      // 11. SPECIFIC CHARACTER & EVENT INQUIRIES
       if (lower.includes('cinderella') && (lower.includes('who') || lower.includes('why') || lower.includes('character'))) {
         return `👸 **Cinderella** is the gentle, kind-hearted protagonist. Although mistreated by her stepmother and forced into endless chores, her hope and inner beauty lead her to the royal ball and true happiness.`;
       }
@@ -9788,22 +9887,13 @@
         return `👠 **The Glass Slipper**: A delicate glass shoe left behind on the palace steps. Because it only fit Cinderella's foot, it served as the undeniable proof that reunited her with the Prince.`;
       }
 
-      // Lion and Mouse Characters
-      if (lower.includes('lion') && (lower.includes('who') || lower.includes('what') || lower.includes('trap') || lower.includes('mouse'))) {
-        return `🦁 **The Lion**: The mighty king of the jungle who initially laughed when a tiny mouse promised to help him, but was later saved from hunters' ropes by that very mouse.`;
-      }
-      if (lower.includes('mouse') && (lower.includes('who') || lower.includes('how') || lower.includes('save') || lower.includes('chew') || lower.includes('rope'))) {
-        return `🐭 **The Mouse**: A brave creature who proved that loyalty and small acts of courage can overcome massive obstacles by gnawing through the hunters' net to free the lion.`;
-      }
-
-      // 5. WORD DEFINITIONS, MEANINGS & VOCABULARY INQUIRY
-      // Extracts target word from queries like "what does X mean", "define X", "meaning of X", "explain X"
+      // 12. WORD DEFINITIONS & LEXICON LOOKUP
       const defMatch = lower.match(/(?:what does|define|meaning of|what is|explain the word|definition of|tell me about the word)\s+["']?([a-zA-Z\-]+)["']?/i)
         || q.match(/^([a-zA-Z\-]{3,20})\?*$/);
 
       const targetWord = defMatch ? defMatch[1].toLowerCase() : null;
 
-      // Check if user is asking about synonyms
+      // Synonyms
       const synMatch = lower.match(/(?:synonyms? for|synonyms? of|another word for)\s+["']?([a-zA-Z\-]+)["']?/i);
       if (synMatch) {
         const w = synMatch[1].toLowerCase();
@@ -9814,7 +9904,7 @@
         }
       }
 
-      // Check if user is asking about antonyms / opposites
+      // Antonyms
       const antMatch = lower.match(/(?:antonyms? for|antonyms? of|opposite of|opposites for)\s+["']?([a-zA-Z\-]+)["']?/i);
       if (antMatch) {
         const w = antMatch[1].toLowerCase();
@@ -9825,7 +9915,6 @@
         }
       }
 
-      // If a target word was requested for definition
       if (targetWord) {
         const lemma = (typeof lemmatizeWord === 'function') ? lemmatizeWord(targetWord) : targetWord;
         const entry = LEXICON_DATABASE[targetWord] || LEXICON_DATABASE[lemma];
@@ -9835,15 +9924,6 @@
           const antStr = entry.ant ? `\n• **Antonyms**: ${entry.ant.slice(0, 4).join(', ')}` : '';
           const famStr = entry.family ? `\n• **Word Family**: ${entry.family}` : '';
           return `📖 **${targetWord.toUpperCase()}** (${entry.phonetic || ''}) — *${entry.pos || 'Word'}* [${entry.cefr || 'A2'} Level]\n• **Meaning**: ${entry.meaning}${synStr}${antStr}\n• **In Context**: "${entry.example}"${famStr}`;
-        }
-
-        // Search in story markup for tag definition
-        const tagRegex = new RegExp(`\\[([A-Z]+):${targetWord}\\]\\(([^)]*)\\)`, 'i');
-        const tagMatch = storyRaw.match(tagRegex);
-        if (tagMatch) {
-          const type = tagMatch[1];
-          const explanation = tagMatch[2];
-          return `📖 **${targetWord.toUpperCase()}** (from "${storyTitle}")\n• **Grammar Role**: ${type}\n• **Explanation**: ${explanation}\n• **Example in Story**: "... ${targetWord} ..."`;
         }
       }
 
@@ -9860,71 +9940,34 @@
         }
       }
 
-      // 6. GRAMMAR, TENSES & SYNTAX INQUIRIES
-      if (lower.includes('past simple') || lower.includes('past tense') || lower.includes('verbs') || lower.includes('tense')) {
-        return `🔍 **Grammar Insight (Past Tenses)**:\nThis story uses **Past Simple** (e.g. *lived, appeared, transformed, fled, warned*) to narrate completed chronological events, and **Past Passive** (*was forced, was captivated*) when the action is received by the subject. Conjunctions like *Despite, Suddenly,* and *However* sequence the narrative.`;
-      }
-
-      if (lower.includes('passive') || lower.includes('was forced') || lower.includes('was captivated')) {
-        return `🔍 **Passive Voice Breakdown**:\n• **Structure**: *was / were + Past Participle (V3)*\n• **Examples**: "*She was forced to work*" and "*The Prince was captivated*".\n• **Why it's used**: Passive voice emphasizes the person receiving the action rather than who performed it.`;
-      }
-
-      if (lower.includes('adjective') || lower.includes('adjectives')) {
-        return `✨ **Key Adjectives in this Story**:\n• **kind-hearted**: having a sympathetic nature.\n• **cruel**: causing pain without pity.\n• **magnificent**: exceptionally beautiful or grand.\n• **hopeful**: feeling optimistic about the future.`;
-      }
-
-      if (lower.includes('adverb') || lower.includes('adverbs') || lower.includes('-ly')) {
-        return `🎯 **Adverbs of Manner & Time**:\n• **endlessly**: continuously without stopping.\n• **suddenly**: happening quickly and unexpectedly.\n• **happily**: with joy and contentment.\nAdverbs modify verbs and add vivid detail to narrative storytelling.`;
-      }
-
-      if (lower.includes('preposition') || lower.includes('prepositions')) {
-        return `📍 **Prepositions in Story Context**:\n• **to**: direction (*invited to a royal ball*)\n• **by**: time limit (*return by midnight*)\n• **behind**: location (*leaving behind a slipper*)`;
-      }
-
-      // 7. SENTENCE CORRECTION & WRITING ASSISTANCE
-      if (lower.includes('correct this') || lower.includes('is this correct') || lower.includes('check my sentence') || lower.includes('correct my')) {
-        const sentenceCandidate = q.replace(/^(correct this|is this correct|check my sentence|correct my sentence)[:s]*/i, '').trim();
+      // 13. SENTENCE CORRECTION & PROOFREADING ASSISTANCE
+      if (lower.includes('correct this') || lower.includes('is this correct') || lower.includes('check my sentence') || lower.includes('correct my') || lower.includes('proofread')) {
+        const sentenceCandidate = q.replace(/^(correct this|is this correct|check my sentence|correct my sentence|proofread)[:s]*/i, '').trim();
         if (sentenceCandidate.length > 3) {
           let corrected = sentenceCandidate.charAt(0).toUpperCase() + sentenceCandidate.slice(1);
           if (!/[.!?]$/.test(corrected)) corrected += '.';
-          return `✍️ **Grammar & Sentence Check**:\n• **Your Input**: "${sentenceCandidate}"\n• **Polished Version**: "${corrected}"\n• **Feedback**: Ensure proper capitalization at the start and end with standard punctuation (. or !). Your phrasing is natural!`;
+          
+          // Basic grammar polishing
+          corrected = corrected
+            .replace(/\bam learn\b/gi, 'am learning')
+            .replace(/\bevery days\b/gi, 'every day')
+            .replace(/\bi\b/g, 'I');
+
+          return `✍️ **Grammar & Sentence Polishing**:\n• **Your Sentence**: "${sentenceCandidate}"\n• **Polished Version**: "${corrected}"\n• **Explanation**: \n  - Always capitalize 'I' when referring to yourself.\n  - Use **Present Continuous** (*am learning*) for ongoing actions.\n  - Use *"every day"* (two words as an adverb) for daily habits!`;
         }
       }
 
-      // 8. MULTILINGUAL TRANSLATION INQUIRY
+      // 14. MULTILINGUAL TRANSLATION INQUIRY
       if (lower.includes('translate') || lower.includes('in french') || lower.includes('in arabic') || lower.includes('in spanish')) {
-        const frDict = {
-          "cinderella": "Cendrillon", "prince": "Prince", "glass slipper": "pantoufle de verre",
-          "magnificent": "magnifique", "cruel": "cruel", "kind-hearted": "au grand cœur",
-          "fled": "s'est enfuie", "midnight": "minuit", "carriage": "carrosse", "pumpkin": "citrouille"
-        };
-        const arDict = {
-          "cinderella": "سندريلا", "prince": "الأمير", "glass slipper": "الحذاء الزجاجي",
-          "magnificent": "رائع / بديع", "cruel": "قاسي", "kind-hearted": "طيب القلب",
-          "fled": "هربت", "midnight": "منتصف الليل", "carriage": "عربة", "pumpkin": "اليقطين"
-        };
-
         if (lower.includes('french') || lower.includes('français')) {
           return `🇫🇷 **French Translation Assistant**:\n• Key vocabulary from "${storyTitle}":\n  - *Glass slipper* = *la pantoufle de verre*\n  - *Fairy Godmother* = *la fée marraine*\n  - *Magnificent* = *magnifique*\n  - *Midnight* = *minuit*`;
         } else if (lower.includes('arabic') || lower.includes('عربي')) {
-          return `🇸🇦 **Arabic Translation Assistant**:\n• مصطلحات القصة باللغة العربية:\n  - *Glass slipper* = *الحذاء الزجاجي*\n  - *Magnificent* = *رائع وبديع*\n  - *Kind-hearted* = *طيب القلب*\n  - *Midnight* = *منتصف الليل*`;
+          return `🇸🇦 **Arabic Translation Assistant**:\n• مصطلحات القصة باللغة العربية:\n  - *Glass slipper* = *الحذاء الزجاجي*\n  - *Magnificent* = *رائع وبديع*\n  - *Kind-hearted* = *طيب القلب*\n  - *Midnight* = *منت منتصف الليل*`;
         }
       }
 
-      // 9. CONTEXTUAL STORY QUESTION FALLBACK
-      // If user asks any other specific question about the story
-      const storyMatchingSentences = storyPlain.split(/[.!?]+/).filter(s => {
-        const sLower = s.toLowerCase();
-        return wordsInQuery.some(w => sLower.includes(w));
-      });
-
-      if (storyMatchingSentences.length > 0) {
-        const bestSentence = storyMatchingSentences[0].trim();
-        return `📖 **Story Context for "${q}"**:\nIn "${storyTitle}", the text explains:\n*"...${bestSentence}..."*\n\nThis shows how the events develop at the ${storyLevel} learning level. Would you like to practice a sentence using these words?`;
-      }
-
-      // 10. DEFAULT CONVERSATIONAL EDUCATIONAL RESPONSE
-      return `🤖 **LingoBot Tutor**:\nRegarding **"${q}"** in **"${storyTitle}"** (${storyLevel} Level):\nWe focus on clear sentence structure, accurate vocabulary, and natural narrative flow. You can ask me to define any word, explain past tenses, give synonyms/antonyms, or check your own English sentences!`;
+      // 15. FREE CHAT & GENERAL CONVERSATION FALLBACK
+      return `💬 **LingoBot Conversation & Learning Partner**:\nThat's a fantastic topic, Abdelmalek! Practicing English through active conversation is one of the fastest ways to build natural fluency.\n\nRegarding **"${q}"**:\nWhen discussing this in English, focus on using clear connecting words (like *In my opinion, Furthermore, As a result*) to express your thoughts seamlessly.\n\n💡 **Mini Language Tip**: Would you like me to show you 3 advanced vocabulary words or an idiom related to this topic?`;
     }
 
     // --- READERS & LISTENERS FEEDBACK SYSTEM ---
