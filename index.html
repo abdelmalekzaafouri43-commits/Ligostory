@@ -159,17 +159,29 @@
     .reader-scroll .story-word { transition: all 0.1s ease-out; border-radius: 4px; padding: 0 1px; display: inline-block; }
     
     @keyframes wordGlowPulse {
-      0% { transform: translateY(6px) scale(0.95); opacity: 0; filter: blur(4px); box-shadow: 0 0 0 rgba(99, 102, 241, 0); }
+      0% { transform: translateY(4px) scale(0.98); opacity: 0.7; filter: blur(2px); box-shadow: 0 0 0 rgba(99, 102, 241, 0); }
       40% { transform: translateY(-4px) scale(1.08); opacity: 1; filter: blur(0); box-shadow: 0 0 16px rgba(168, 85, 247, 0.5); }
       100% { transform: translateY(-2px) scale(1.05); opacity: 1; filter: blur(0); box-shadow: 0 0 10px rgba(99, 102, 241, 0.45); }
     }
 
-    .reader-scroll .story-word.active-spoken-word {
+    #storyContent.is-reading-aloud .story-word { 
+      opacity: 0.35; 
+      transform: translateY(2px); 
+      transition: all 0.25s ease-out; 
+    }
+    #storyContent.is-reading-aloud .story-word.already-spoken { 
+      opacity: 0.85; 
+      transform: translateY(0); 
+    }
+    #storyContent .story-word.active-spoken-word {
       background: linear-gradient(135deg, rgba(99, 102, 241, 0.28), rgba(168, 85, 247, 0.28));
-      color: var(--primary);
+      color: var(--primary) !important;
       font-weight: 700;
       border-bottom: 2px solid var(--primary);
-      animation: wordGlowPulse 0.3s ease-out forwards;
+      opacity: 1 !important;
+      transform: translateY(-4px) scale(1.08) !important;
+      box-shadow: 0 4px 12px rgba(168, 85, 247, 0.35);
+      animation: none; /* Removing the old pulse as we use CSS transitions now */
     }
     .font-14 { font-size: 14px; } .font-16 { font-size: 16px; } .font-18 { font-size: 18px; } .font-21 { font-size: 21px; }
 
@@ -2040,16 +2052,20 @@
         return false;
       };
 
-      if ((word === 'lion' || word === 'roared' || word === 'roar' || word === 'brayed') && canPlay('lion')) {
+      if ((word === 'lion' || word === 'roared' || word === 'roar' || word === 'brayed' || word === 'growl') && canPlay('lion')) {
         playLionRoar();
       } else if ((word === 'laugh' || word === 'laughed' || word === 'laughing' || word === 'giggle' || word === 'giggled' || word === 'chuckle') && canPlay('laugh')) {
         playLaugh();
-      } else if ((word === 'thunder' || word === 'lightning') && canPlay('thunder')) {
+      } else if ((word === 'thunder' || word === 'lightning' || word === 'storm' || word === 'boom') && canPlay('thunder')) {
         playThunder();
-      } else if ((word === 'rain' || word === 'raining' || word === 'shower') && canPlay('rain')) {
+      } else if ((word === 'rain' || word === 'raining' || word === 'shower' || word === 'pour' || word === 'drizzle') && canPlay('rain')) {
         startRainSoundscape();
-      } else if ((word === 'wind' || word === 'breeze' || word === 'blowing') && canPlay('wind')) {
+      } else if ((word === 'wind' || word === 'breeze' || word === 'blowing' || word === 'howled' || word === 'gale') && canPlay('wind')) {
         startWindSoundscape();
+      } else if ((word === 'birds' || word === 'forest' || word === 'chirp' || word === 'singing') && canPlay('birds')) {
+        startForestBirdsSoundscape();
+      } else if ((word === 'ocean' || word === 'sea' || word === 'waves' || word === 'water' || word === 'splash') && canPlay('waves')) {
+        startWavesSoundscape();
       }
     }
 
@@ -2841,9 +2857,14 @@
               const end = parseInt(span.dataset.end);
               if (charIdx >= start && charIdx < end) {
                 span.classList.add('active-spoken-word');
+                span.classList.remove('already-spoken');
                 span.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+              } else if (end <= charIdx) {
+                span.classList.remove('active-spoken-word');
+                span.classList.add('already-spoken');
               } else {
                 span.classList.remove('active-spoken-word');
+                span.classList.remove('already-spoken');
               }
             });
 
@@ -2888,8 +2909,13 @@
       document.getElementById('btnPlay').style.display = 'flex';
       document.getElementById('btnStop').style.display = 'none';
       document.getElementById('progressFill').style.width = '0%';
+      
+      const content = document.getElementById('storyContent');
+      if (content) content.classList.remove('is-reading-aloud');
+      
       document.querySelectorAll('#storyContent .story-word').forEach(span => {
         span.classList.remove('active-spoken-word');
+        span.classList.remove('already-spoken');
       });
     }
 
