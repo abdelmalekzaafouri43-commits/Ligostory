@@ -271,26 +271,31 @@
       will-change: transform, opacity, box-shadow;
     }
     
-    @keyframes activeWordFloatGlow {
+    @keyframes activeWordSubtleHighlight {
       0% { 
-        transform: translateY(-3px) scale(1.08); 
-        box-shadow: 0 3px 14px rgba(99, 102, 241, 0.42), 0 0 10px rgba(168, 85, 247, 0.35); 
+        transform: translateY(-2px) scale(1.05); 
+        box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35), 0 0 8px rgba(168, 85, 247, 0.25); 
+      }
+      50% { 
+        transform: translateY(-3.5px) scale(1.08); 
+        box-shadow: 0 5px 16px rgba(99, 102, 241, 0.5), 0 0 12px rgba(168, 85, 247, 0.4); 
       }
       100% { 
-        transform: translateY(-5px) scale(1.12); 
-        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.65), 0 0 16px rgba(168, 85, 247, 0.55); 
+        transform: translateY(-2px) scale(1.05); 
+        box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35), 0 0 8px rgba(168, 85, 247, 0.25); 
       }
     }
 
     #storyContent.is-reading-aloud .story-word { 
-      opacity: 0.32; 
-      transform: translateY(1.5px); 
-      filter: blur(0.35px);
-      transition: opacity 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
-                  transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
-                  filter 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
-                  background 0.25s ease,
-                  box-shadow 0.25s ease; 
+      opacity: 0.42; 
+      transform: translateY(1px); 
+      filter: blur(0.25px);
+      transition: opacity 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+                  transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+                  filter 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+                  background 0.2s ease,
+                  box-shadow 0.2s ease,
+                  color 0.2s ease; 
     }
     #storyContent.is-reading-aloud .story-word.already-spoken { 
       opacity: 0.94; 
@@ -298,17 +303,17 @@
       filter: blur(0);
     }
     #storyContent .story-word.active-spoken-word {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.32), rgba(168, 85, 247, 0.36)) !important;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.28), rgba(168, 85, 247, 0.32)) !important;
       color: var(--primary) !important;
-      font-weight: 800;
-      border-bottom: 2px solid var(--primary);
+      font-weight: 700;
+      border-bottom: 2.5px solid var(--primary);
+      border-radius: 6px;
       opacity: 1 !important;
       filter: blur(0) !important;
-      transform: translateY(-4px) scale(1.1) !important;
-      box-shadow: 0 4px 18px rgba(99, 102, 241, 0.5), 0 0 12px rgba(168, 85, 247, 0.4);
-      animation: activeWordFloatGlow 1.2s ease-in-out infinite alternate !important;
+      animation: activeWordSubtleHighlight 1.3s ease-in-out infinite !important;
       z-index: 3;
       position: relative;
+      display: inline-block;
     }
     .font-14 { font-size: 14px; } .font-16 { font-size: 16px; } .font-18 { font-size: 18px; } .font-21 { font-size: 21px; }
 
@@ -833,25 +838,44 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 12px;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .builder-dropzone.active-drop {
+      border-color: var(--primary);
+      background: rgba(67, 56, 202, 0.12);
+      box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.18), inset 0 0 12px rgba(67, 56, 202, 0.12);
+      transform: scale(1.008);
     }
     .builder-chip {
-      padding: 6px 12px;
-      border-radius: 8px;
-      background: var(--primary);
+      padding: 7px 14px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark, #3730a3));
       color: white;
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      animation: chipPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 2px 6px rgba(67, 56, 202, 0.25);
+      gap: 6px;
+      box-shadow: 0 3px 10px rgba(67, 56, 202, 0.28);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                  background 0.22s ease;
+      will-change: transform;
+      user-select: none;
+      position: relative;
+    }
+    .builder-chip.animating-entry {
+      will-change: transform, box-shadow;
+      z-index: 10;
     }
     .builder-chip:hover {
-      background: var(--primary-dark);
-      transform: scale(0.96);
+      background: linear-gradient(135deg, var(--primary-dark, #3730a3), var(--primary));
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 16px rgba(67, 56, 202, 0.38);
+    }
+    .builder-chip:active {
+      transform: scale(0.95);
     }
     .builder-source-chips {
       display: flex;
@@ -874,6 +898,11 @@
       cursor: pointer;
       transition: all 0.18s ease;
       user-select: none;
+      position: relative;
+    }
+    .source-word-chip.animating-entry {
+      will-change: transform, box-shadow;
+      z-index: 10;
     }
     .source-word-chip:hover {
       border-color: var(--primary);
@@ -9279,10 +9308,15 @@
             wordSpans.forEach(span => {
               const start = parseInt(span.dataset.start);
               const end = parseInt(span.dataset.end);
-              if (charIdx >= start && charIdx < end) {
-                span.classList.add('active-spoken-word');
-                span.classList.remove('already-spoken');
-                span.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+              const isMatch = (charIdx >= start && charIdx < end) || 
+                              (charIdx + charLen > start && charIdx <= start);
+
+              if (isMatch) {
+                if (!span.classList.contains('active-spoken-word')) {
+                  span.classList.add('active-spoken-word');
+                  span.classList.remove('already-spoken');
+                  span.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+                }
               } else if (end <= charIdx) {
                 span.classList.remove('active-spoken-word');
                 span.classList.add('already-spoken');
@@ -10291,7 +10325,7 @@
           const chip = document.createElement('div');
           chip.className = "builder-chip";
           chip.innerHTML = `${escapeHtml(word)} <span style="font-size:10px; opacity:0.75;">✕</span>`;
-          chip.onclick = () => removeWordFromBuilt(wIdx);
+          chip.onclick = (e) => removeWordFromBuilt(wIdx, e);
           dropzone.appendChild(chip);
         });
       }
@@ -10302,28 +10336,103 @@
         const chip = document.createElement('button');
         chip.className = "source-word-chip";
         chip.innerText = word;
-        chip.onclick = () => addWordToBuilt(word, wIdx);
+        chip.onclick = (e) => addWordToBuilt(word, wIdx, e);
         sourceContainer.appendChild(chip);
       });
     }
 
-    function addWordToBuilt(word, sourceIdx) {
+    function animateChipMovement(fromRect, targetElement, isReturn = false) {
+      if (!fromRect || !targetElement) return;
+      const targetRect = targetElement.getBoundingClientRect();
+      const deltaX = fromRect.left - targetRect.left;
+      const deltaY = fromRect.top - targetRect.top;
+
+      targetElement.style.transition = 'none';
+      targetElement.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(${isReturn ? 1.06 : 0.88})`;
+      targetElement.classList.add('animating-entry');
+      if (!isReturn) {
+        targetElement.style.boxShadow = '0 10px 28px rgba(67, 56, 202, 0.45)';
+      }
+
+      const dropzone = document.getElementById('sbDropzone');
+      if (dropzone) {
+        dropzone.classList.add('active-drop');
+        setTimeout(() => dropzone.classList.remove('active-drop'), 380);
+      }
+
+      // Force layout reflow
+      targetElement.getBoundingClientRect();
+
+      requestAnimationFrame(() => {
+        targetElement.style.transition = 'transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.38s ease, background 0.35s ease, border-color 0.35s ease';
+        targetElement.style.transform = 'translate3d(0, 0, 0) scale(1)';
+        targetElement.style.boxShadow = '';
+
+        setTimeout(() => {
+          targetElement.style.transition = '';
+          targetElement.style.transform = '';
+          targetElement.classList.remove('animating-entry');
+        }, 400);
+      });
+    }
+
+    function addWordToBuilt(word, sourceIdx, event) {
+      let sourceRect = null;
+      if (event && event.currentTarget) {
+        sourceRect = event.currentTarget.getBoundingClientRect();
+      }
+
       sbAvailableWords.splice(sourceIdx, 1);
       sbBuiltWords.push(word);
       renderSentenceBuilderUI();
+
+      if (sourceRect) {
+        const dropzone = document.getElementById('sbDropzone');
+        const newChip = dropzone.lastElementChild;
+        if (newChip && newChip.classList.contains('builder-chip')) {
+          animateChipMovement(sourceRect, newChip, false);
+        }
+      }
     }
 
-    function removeWordFromBuilt(builtIdx) {
+    function removeWordFromBuilt(builtIdx, event) {
+      let sourceRect = null;
+      if (event && event.currentTarget) {
+        sourceRect = event.currentTarget.getBoundingClientRect();
+      }
+
       const word = sbBuiltWords.splice(builtIdx, 1)[0];
       sbAvailableWords.push(word);
       renderSentenceBuilderUI();
+
+      if (sourceRect && word) {
+        const sourceContainer = document.getElementById('sbSourceChips');
+        const sourceChips = Array.from(sourceContainer.querySelectorAll('.source-word-chip'));
+        const targetSourceChip = sourceChips.find(c => c.innerText.trim() === word.trim());
+        if (targetSourceChip) {
+          animateChipMovement(sourceRect, targetSourceChip, true);
+        }
+      }
     }
 
     function undoSentenceBuilder() {
       if (sbBuiltWords.length > 0) {
+        const dropzone = document.getElementById('sbDropzone');
+        const lastChip = dropzone ? dropzone.lastElementChild : null;
+        const sourceRect = (lastChip && lastChip.classList.contains('builder-chip')) ? lastChip.getBoundingClientRect() : null;
+
         const word = sbBuiltWords.pop();
         sbAvailableWords.push(word);
         renderSentenceBuilderUI();
+
+        if (sourceRect && word) {
+          const sourceContainer = document.getElementById('sbSourceChips');
+          const sourceChips = Array.from(sourceContainer.querySelectorAll('.source-word-chip'));
+          const targetSourceChip = sourceChips.find(c => c.innerText.trim() === word.trim());
+          if (targetSourceChip) {
+            animateChipMovement(sourceRect, targetSourceChip, true);
+          }
+        }
       }
     }
 
@@ -10338,7 +10447,22 @@
 
       const availIdx = sbAvailableWords.indexOf(nextWordNeeded);
       if (availIdx !== -1) {
-        addWordToBuilt(nextWordNeeded, availIdx);
+        const sourceContainer = document.getElementById('sbSourceChips');
+        const sourceChips = Array.from(sourceContainer.querySelectorAll('.source-word-chip'));
+        const sourceElem = sourceChips[availIdx];
+        const sourceRect = sourceElem ? sourceElem.getBoundingClientRect() : null;
+
+        sbAvailableWords.splice(availIdx, 1);
+        sbBuiltWords.push(nextWordNeeded);
+        renderSentenceBuilderUI();
+
+        if (sourceRect) {
+          const dropzone = document.getElementById('sbDropzone');
+          const newChip = dropzone.lastElementChild;
+          if (newChip && newChip.classList.contains('builder-chip')) {
+            animateChipMovement(sourceRect, newChip, false);
+          }
+        }
       }
     }
 
