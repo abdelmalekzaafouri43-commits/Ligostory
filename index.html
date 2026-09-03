@@ -1496,32 +1496,15 @@
     };
 
     function getSmartLexis(word, type, info) {
-      const key = word.toLowerCase();
+      const key = word.toLowerCase().replace(/[^a-z]/g, '');
       if (smartLexisDb[key]) {
         return smartLexisDb[key];
       }
-      let syn = ["notable", "significant", "expressive"];
-      let ant = ["ordinary", "unremarkable"];
-      let example = `In context, "${word}" is used to convey "${info}".`;
-      
-      if (type === "ADJ") {
-        syn = ["notable", "striking", "expressive"];
-        ant = ["ordinary", "unremarkable"];
-        example = `The travelers noticed the ${word} scenery along the winding path.`;
-      } else if (type === "ADV") {
-        syn = ["greatly", "markedly"];
-        ant = ["moderately", "slightly"];
-        example = `She completed the task quite ${word} under pressure.`;
-      } else if (type === "T" || type === "VERB") {
-        syn = ["perform", "execute", "act"];
-        ant = ["cease", "halt"];
-        example = `They decided to ${word} with great care and attention.`;
-      } else if (type === "N") {
-        syn = ["entity", "concept", "element"];
-        ant = ["abstraction"];
-        example = `The new ${word} brought fresh ideas to the discussion.`;
-      }
-      return { syn, ant, example };
+      return { 
+        syn: [], 
+        ant: [], 
+        example: `In this context, "${word}" means: ${info.toLowerCase()}` 
+      };
     }
 
     function showAnnotationModal(token) {
@@ -1533,8 +1516,35 @@
       document.getElementById('sheetDesc').innerText = token.info;
 
       const lexis = getSmartLexis(token.text, token.type, token.info);
-      document.getElementById('sheetSynonyms').innerText = lexis.syn.join(', ');
-      document.getElementById('sheetAntonyms').innerText = lexis.ant.join(', ');
+      
+      const synEl = document.getElementById('sheetSynonyms');
+      const antEl = document.getElementById('sheetAntonyms');
+      
+      const lexisBox = document.getElementById('sheetSynonyms').parentElement.parentElement;
+      const lexisTitle = lexisBox.querySelector('div:first-child');
+      
+      if ((!lexis.syn || lexis.syn.length === 0) && (!lexis.ant || lexis.ant.length === 0)) {
+        lexisTitle.innerText = "📖 Contextual Usage";
+        synEl.parentElement.style.display = 'none';
+        antEl.parentElement.style.display = 'none';
+      } else {
+        lexisTitle.innerText = "💡 Smart Lexis Analysis";
+        
+        if (lexis.syn && lexis.syn.length > 0) {
+          synEl.parentElement.style.display = 'block';
+          synEl.innerText = lexis.syn.join(', ');
+        } else {
+          synEl.parentElement.style.display = 'none';
+        }
+        
+        if (lexis.ant && lexis.ant.length > 0) {
+          antEl.parentElement.style.display = 'block';
+          antEl.innerText = lexis.ant.join(', ');
+        } else {
+          antEl.parentElement.style.display = 'none';
+        }
+      }
+      
       document.getElementById('sheetExample').innerText = `"${lexis.example}"`;
 
       openModal('annotationModal');
@@ -1548,8 +1558,8 @@
         type: currentAnnotationObj.type,
         extra: currentAnnotationObj.extra || '',
         info: currentAnnotationObj.info,
-        syn: lexis.syn.join(', '),
-        ant: lexis.ant.join(', '),
+        syn: lexis.syn && lexis.syn.length > 0 ? lexis.syn.join(', ') : '',
+        ant: lexis.ant && lexis.ant.length > 0 ? lexis.ant.join(', ') : '',
         example: lexis.example,
         date: new Date().toLocaleDateString()
       };
@@ -2829,6 +2839,9 @@
     function startAudio() {
       if (!('speechSynthesis' in window)) return alert('TTS not supported');
       window.speechSynthesis.cancel();
+      
+      const content = document.getElementById('storyContent');
+      if (content) content.classList.add('is-reading-aloud');
 
       if (!fullPlainString) {
         parseStoryMarkup(currentStory.raw);
