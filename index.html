@@ -4796,45 +4796,34 @@
       return "";
     }
 
-    // Always ensure ALL default stories exist in allStories with complete text & quizzes!
-    let savedStories = [];
-    try {
-      savedStories = JSON.parse(localStorage.getItem('lingo_stories_v9') || localStorage.getItem('lingo_stories_v8') || localStorage.getItem('lingo_stories_v7') || localStorage.getItem('lingo_stories_v6')) || [];
-    } catch (e) {
-      savedStories = [];
-    }
-
+    // Always use pristine built-in default stories directly from code source
     let combinedStoriesMap = {};
-    // Populate with all built-in default stories
     defaultStories.forEach(s => {
       combinedStoriesMap[s.id] = Object.assign({}, s);
     });
 
-    // Add any user-generated custom stories from localStorage
+    // Add user-created custom stories from localStorage (only if NOT a built-in story ID)
+    let savedStories = [];
+    try {
+      savedStories = JSON.parse(
+        localStorage.getItem('lingo_custom_stories') ||
+        localStorage.getItem('lingo_stories_v9') ||
+        localStorage.getItem('lingo_stories_v8') ||
+        localStorage.getItem('lingo_stories_v7')
+      ) || [];
+    } catch (e) {
+      savedStories = [];
+    }
+
     if (Array.isArray(savedStories)) {
       savedStories.forEach(s => {
-        if (s && s.id && !defaultStoriesMap[s.id]) {
-          combinedStoriesMap[s.id] = s;
-        } else if (s && s.id && defaultStoriesMap[s.id]) {
-          // Ensure built-in story has complete text & quiz
-          if (!s.raw || s.raw.trim().length < 50) {
-            s.raw = defaultStoriesMap[s.id].raw;
-          }
-          if (!s.quiz || !Array.isArray(s.quiz) || s.quiz.length === 0) {
-            s.quiz = defaultStoriesMap[s.id].quiz;
-          }
+        if (s && s.id && !defaultStoriesMap[s.id] && s.raw && s.raw.trim().length > 10) {
           combinedStoriesMap[s.id] = s;
         }
       });
     }
 
     let allStories = Object.values(combinedStoriesMap);
-    try {
-      localStorage.setItem('lingo_stories_v9', JSON.stringify(allStories));
-      localStorage.setItem('lingo_stories_v8', JSON.stringify(allStories));
-      localStorage.setItem('lingo_stories_v7', JSON.stringify(allStories));
-      localStorage.setItem('lingo_stories_v6', JSON.stringify(allStories));
-    } catch(e) {}
 
     let currentStory = allStories[0] || defaultStories[0];
     let parsedTokens = [];
@@ -4901,6 +4890,14 @@
     let isAmbientOn = false;
 
     function init() {
+      // Clean up legacy corrupted story keys from older versions
+      try {
+        localStorage.removeItem('lingo_stories_v9');
+        localStorage.removeItem('lingo_stories_v8');
+        localStorage.removeItem('lingo_stories_v7');
+        localStorage.removeItem('lingo_stories_v6');
+      } catch(e){}
+
       // Restore theme & font preferences if available
       try {
         const savedPaletteIdx = localStorage.getItem('lingo_palette_idx');
@@ -5089,7 +5086,7 @@
       if (!parsedTokens || parsedTokens.length === 0) {
         const raw = getStoryRawText(currentStory);
         if (raw) {
-          content.innerHTML = `<div style="padding:16px; font-size:16px; line-height:1.7;">${escapeHtml(raw)}</div>`;
+          content.innerHTML = `<div style="padding:16px; font-size:16px; line-height:1.8; color:var(--text-main);">${escapeHtml(raw)}</div>`;
         } else {
           content.innerHTML = `<div style="padding:16px; font-size:15px; color:var(--text-muted);">No story text available for this item.</div>`;
         }
@@ -5102,11 +5099,7 @@
         } else if (token.type === 'TEXT') {
           const span = document.createElement('span');
           span.innerText = token.text;
-          span.className = 'story-word premium-reveal clickable-plain-word';
-          
-          const delay = Math.min(wordIndex * 0.012, 0.4);
-          span.style.animationDelay = `${delay}s`;
-          span.style.setProperty('--final-opacity', '1');
+          span.className = 'story-word clickable-plain-word';
           span.style.opacity = '1';
           
           span.dataset.start = token.charStart;
@@ -5132,13 +5125,9 @@
         } else {
           const span = document.createElement('span');
           span.innerText = token.text;
-          span.className = `story-word premium-reveal part part-${token.type.toLowerCase()}`;
-          
-          const delay = Math.min(wordIndex * 0.015, 0.8);
-          span.style.animationDelay = `${delay}s`;
+          span.className = `story-word part part-${token.type.toLowerCase()}`;
           
           const finalOpacity = (activeFilter && activeFilter !== token.type) ? "0.35" : "1";
-          span.style.setProperty('--final-opacity', finalOpacity);
           span.style.opacity = finalOpacity;
           
           span.dataset.start = token.charStart;
