@@ -943,6 +943,293 @@
       background: linear-gradient(135deg, #10b981, #3b82f6);
     }
 
+  
+    /* Synonyms & Antonyms Chips */
+    .syn-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #059669;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .syn-chip:hover {
+      background: #10b981;
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+    }
+    .ant-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 12px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #dc2626;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .ant-chip:hover {
+      background: #ef4444;
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+    }
+    .clickable-plain-word {
+      cursor: pointer;
+      transition: color 0.15s ease, background-color 0.15s ease;
+      border-radius: 3px;
+      padding: 0 1px;
+    }
+    .clickable-plain-word:hover {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--primary);
+    }
+
+
+    /* ========================================================
+       PREMIUM GLASS AI COMPANION SPACE & MODAL STYLES
+       ======================================================== */
+    .glass-ai-container {
+      background: rgba(255, 255, 255, 0.76);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      box-shadow: 0 12px 38px 0 rgba(124, 58, 237, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.04);
+      border-radius: 22px;
+      padding: 22px;
+      margin-top: 22px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .dark-mode .glass-ai-container {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+    }
+    .glass-ai-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(55px);
+      opacity: 0.22;
+      pointer-events: none;
+      z-index: 0;
+      animation: glassOrbPulse 6s ease-in-out infinite alternate;
+    }
+    @keyframes glassOrbPulse {
+      0% { transform: scale(1) translate(0, 0); opacity: 0.18; }
+      100% { transform: scale(1.15) translate(8px, -8px); opacity: 0.28; }
+    }
+    .glass-ai-orb-1 { top: -50px; right: -40px; width: 220px; height: 220px; background: linear-gradient(135deg, #a855f7, #ec4899); }
+    .glass-ai-orb-2 { bottom: -50px; left: -40px; width: 200px; height: 200px; background: linear-gradient(135deg, #6366f1, #06b6d4); }
+    .glass-ai-orb-3 { top: 40%; left: 30%; width: 150px; height: 150px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); opacity: 0.12; }
+
+    /* Glass AI Modal Sheet */
+    .glass-ai-modal-sheet {
+      background: rgba(255, 255, 255, 0.88) !important;
+      backdrop-filter: blur(28px) saturate(200%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.8) !important;
+      box-shadow: 0 -10px 45px rgba(124, 58, 237, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.6) inset !important;
+      border-radius: 28px 28px 0 0 !important;
+      position: relative;
+      overflow: hidden;
+    }
+    .dark-mode .glass-ai-modal-sheet {
+      background: rgba(15, 23, 42, 0.88) !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      box-shadow: 0 -10px 45px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08) inset !important;
+    }
+
+    /* Glass AI Header & Status */
+    .glass-ai-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 14px rgba(168, 85, 247, 0.4);
+      flex-shrink: 0;
+      position: relative;
+    }
+    .glass-ai-status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #10b981;
+      border: 2px solid white;
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      box-shadow: 0 0 8px #10b981;
+      animation: statusPulse 2s infinite;
+    }
+    @keyframes statusPulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* Glass AI Prompt Chips */
+    .glass-ai-chip {
+      padding: 6px 13px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(168, 85, 247, 0.28);
+      color: var(--text-main);
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.05);
+    }
+    .dark-mode .glass-ai-chip {
+      background: rgba(30, 41, 59, 0.65);
+      border-color: rgba(168, 85, 247, 0.35);
+      color: #e2e8f0;
+    }
+    .glass-ai-chip:hover {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(99, 102, 241, 0.2));
+      border-color: #a855f7;
+      color: #9333ea;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(168, 85, 247, 0.2);
+    }
+    .dark-mode .glass-ai-chip:hover {
+      color: #c084fc;
+    }
+
+    /* Glass Chat Message Area */
+    .glass-chat-feed {
+      background: rgba(248, 250, 252, 0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .dark-mode .glass-chat-feed {
+      background: rgba(15, 23, 42, 0.55);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Glass Bubbles */
+    .glass-bot-bubble {
+      align-self: flex-start;
+      max-width: 90%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      border-left: 3.5px solid #a855f7;
+      border-radius: 16px 16px 16px 4px;
+      padding: 12px 15px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-main);
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.06);
+      position: relative;
+    }
+    .dark-mode .glass-bot-bubble {
+      background: rgba(30, 41, 59, 0.85);
+      border-color: rgba(168, 85, 247, 0.35);
+      color: #f1f5f9;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+    .glass-user-bubble {
+      align-self: flex-end;
+      max-width: 85%;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: #ffffff;
+      border-radius: 16px 16px 4px 16px;
+      padding: 11px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.5;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    /* Glass Input Box */
+    .glass-ai-input-wrap {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 14px;
+      padding: 4px 6px 4px 12px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 10px rgba(124, 58, 237, 0.05);
+    }
+    .dark-mode .glass-ai-input-wrap {
+      background: rgba(30, 41, 59, 0.7);
+      border-color: rgba(168, 85, 247, 0.35);
+    }
+    .glass-ai-input-wrap:focus-within {
+      border-color: #a855f7;
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.22), 0 4px 16px rgba(168, 85, 247, 0.15);
+    }
+    .glass-ai-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text-main);
+      font-size: 13px;
+      padding: 8px 0;
+    }
+    .glass-ai-input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.8;
+    }
+    .glass-ai-send-btn {
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      color: white;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 10px rgba(168, 85, 247, 0.35);
+      transition: all 0.2s ease;
+    }
+    .glass-ai-send-btn:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 16px rgba(168, 85, 247, 0.5);
+    }
+
   </style>
 </head>
 <body>
@@ -1107,6 +1394,58 @@
         <div id="quizArea" class="quiz-container"></div>
 
         <!-- Glass Learners & Readers Feedback Page -->
+        
+        <!-- Glass AI Companion Interactive Space -->
+        <div id="storyCompanionArea" class="glass-ai-container">
+          <div class="glass-ai-orb glass-ai-orb-1"></div>
+          <div class="glass-ai-orb glass-ai-orb-2"></div>
+          <div class="glass-ai-orb glass-ai-orb-3"></div>
+
+          <div style="position:relative; z-index:1;">
+            <!-- Header & Badge -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid rgba(168,85,247,0.2); padding-bottom:12px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div class="glass-ai-avatar">
+                  🤖
+                  <div class="glass-ai-status-dot"></div>
+                </div>
+                <div>
+                  <div style="font-size:1.1rem; font-weight:800; background:linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:-0.3px;">LingoBot AI Companion & Story Tutor</div>
+                  <div style="font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:5px;">
+                    <span>✨ Real-time English Guidance</span> • <span style="color:#10b981; font-weight:700;">● Online Ready</span>
+                  </div>
+                </div>
+              </div>
+              <button class="btn-pill" style="background:rgba(168,85,247,0.15); color:#a855f7; border:1px solid rgba(168,85,247,0.35); font-weight:700; font-size:11.5px; padding:6px 14px; box-shadow:0 2px 8px rgba(168,85,247,0.15);" onclick="openAiCompanion()">🔍 Full Companion Space</button>
+            </div>
+
+            <!-- Quick Story Actions & Prompts -->
+            <div style="display:flex; gap:7px; overflow-x:auto; padding-bottom:10px; margin-bottom:12px; scrollbar-width:none;">
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Explain the moral and main lesson of this story.')">💡 Story Moral & Lesson</button>
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Let\'s practice a conversation based on this story!')">🗣️ Interactive Chat Practice</button>
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Quiz me with 3 new vocabulary questions from this story.')">📝 Vocab Drill Quiz</button>
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Explain the key grammar rules and tenses used here.')">🔍 Grammar Breakdown</button>
+              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Summarize this story in 3 simple sentences.')">⚡ Quick 3-Sentence Summary</button>
+            </div>
+
+            <!-- In-Story Live Chat Feed -->
+            <div id="storyCompanionChat" class="glass-chat-feed" style="min-height:160px; max-height:280px; margin-bottom:12px;">
+              <div class="glass-bot-bubble">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                  <div>👋 Hello Abdelmalek! I am your <strong>LingoBot AI Companion</strong>. Ask me anything about this story, request grammar breakdowns, or tap any quick prompt above to practice speaking!</div>
+                  <button class="icon-btn" style="padding:2px 6px; font-size:11px; flex-shrink:0; background:rgba(168,85,247,0.15); color:#a855f7;" onclick="speakWord('Hello! I am your LingoBot AI Companion. Ask me anything about this story!')">🔊</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- In-Story Input Box -->
+            <div class="glass-ai-input-wrap">
+              <input id="storyCompanionInput" type="text" class="glass-ai-input" placeholder="Ask LingoBot anything about this story or English grammar..." onkeydown="if(event.key==='Enter') sendStoryCompanionMessage()" />
+              <button class="glass-ai-send-btn" onclick="sendStoryCompanionMessage()">Ask AI 🚀</button>
+            </div>
+          </div>
+        </div>
+
         <div id="feedbackArea" class="glass-feedback-container">
           <div class="glass-glow-orb glass-orb-1"></div>
           <div class="glass-glow-orb glass-orb-2"></div>
@@ -1275,29 +1614,64 @@
 
   <!-- Annotation Detail Modal -->
   <div id="annotationModal" class="modal-overlay" onclick="closeSheet(event, 'annotationModal')">
-    <div class="modal-sheet" style="max-height:85vh; overflow-y:auto;" onclick="event.stopPropagation()">
+    <div class="modal-sheet" style="max-height:88vh; overflow-y:auto; padding:20px; background:rgba(255,255,255,0.92); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.7); box-shadow:0 20px 40px rgba(0,0,0,0.15);" onclick="event.stopPropagation()">
       <div class="modal-drag-handle"></div>
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <div id="sheetWord" style="font-size:1.35rem; font-weight:800; color:var(--primary);">Word</div>
-          <span id="sheetBadge" class="badge badge-a2">TAG</span>
+      
+      <!-- Word Header & Audio -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <div style="display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;">
+          <div id="sheetWord" style="font-size:1.45rem; font-weight:900; color:var(--primary); letter-spacing:-0.4px;">Word</div>
+          <span id="sheetPhonetic" style="font-family:monospace; font-size:12px; color:var(--text-muted); font-weight:600;"></span>
         </div>
-        <button class="icon-btn" style="background:var(--primary); color:white;" onclick="speakWord(currentAnnotationWord)">🔊</button>
+        <button class="icon-btn" style="background:linear-gradient(135deg, #4338ca, #6366f1); color:white; width:38px; height:38px; font-size:18px; box-shadow:0 3px 10px rgba(67,56,202,0.3);" onclick="speakWord(currentAnnotationWord)" title="Listen to Native Pronunciation">🔊</button>
       </div>
-      <div id="sheetTypeTitle" style="font-size:12px; font-weight:bold; color:var(--text-muted); margin-top:4px;">Grammar Category</div>
-      <div id="sheetDesc" style="margin:10px 0; font-size:13px; line-height:1.45;">Explanation</div>
-
-      <!-- Smart Lexis Box -->
-      <div style="background:var(--surface-variant); border:1px solid var(--border); border-radius:12px; padding:12px; margin:12px 0;">
-        <div style="font-size:11px; font-weight:700; color:var(--primary); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">💡 Smart Lexis Analysis</div>
-        <div style="font-size:12px; margin-bottom:6px;"><strong>Synonyms:</strong> <span id="sheetSynonyms" style="color:var(--text-main);">—</span></div>
-        <div style="font-size:12px; margin-bottom:6px;"><strong>Antonyms:</strong> <span id="sheetAntonyms" style="color:var(--text-main);">—</span></div>
-        <div style="font-size:12px;"><strong>Example Sentence:</strong> <span id="sheetExample" style="font-style:italic; color:var(--text-main);">—</span></div>
+      
+      <!-- Badges & Category -->
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+        <span id="sheetBadge" class="badge badge-a2">TAG</span>
+        <span id="sheetTypeTitle" style="font-size:11.5px; font-weight:700; color:var(--text-muted);">Grammar Category</span>
       </div>
 
+      <!-- Meaning Section -->
+      <div id="sheetDesc" style="margin:10px 0;">Explanation</div>
+
+      <!-- Smart Lexis & Thesaurus Box -->
+      <div style="background:rgba(255,255,255,0.75); border:1px solid var(--border); border-radius:14px; padding:14px; margin:12px 0; box-shadow:0 2px 10px rgba(0,0,0,0.03);">
+        <div style="font-size:11.5px; font-weight:800; color:var(--primary); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+          <span>💡 Smart Lexis & Thesaurus</span>
+        </div>
+        
+        <!-- Synonyms Chips -->
+        <div style="margin-bottom:10px;">
+          <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:4px; text-transform:uppercase;">🔄 Synonyms (tap to explore):</div>
+          <div id="sheetSynonyms" style="display:flex; flex-wrap:wrap; gap:6px;">—</div>
+        </div>
+
+        <!-- Antonyms Chips -->
+        <div style="margin-bottom:10px;">
+          <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:4px; text-transform:uppercase;">⚡ Antonyms (tap to explore):</div>
+          <div id="sheetAntonyms" style="display:flex; flex-wrap:wrap; gap:6px;">—</div>
+        </div>
+
+        <!-- Example Sentence -->
+        <div style="padding-top:8px; border-top:1px dashed var(--border); margin-top:8px;">
+          <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:3px; text-transform:uppercase;">📖 Contextual Example:</div>
+          <div id="sheetExample" style="font-size:12.5px; font-style:italic; color:var(--text-main); line-height:1.45;">—</div>
+        </div>
+
+        <!-- Word Family -->
+        <div style="padding-top:8px; border-top:1px dashed var(--border); margin-top:8px; display:none;">
+          <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:3px; text-transform:uppercase;">🌳 Word Family:</div>
+          <div id="sheetFamily" style="font-size:11.5px; color:var(--text-muted); font-weight:600;">—</div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
       <div style="display:flex; gap:8px; margin-top:14px;">
-        <button class="btn-pill" style="flex:1; justify-content:center; background:var(--primary); color:white; border:none;" onclick="saveCurrentWordToVocab()">💾 Save to Vocab Notebook</button>
-        <button class="btn-pill" style="padding:8px 16px;" onclick="closeModalDirect('annotationModal')">Close</button>
+        <button class="btn-play" style="flex:1; justify-content:center; padding:10px 16px; font-size:12.5px; background:linear-gradient(135deg, #4338ca, #6366f1);" onclick="saveCurrentWordToVocab()">
+          💾 Save to Vocab Notebook
+        </button>
+        <button class="btn-pill" style="padding:10px 16px; font-size:12.5px;" onclick="closeModalDirect('annotationModal')">Close</button>
       </div>
     </div>
   </div>
@@ -1341,43 +1715,52 @@
     </div>
   </div>
 
-  <!-- AI Companion Modal (LingoBot) -->
+  <!-- Glass AI Companion Modal (LingoBot) -->
   <div id="aiCompanionModal" class="modal-overlay" onclick="closeSheet(event, 'aiCompanionModal')">
-    <div class="modal-sheet" style="max-height:85vh; display:flex; flex-direction:column; padding:16px;" onclick="event.stopPropagation()">
+    <div class="modal-sheet glass-ai-modal-sheet" style="max-height:88vh; display:flex; flex-direction:column; padding:18px;" onclick="event.stopPropagation()">
+      <div class="glass-ai-orb glass-ai-orb-1"></div>
+      <div class="glass-ai-orb glass-ai-orb-2"></div>
       <div class="modal-drag-handle"></div>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:10px;">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <div style="width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg, #a855f7, #6366f1); color:white; display:flex; align-items:center; justify-content:center; font-size:18px;">🤖</div>
-          <div>
-            <h2 style="font-size:1rem; font-weight:800; color:var(--primary);">LingoBot AI Companion</h2>
-            <div style="font-size:10.5px; color:var(--text-muted);">24/7 English Language Tutor & Story Guide</div>
+
+      <div style="position:relative; z-index:1; display:flex; flex-direction:column; flex:1; overflow:hidden;">
+        <!-- Header -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(168,85,247,0.25); padding-bottom:10px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="glass-ai-avatar">
+              🤖
+              <div class="glass-ai-status-dot"></div>
+            </div>
+            <div>
+              <h2 style="font-size:1.1rem; font-weight:800; background:linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:0;">LingoBot Glass AI Companion</h2>
+              <div style="font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:6px;">
+                <span>24/7 Smart English Language Tutor</span> • <span style="color:#10b981; font-weight:700;">● Active</span>
+              </div>
+            </div>
           </div>
+          <button class="btn-pill" style="padding:5px 12px; font-size:11.5px; background:rgba(255,255,255,0.7); backdrop-filter:blur(8px); border:1px solid rgba(168,85,247,0.3); color:var(--text-main);" onclick="closeModalDirect('aiCompanionModal')">✕ Close</button>
         </div>
-        <button class="btn-pill" style="padding:4px 10px; font-size:11px;" onclick="closeModalDirect('aiCompanionModal')">✕ Close</button>
-      </div>
 
-      <!-- Quick Prompt Chips -->
-      <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:10px; scrollbar-width:none;">
-        <button class="btn-pill" style="white-space:nowrap; font-size:11px; background:var(--surface-variant);" onclick="sendQuickPrompt('Explain the moral and main lesson of this story.')">💡 Story Lesson</button>
-        <button class="btn-pill" style="white-space:nowrap; font-size:11px; background:var(--surface-variant);" onclick="sendQuickPrompt('Let\'s practice a conversation based on this story!')">🗣️ Practice Chat</button>
-        <button class="btn-pill" style="white-space:nowrap; font-size:11px; background:var(--surface-variant);" onclick="sendQuickPrompt('Quiz me with 3 new vocabulary questions.')">📝 Quick Quiz</button>
-        <button class="btn-pill" style="white-space:nowrap; font-size:11px; background:var(--surface-variant);" onclick="sendQuickPrompt('Explain the key grammar rules used in this story.')">🔍 Grammar Rules</button>
-      </div>
+        <!-- Quick Prompt Chips -->
+        <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:10px; scrollbar-width:none;">
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Explain the moral and main lesson of this story.')">💡 Story Lesson</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Let\'s practice a conversation based on this story!')">🗣️ Practice Chat</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Quiz me with 3 new vocabulary questions.')">📝 Quick Quiz</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Explain the key grammar rules used in this story.')">🔍 Grammar Rules</button>
+          <button class="glass-ai-chip" onclick="sendQuickPrompt('Give me 5 useful synonyms and expressions from this story.')">📖 Vocab Synonyms</button>
+        </div>
 
-      <!-- Chat Messages Scroll Container -->
-      <div id="companionChatContainer" style="flex:1; overflow-y:auto; min-height:240px; max-height:360px; padding:10px; background:var(--surface-variant); border-radius:12px; border:1px solid var(--border); margin-bottom:12px; display:flex; flex-direction:column; gap:10px;">
-      </div>
+        <!-- Chat Messages Scroll Container -->
+        <div id="companionChatContainer" class="glass-chat-feed" style="flex:1; min-height:260px; max-height:420px; margin-bottom:12px;">
+        </div>
 
-      <!-- Chat Input Box -->
-      <div style="display:flex; gap:8px; align-items:center;">
-        <input id="companionInput" type="text" class="form-input" style="flex:1;" placeholder="Ask LingoBot anything about English or this story..." onkeydown="if(event.key==='Enter') sendCompanionMessage()" />
-        <button class="btn-ai" style="padding:8px 16px; border-radius:8px; font-size:12px;" onclick="sendCompanionMessage()">Send 🚀</button>
+        <!-- Chat Input Box -->
+        <div class="glass-ai-input-wrap">
+          <input id="companionInput" type="text" class="glass-ai-input" placeholder="Ask LingoBot anything about English or this story..." onkeydown="if(event.key==='Enter') sendCompanionMessage()" />
+          <button class="glass-ai-send-btn" onclick="sendCompanionMessage()">Send 🚀</button>
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- Floating AI Companion Button -->
-  <button id="companionFab" class="icon-btn" onclick="openAiCompanion()" title="Open LingoBot AI Companion" style="position:fixed; bottom:18px; right:18px; width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, #a855f7, #6366f1); color:white; font-size:22px; box-shadow:0 4px 14px rgba(168,85,247,0.45); z-index:90; border:2px solid #ffffff;">🤖</button>
 
   <!-- Readers & Listeners Feedback Modal -->
   
@@ -3023,6 +3406,10 @@
       renderFeedbacks();
       updateBookmarkButton();
       scanAndUpdateAdaptiveSoundscape(story);
+      if (companionHistory.length === 0) {
+        initCompanionWelcome();
+      }
+      renderCompanionChat();
       stopAudio();
     }
 
@@ -3115,15 +3502,30 @@
         } else if (token.type === 'TEXT') {
           const span = document.createElement('span');
           span.innerText = token.text;
-          span.className = 'story-word premium-reveal';
+          span.className = 'story-word premium-reveal clickable-plain-word';
           
-          // Cap the delay at ~0.8s so long stories don't take forever to render
           const delay = Math.min(wordIndex * 0.015, 0.8);
           span.style.animationDelay = `${delay}s`;
           span.style.setProperty('--final-opacity', '1');
           
           span.dataset.start = token.charStart;
           span.dataset.end = token.charEnd;
+          
+          // Allow clicking any plain word to define it!
+          span.onclick = (e) => {
+            e.stopPropagation();
+            const clean = token.text.replace(/[^a-zA-Z]/g, '');
+            if (clean.length > 0) {
+              checkSpokenWordForSoundEffects(token.text.toLowerCase());
+              showAnnotationModal({
+                text: clean,
+                type: 'L',
+                info: 'Story Vocabulary Word',
+                extra: 'Lexical Term'
+              });
+            }
+          };
+
           content.appendChild(span);
           wordIndex++;
         } else {
@@ -3136,7 +3538,6 @@
           
           const finalOpacity = (activeFilter && activeFilter !== token.type) ? "0.35" : "1";
           span.style.setProperty('--final-opacity', finalOpacity);
-          // Set initial opacity so it looks right if animation isn't fully supported
           span.style.opacity = finalOpacity;
           
           span.dataset.start = token.charStart;
@@ -3159,171 +3560,1328 @@
       renderFullStory();
     }
 
-    const smartLexisDb = {
-      "tranquil": {"syn":["peaceful","serene","calm"],"ant":["turbulent","chaotic","stormy"],"example":"The quiet garden was tranquil and sheltered from the city noise."},
-      "unusual": {"syn":["rare","extraordinary","uncommon"],"ant":["normal","common","typical"],"example":"He showed an unusual talent for solving complex puzzles."},
-      "disbelief": {"syn":["skepticism","incredulity","doubt"],"ant":["belief","faith","certainty"],"example":"She stared in total disbelief at the shocking news."},
-      "violently": {"syn":["forcefully","fiercely","intensely"],"ant":["gently","mildly","peacefully"],"example":"The gale blew violently across the exposed coast."},
-      "baffling": {"syn":["perplexing","mystifying","puzzling"],"ant":["clear","obvious","comprehensible"],"example":"The sudden disappearance remained a baffling enigma."},
-      "graciously": {"syn":["courteously","kindly","politely"],"ant":["rudely","harshly","ungraciously"],"example":"The host graciously welcomed every guest at the door."},
-      "chilly": {"syn":["cool","crisp","frosty"],"ant":["warm","balmy","hot"],"example":"A chilly autumn breeze rustled the falling leaves."},
-      "eerie": {"syn":["spooky","creepy","mysterious"],"ant":["ordinary","comforting","familiar"],"example":"An eerie silence settled over the deserted mansion."},
-      "discreetly": {"syn":["cautiously","quietly","subtly"],"ant":["openly","loudly","blatantly"],"example":"The detective discreetly followed the suspect through the crowd."},
-      "gruesome": {"syn":["ghastly","horrific","grisly"],"ant":["pleasant","delightful","attractive"],"example":"The mystery writer depicted a gruesome crime scene."},
-      "unrivaled": {"syn":["peerless","matchless","unmatched"],"ant":["inferior","ordinary","mediocre"],"example":"Her analytical skills in deduction were unrivaled in Europe."},
-      "scrupulously": {"syn":["meticulously","carefully","thoroughly"],"ant":["carelessly","sloppily","hastily"],"example":"He scrupulously verified every single fact before publishing."},
-      "revenge": {"syn":["vengeance","retaliation","retribution"],"ant":["forgiveness","pardon","clemency"],"example":"He sought revenge for the injustice he had suffered."},
-      "exquisite": {"syn":["superb","flawless","magnificent"],"ant":["crude","ugly","shoddy"],"example":"The jeweler crafted an exquisite diamond necklace."},
-      "intoxicated": {"syn":["drunk","inebriated","elated"],"ant":["sober","lucid","composed"],"example":"He was intoxicated by the excitement of the masquerade ball."},
-      "triumphant": {"syn":["victorious","successful","jubilant"],"ant":["defeated","failing","crestfallen"],"example":"The hero made a triumphant return to his hometown."},
-      "inscrutable": {"syn":["enigmatic","unfathomable","mysterious"],"ant":["transparent","obvious","clear"],"example":"His face remained calm and inscrutable during questioning."},
-      "fearsome": {"syn":["frightening","terrible","intimidating"],"ant":["gentle","harmless","friendly"],"example":"The castle was guarded by a fearsome dragon."},
-      "humiliation": {"syn":["embarrassment","mortification","shame"],"ant":["honor","pride","glory"],"example":"He suffered deep humiliation when his mistake was revealed."},
-      "boasted": {"syn":["bragged","crowed","vaunted"],"ant":["downplayed","concealed"],"example":"The miller boasted foolishly about his daughter's skills."},
-      "compassionate": {"syn":["caring","kindhearted","sympathetic"],"ant":["indifferent","cruel","harsh"],"example":"The compassionate nurse tended to the sick child with love."},
-      "resentment": {"syn":["bitterness","animosity","indignation"],"ant":["gratitude","contentment","affection"],"example":"Hidden resentment poisoned their longstanding friendship."},
-      "epiphany": {"syn":["realization","revelation","insight"],"ant":["confusion","ignorance","blindness"],"example":"Looking at the winter snow, he experienced a profound epiphany."},
-      "hungry": { syn: ["famished", "ravenous", "starving"], ant: ["full", "satiated", "stuffed"], example: "After walking all afternoon, the children felt very hungry." },
-      "scorching": { syn: ["blistering", "sweltering", "blazing"], ant: ["freezing", "chilly", "cool"], example: "The travelers sought shade from the scorching desert sun." },
-      "ingenious": { syn: ["brilliant", "inventive", "clever"], ant: ["foolish", "dull", "uninspired"], example: "She came up with an ingenious solution to the puzzle." },
-      "mighty": { syn: ["powerful", "strong", "robust"], ant: ["weak", "fragile", "feeble"], example: "The mighty oak tree stood firm against the storm." },
-      "swift": { syn: ["fast", "rapid", "quick"], ant: ["slow", "sluggish"], example: "The swift river rushed down the mountain valley." },
-      "peacefully": { syn: ["quietly", "calmly", "serenely"], ant: ["noisily", "turbulently", "restlessly"], example: "The baby slept peacefully in her crib." },
-      "desperately": { syn: ["urgently", "frantically", "intensely"], ant: ["calmly", "indifferently"], example: "He searched desperately for his lost keys before the meeting." },
-      "accidentally": { syn: ["unintentionally", "inadvertently", "by chance"], ant: ["deliberately", "purposely", "intentionally"], example: "She accidentally dropped her favorite coffee mug." },
-      "kindhearted": { syn: ["compassionate", "generous", "caring"], ant: ["cruel", "selfish", "mean"], example: "The kind-hearted woman adopted three rescue dogs." },
-      "cruel": { syn: ["brutal", "heartless", "vicious"], ant: ["kind", "compassionate", "gentle"], example: "It was a cruel twist of fate that led to their separation." },
-      "hopeful": { syn: ["optimistic", "positive", "confident"], ant: ["pessimistic", "despairing", "hopeless"], example: "She felt hopeful about her chances of passing the exam." },
-      "suddenly": { syn: ["abruptly", "unexpectedly", "instantly"], ant: ["gradually", "slowly", "predictably"], example: "Suddenly, the lights went out in the entire building." },
-      "magic": { syn: ["enchantment", "sorcery", "wizardry"], ant: ["reality", "science", "logic"], example: "The wizard used his magic to conjure a beautiful glowing light." },
-      "magnificent": { syn: ["splendid", "spectacular", "glorious"], ant: ["ordinary", "unimpressive", "modest"], example: "The palace was a magnificent display of ancient architecture." },
-      "happily": { syn: ["joyfully", "cheerfully", "gladly"], ant: ["sadly", "miserably", "reluctantly"], example: "They lived happily ever after in their cozy cottage." },
-      "dark": { syn: ["dim", "shadowy", "pitch-black"], ant: ["bright", "light", "luminous"], example: "The dark forest was full of mysterious sounds." },
-      "constantly": { syn: ["always", "continually", "persistently"], ant: ["rarely", "occasionally", "never"], example: "He was constantly checking his phone for new messages." },
-      "teamwork": { syn: ["collaboration", "cooperation", "partnership"], ant: ["individualism", "opposition", "conflict"], example: "Their success was entirely due to great teamwork." },
-      "friendship": { syn: ["companionship", "camaraderie", "bond"], ant: ["hostility", "enmity", "rivalry"], example: "Their friendship lasted for over fifty years." },
-      "beautiful": { syn: ["gorgeous", "stunning", "lovely"], ant: ["ugly", "hideous", "unattractive"], example: "She wore a beautiful dress to the grand ball." },
-      "endlessly": { syn: ["ceaselessly", "infinitely", "perpetually"], ant: ["briefly", "temporarily", "fleetingly"], example: "The ocean seemed to stretch on endlessly." }
+    
+    // =========================================================================
+    // COMPREHENSIVE SMART LEXICON, THESAURUS & DICTIONARY ENGINE
+    // =========================================================================
+
+    const LEXICON_DATABASE = {
+      // Common & Story Words
+      "tranquil": {
+        meaning: "Free from disturbance; calm, serene, and peaceful.",
+        phonetic: "/ˈtræŋ.kwɪl/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["peaceful", "serene", "calm", "placid", "restful", "untroubled"],
+        ant: ["turbulent", "chaotic", "stormy", "noisy", "agitated"],
+        example: "The quiet garden was tranquil and sheltered from the city noise.",
+        family: "tranquility (n) • tranquilize (v) • tranquilly (adv)"
+      },
+      "unusual": {
+        meaning: "Not habitually or commonly occurring or done; remarkable or curious.",
+        phonetic: "/ʌnˈjuː.ʒu.əl/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["rare", "extraordinary", "uncommon", "singular", "unique", "peculiar"],
+        ant: ["normal", "common", "typical", "ordinary", "usual", "standard"],
+        example: "He showed an unusual talent for solving complex mathematical puzzles.",
+        family: "usual (adj) • unusually (adv) • unusualness (n)"
+      },
+      "disbelief": {
+        meaning: "Inability or refusal to accept that something is true or real; profound shock or skepticism.",
+        phonetic: "/ˌdɪs.bɪˈliːf/",
+        pos: "Noun",
+        cefr: "B2",
+        syn: ["skepticism", "incredulity", "doubt", "distrust", "astonishment"],
+        ant: ["belief", "faith", "trust", "credulity", "certainty"],
+        example: "She stared in total disbelief at the unexpected news on the screen.",
+        family: "believe (v) • believer (n) • believable (adj) • disbelieve (v)"
+      },
+      "violently": {
+        meaning: "With great, intense, or uncontrolled physical force or destructive power.",
+        phonetic: "/ˈvaɪə.lənt.li/",
+        pos: "Adverb",
+        cefr: "B1",
+        syn: ["forcefully", "fiercely", "intensely", "furiously", "savagely", "powerfully"],
+        ant: ["gently", "mildly", "peacefully", "calmly", "softly"],
+        example: "The violent gale blew violently across the exposed northern coastline.",
+        family: "violent (adj) • violence (n)"
+      },
+      "baffling": {
+        meaning: "Impossible or very difficult to understand; deeply perplexing or mystifying.",
+        phonetic: "/ˈbæf.lɪŋ/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["perplexing", "mystifying", "puzzling", "bewildering", "confusing", "enigmatic"],
+        ant: ["clear", "obvious", "comprehensible", "plain", "straightforward", "simple"],
+        example: "The sudden disappearance remained a baffling enigma for detectives.",
+        family: "baffle (v) • bafflement (n) • bafflingly (adv)"
+      },
+      "graciously": {
+        meaning: "In a courteous, kind, polite, elegant, and generous manner.",
+        phonetic: "/ˈɡreɪ.ʃəs.li/",
+        pos: "Adverb",
+        cefr: "B2",
+        syn: ["courteously", "kindly", "politely", "elegantly", "warmly", "hospitably"],
+        ant: ["rudely", "harshly", "ungraciously", "curtly", "disdainfully"],
+        example: "The hostess graciously welcomed each traveler at the entrance.",
+        family: "grace (n) • gracious (adj) • graciousness (n)"
+      },
+      "chilly": {
+        meaning: "Unpleasantly cold; marked by coldness of temperature or emotional atmosphere.",
+        phonetic: "/ˈtʃɪl.i/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["cool", "crisp", "frosty", "nippy", "wintry", "frigid"],
+        ant: ["warm", "balmy", "hot", "toasty", "tropical"],
+        example: "A chilly autumn breeze rustled the falling amber leaves.",
+        family: "chill (n/v) • chilliness (n)"
+      },
+      "eerie": {
+        meaning: "Strange and frightening; suggesting supernatural or creepy occurrences.",
+        phonetic: "/ˈɪə.ri/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["spooky", "creepy", "mysterious", "uncanny", "spectral", "haunting"],
+        ant: ["ordinary", "comforting", "familiar", "natural", "reassuring"],
+        example: "An eerie silence settled over the deserted, fog-covered mansion.",
+        family: "eerily (adv) • eeriness (n)"
+      },
+      "discreetly": {
+        meaning: "In a careful, quiet, and prudent manner, especially to avoid causing offense or drawing attention.",
+        phonetic: "/dɪˈskriːt.li/",
+        pos: "Adverb",
+        cefr: "B2",
+        syn: ["cautiously", "quietly", "subtly", "prudently", "unobtrusively", "tactfully"],
+        ant: ["openly", "loudly", "blatantly", "conspicuously", "recklessly"],
+        example: "The investigator discreetly observed the suspicious suspect from across the room.",
+        family: "discreet (adj) • discretion (n)"
+      },
+      "gruesome": {
+        meaning: "Causing repulsion, dread, or horror; extremely unpleasant or grisly.",
+        phonetic: "/ˈɡruː.səm/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["ghastly", "horrific", "grisly", "macabre", "hideous", "appalling"],
+        ant: ["pleasant", "delightful", "attractive", "agreeable", "charming"],
+        example: "The old mystery novel described a gruesome and chilling crime.",
+        family: "gruesomely (adv) • gruesomeness (n)"
+      },
+      "unrivaled": {
+        meaning: "Better than everyone or everything of the same type; without equal.",
+        phonetic: "/ʌnˈraɪ.vəld/",
+        pos: "Adjective",
+        cefr: "C1",
+        syn: ["peerless", "matchless", "unmatched", "incomparable", "supreme", "unequaled"],
+        ant: ["inferior", "ordinary", "mediocre", "rivaled", "second-rate"],
+        example: "Her analytical skills in logic and deduction were unrivaled across the land.",
+        family: "rival (n/v) • rivalry (n)"
+      },
+      "scrupulously": {
+        meaning: "With extreme care, thoroughness, and attention to every detail or moral standard.",
+        phonetic: "/ˈskruː.pjə.ləs.li/",
+        pos: "Adverb",
+        cefr: "C1",
+        syn: ["meticulously", "carefully", "thoroughly", "rigorously", "conscientiously", "painstakingly"],
+        ant: ["carelessly", "sloppily", "hastily", "negligently"],
+        example: "He scrupulously verified every single fact before publishing the chronicle.",
+        family: "scrupulous (adj) • scrupulousness (n) • scruple (n)"
+      },
+      "revenge": {
+        meaning: "The action of inflicting hurt or harm on someone for a wrong suffered at their hands.",
+        phonetic: "/rɪˈvendʒ/",
+        pos: "Noun",
+        cefr: "B2",
+        syn: ["vengeance", "retaliation", "retribution", "payback", "requital"],
+        ant: ["forgiveness", "pardon", "clemency", "mercy", "reconciliation"],
+        example: "He sought revenge for the betrayal and injustice he had suffered.",
+        family: "revengeful (adj) • revenger (n)"
+      },
+      "exquisite": {
+        meaning: "Extremely beautiful and delicate; of rare and flawless quality.",
+        phonetic: "/ɪkˈskwɪz.ɪt/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["superb", "flawless", "magnificent", "delicate", "impeccable", "splendid"],
+        ant: ["crude", "ugly", "shoddy", "inferior", "clumsy"],
+        example: "The royal jeweler crafted an exquisite necklace of sapphire and diamonds.",
+        family: "exquisitely (adv) • exquisiteness (n)"
+      },
+      "intoxicated": {
+        meaning: "Losing control of faculties due to alcohol/substances, or overwhelmed by excitement and joy.",
+        phonetic: "/ɪnˈtɒk.sɪ.keɪ.tɪd/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["drunk", "inebriated", "elated", "thrilled", "exhilarated", "enchanted"],
+        ant: ["sober", "lucid", "composed", "clear-headed"],
+        example: "The dancers were intoxicated by the enchanting music of the grand ballroom.",
+        family: "intoxicate (v) • intoxication (n)"
+      },
+      "triumphant": {
+        meaning: "Having won a battle or contest; feeling or expressing jubilation after victory.",
+        phonetic: "/traɪˈʌm.fənt/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["victorious", "successful", "jubilant", "conquering", "exultant", "glorious"],
+        ant: ["defeated", "failing", "crestfallen", "beaten", "discouraged"],
+        example: "The brave champion made a triumphant return to cheering crowds in the city.",
+        family: "triumph (n/v) • triumphantly (adv)"
+      },
+      "inscrutable": {
+        meaning: "Impossible to understand, interpret, or decipher; unfathomable.",
+        phonetic: "/ɪnˈskruː.tə.bəl/",
+        pos: "Adjective",
+        cefr: "C1",
+        syn: ["enigmatic", "unfathomable", "mysterious", "cryptic", "unreadable", "opaque"],
+        ant: ["transparent", "obvious", "clear", "readable", "expressive"],
+        example: "His facial expression remained calm and inscrutable throughout the trial.",
+        family: "inscrutably (adv) • inscrutability (n)"
+      },
+      "fearsome": {
+        meaning: "Frightening, especially in appearance or strength; intimidating.",
+        phonetic: "/ˈfɪə.səm/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["frightening", "terrible", "intimidating", "menacing", "formidable", "scary"],
+        ant: ["gentle", "harmless", "friendly", "meek", "approachable"],
+        example: "The mountain pass was guarded by a fearsome, fire-breathing beast.",
+        family: "fear (n/v) • fearfully (adv)"
+      },
+      "humiliation": {
+        meaning: "The feeling of being deeply embarrassed, ashamed, or having one's pride wounded.",
+        phonetic: "/hjuːˌmɪl.iˈeɪ.ʃən/",
+        pos: "Noun",
+        cefr: "B2",
+        syn: ["embarrassment", "mortification", "shame", "disgrace", "ignominy", "dishonor"],
+        ant: ["honor", "pride", "glory", "dignity", "exaltation"],
+        example: "He suffered profound humiliation when his false pretenses were exposed.",
+        family: "humiliate (v) • humiliating (adj) • humble (adj)"
+      },
+      "boasted": {
+        meaning: "Talked with excessive pride and self-satisfaction about one's achievements or possessions.",
+        phonetic: "/ˈbəʊ.stɪd/",
+        pos: "Verb",
+        cefr: "B1",
+        syn: ["bragged", "crowed", "vaunted", "swaggered", "flaunted"],
+        ant: ["downplayed", "concealed", "humiliated", "understated"],
+        example: "The arrogant athlete boasted loudly about his unbeaten record.",
+        family: "boast (v/n) • boastful (adj) • boastfully (adv)"
+      },
+      "compassionate": {
+        meaning: "Feeling or showing deep sympathy and concern for others who are suffering.",
+        phonetic: "/kəmˈpæʃ.ən.ət/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["caring", "kindhearted", "sympathetic", "empathetic", "merciful", "benevolent"],
+        ant: ["indifferent", "cruel", "harsh", "callous", "heartless", "unfeeling"],
+        example: "The compassionate nurse tended to the injured travelers day and night.",
+        family: "compassion (n) • compassionately (adv)"
+      },
+      "resentment": {
+        meaning: "Bitter indignation or anger at having been treated unfairly or disregarded.",
+        phonetic: "/rɪˈzent.mənt/",
+        pos: "Noun",
+        cefr: "B2",
+        syn: ["bitterness", "animosity", "indignation", "grudge", "ill will", "acrimony"],
+        ant: ["gratitude", "contentment", "affection", "forgiveness", "goodwill"],
+        example: "Lingering resentment poisoned what was once a warm and joyful friendship.",
+        family: "resent (v) • resentful (adj) • resentfully (adv)"
+      },
+      "epiphany": {
+        meaning: "A moment of sudden and great revelation or deep spiritual and cognitive realization.",
+        phonetic: "/ɪˈpɪf.ən.i/",
+        pos: "Noun",
+        cefr: "C1",
+        syn: ["realization", "revelation", "insight", "breakthrough", "discovery", "awakening"],
+        ant: ["confusion", "ignorance", "blindness", "misunderstanding", "delusion"],
+        example: "While walking alone in the quiet forest, he experienced a life-changing epiphany.",
+        family: "epiphanic (adj)"
+      },
+      "nervous": {
+        meaning: "Easily agitated, alarmed, or apprehensive; feeling worried or anxious.",
+        phonetic: "/ˈnɜː.vəs/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["anxious", "worried", "apprehensive", "jittery", "tense", "uneasy"],
+        ant: ["confident", "calm", "relaxed", "composed", "serene", "bold"],
+        example: "He felt quite nervous before giving his first speech in London.",
+        family: "nerve (n) • nervously (adv) • nervousness (n)"
+      },
+      "enthusiasm": {
+        meaning: "Intense and eager enjoyment, interest, passion, or approval.",
+        phonetic: "/ɪnˈθjuː.zi.æz.əm/",
+        pos: "Noun",
+        cefr: "B1",
+        syn: ["eagerness", "passion", "zeal", "excitement", "fervor", "ardor"],
+        ant: ["apathy", "indifference", "lethargy", "reluctance", "unconcern"],
+        example: "Her enthusiasm for learning English inspired all her classmates.",
+        family: "enthusiast (n) • enthusiastic (adj) • enthusiastically (adv)"
+      },
+      "hearty": {
+        meaning: "Wholesome, abundant, and satisfying (of food); or warm, genuine, and cheerful.",
+        phonetic: "/ˈhɑː.ti/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["substantial", "wholesome", "nourishing", "abundant", "warm", "generous"],
+        ant: ["scanty", "meager", "frail", "cold", "unwelcoming"],
+        example: "They enjoyed a hearty breakfast of warm porridge and fresh fruit.",
+        family: "heart (n) • heartily (adv) • heartiness (n)"
+      },
+      "cozy": {
+        meaning: "Giving a feeling of comfort, warmth, and relaxation; snug and pleasant.",
+        phonetic: "/ˈkəʊ.zi/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["snug", "comfortable", "warm", "inviting", "homely", "sheltered"],
+        ant: ["uncomfortable", "cold", "bleak", "inhospitable", "harsh"],
+        example: "She loved reading by the fireplace in her cozy mountain cabin.",
+        family: "coziness (n) • cozily (adv)"
+      },
+      "confident": {
+        meaning: "Feeling or showing certainty about something; self-assured and positive.",
+        phonetic: "/ˈkɒn.fɪ.dənt/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["self-assured", "certain", "positive", "bold", "secure", "fearless"],
+        ant: ["insecure", "doubtful", "hesitant", "uncertain", "timid", "nervous"],
+        example: "Alex felt confident that his journey would be fruitful and inspiring.",
+        family: "confidence (n) • confide (v) • confidently (adv)"
+      },
+      "ancient": {
+        meaning: "Belonging to the very distant past and no longer in existence, or extremely old.",
+        phonetic: "/ˈeɪn.ʃənt/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["antique", "prehistoric", "age-old", "vintage", "timeworn", "archaic"],
+        ant: ["modern", "new", "contemporary", "recent", "fresh"],
+        example: "The explorer discovered an ancient parchment buried under stone.",
+        family: "ancientness (n)"
+      },
+      "treacherous": {
+        meaning: "Hazardous because of presenting hidden, unpredictable, or dangerous risks.",
+        phonetic: "/ˈtretʃ.ər.əs/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["dangerous", "hazardous", "perilous", "risky", "deceitful", "unreliable"],
+        ant: ["safe", "secure", "reliable", "trustworthy", "dependable"],
+        example: "The narrow mountain path was icy and treacherous during the winter storm.",
+        family: "treachery (n) • treacherously (adv)"
+      },
+      "immense": {
+        meaning: "Extremely large or great, especially in scale, degree, or quantity.",
+        phonetic: "/ɪˈmens/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["huge", "colossal", "gigantic", "massive", "vast", "enormous"],
+        ant: ["tiny", "minute", "miniature", "small", "negligible"],
+        example: "Beneath the branches of an immense banyan tree, they found shelter.",
+        family: "immensely (adv) • immensity (n)"
+      },
+      "discovered": {
+        meaning: "Found unexpectedly or during a search; made known, uncovered, or detected.",
+        phonetic: "/dɪˈskʌv.əd/",
+        pos: "Verb (Past)",
+        cefr: "A2",
+        syn: ["found", "uncovered", "located", "revealed", "unearthed", "detected"],
+        ant: ["lost", "hid", "concealed", "overlooked", "missed"],
+        example: "Captain James discovered a forgotten treasure hidden inside the cave.",
+        family: "discover (v) • discovery (n) • discoverer (n)"
+      },
+      "shrouded": {
+        meaning: "Covered, wrapped, or enveloped so as to conceal from view.",
+        phonetic: "/ˈʃraʊ.dɪd/",
+        pos: "Verb / Participle",
+        cefr: "B2",
+        syn: ["covered", "cloaked", "veiled", "enveloped", "blanketed", "hidden"],
+        ant: ["unveiled", "revealed", "exposed", "uncovered", "displayed"],
+        example: "The mysterious mountain peak was shrouded in thick morning mist.",
+        family: "shroud (v/n)"
+      },
+      "uncovered": {
+        meaning: "Removed a cover or disguise from; brought to light or disclosed.",
+        phonetic: "/ʌnˈkʌv.əd/",
+        pos: "Verb (Past)",
+        cefr: "B1",
+        syn: ["revealed", "exposed", "unearthed", "disclosed", "unmasked", "found"],
+        ant: ["covered", "hid", "buried", "concealed", "masked"],
+        example: "Archaeologists uncovered gold coins from beneath the castle ruins.",
+        family: "uncover (v)"
+      },
+      "stabilizes": {
+        meaning: "Makes or becomes unlikely to give way, overturn, or fluctuate; establishes balance.",
+        phonetic: "/ˈsteɪ.bə.laɪ.zɪz/",
+        pos: "Verb",
+        cefr: "B2",
+        syn: ["balances", "steadying", "secures", "anchors", "fortifies", "sustains"],
+        ant: ["destabilizes", "unbalances", "undermines", "weakens", "upsets"],
+        example: "The Moon's gravitational pull stabilizes the Earth's axial tilt.",
+        family: "stable (adj) • stability (n) • stabilization (n)"
+      },
+      "celestial": {
+        meaning: "Positioned in or relating to the sky, or outer space as observed in astronomy; divine.",
+        phonetic: "/sɪˈles.ti.əl/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["astronomical", "heavenly", "stellar", "cosmic", "planetary", "divine"],
+        ant: ["terrestrial", "earthly", "mundane", "subterranean"],
+        example: "Comets and asteroids are fascinating celestial bodies orbiting the Sun.",
+        family: "celestially (adv)"
+      },
+      "erratic": {
+        meaning: "Not even or regular in pattern or movement; unpredictable.",
+        phonetic: "/ɪˈræt.ɪk/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["unpredictable", "inconsistent", "irregular", "fluctuating", "variable", "capricious"],
+        ant: ["consistent", "regular", "predictable", "stable", "steady"],
+        example: "Without the Moon, Earth's climate would undergo erratic and wild fluctuations.",
+        family: "erratically (adv) • erraticism (n)"
+      },
+      "unique": {
+        meaning: "Being the only one of its kind; unlike anything else.",
+        phonetic: "/juːˈniːk/",
+        pos: "Adjective",
+        cefr: "B1",
+        syn: ["one-of-a-kind", "distinctive", "peerless", "rare", "exclusive", "individual"],
+        ant: ["common", "ordinary", "widespread", "typical", "standard"],
+        example: "Each snowflake possesses a unique geometric crystal pattern.",
+        family: "uniquely (adv) • uniqueness (n)"
+      },
+      "kind-hearted": {
+        meaning: "Having a kind, generous, and sympathetic nature; compassionate.",
+        phonetic: "/ˌkaɪndˈhɑː.tɪd/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["compassionate", "benevolent", "generous", "gentle", "caring", "tender"],
+        ant: ["cruel", "mean", "heartless", "selfish", "callous"],
+        example: "The kind-hearted villager offered shelter to the stranded traveler.",
+        family: "kindness (n) • kindly (adv)"
+      },
+      "cruel": {
+        meaning: "Willfully causing pain or suffering to others, or feeling no concern about it.",
+        phonetic: "/ˈkruː.əl/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["brutal", "heartless", "vicious", "ruthless", "merciless", "callous"],
+        ant: ["kind", "compassionate", "gentle", "merciful", "humane"],
+        example: "It was a cruel twist of fate that separated the two lifelong companions.",
+        family: "cruelty (n) • cruelly (adv)"
+      },
+      "hopeful": {
+        meaning: "Feeling or inspiring optimism about a future event; full of hope.",
+        phonetic: "/ˈhəʊp.fəl/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["optimistic", "confident", "positive", "promising", "buoyant"],
+        ant: ["pessimistic", "despairing", "hopeless", "gloomy", "cynical"],
+        example: "She remained hopeful that her dream of entering university would come true.",
+        family: "hope (n/v) • hopefully (adv) • hopefulness (n)"
+      },
+      "endlessly": {
+        meaning: "In a way that has or seems to have no end or limit; incessantly.",
+        phonetic: "/ˈend.ləs.li/",
+        pos: "Adverb",
+        cefr: "B1",
+        syn: ["ceaselessly", "perpetually", "infinitely", "incessantly", "continually", "boundlessly"],
+        ant: ["briefly", "temporarily", "fleetingly", "momentarily", "finitely"],
+        example: "The azure waves stretched endlessly toward the distant horizon.",
+        family: "end (n/v) • endless (adj) • endlessness (n)"
+      },
+      "magnificent": {
+        meaning: "Extremely beautiful, elaborate, or impressive; splendid in appearance.",
+        phonetic: "/mæɡˈnɪf.ɪ.sənt/",
+        pos: "Adjective",
+        cefr: "B1",
+        syn: ["splendid", "spectacular", "glorious", "majestic", "stunning", "grand"],
+        ant: ["ordinary", "unimpressive", "modest", "plain", "inferior"],
+        example: "The royal palace was a magnificent display of classical architecture.",
+        family: "magnificence (n) • magnificently (adv)"
+      },
+      "cunning": {
+        meaning: "Having or showing skill in achieving one's ends by deceit or evasion; sly.",
+        phonetic: "/ˈkʌn.ɪŋ/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["sly", "crafty", "clever", "shrewd", "wily", "deceitful"],
+        ant: ["innocent", "naive", "frank", "honest", "straightforward", "guileless"],
+        example: "The cunning fox devised an ingenious trap to outsmart the hunters.",
+        family: "cunningly (adv)"
+      },
+      "slyly": {
+        meaning: "In a cunning, secretive, or deceitful manner.",
+        phonetic: "/ˈslaɪ.li/",
+        pos: "Adverb",
+        cefr: "B2",
+        syn: ["cunningly", "craftily", "sneakily", "stealthily", "secretively"],
+        ant: ["openly", "frankly", "honestly", "candidly", "plainly"],
+        example: "The wolf smiled slyly as he questioned Little Red Riding Hood.",
+        family: "sly (adj) • slyness (n)"
+      },
+      "innocent": {
+        meaning: "Not guilty of a crime or offense; free from moral wrong; naive and pure.",
+        phonetic: "/ˈɪn.ə.sənt/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["naive", "pure", "guiltless", "blameless", "harmless", "unspoiled"],
+        ant: ["guilty", "corrupt", "sinful", "cunning", "culpable"],
+        example: "The innocent child answered all questions with complete honesty.",
+        family: "innocence (n) • innocently (adv)"
+      },
+      "brave": {
+        meaning: "Ready to face and endure danger, pain, or difficulty; courageous.",
+        phonetic: "/breɪv/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["courageous", "valiant", "fearless", "heroic", "gallant", "bold"],
+        ant: ["cowardly", "fearful", "timid", "faint-hearted", "scared"],
+        example: "The brave firefighter rushed inside to rescue the trapped kitten.",
+        family: "bravery (n) • bravely (adv)"
+      },
+      "bravely": {
+        meaning: "In a way that shows courage and determination in the face of danger.",
+        phonetic: "/ˈbreɪv.li/",
+        pos: "Adverb",
+        cefr: "A2",
+        syn: ["courageously", "valiantly", "fearlessly", "heroically", "boldly"],
+        ant: ["cowardly", "fearfully", "timidly", "hesitantly"],
+        example: "The sailor bravely navigated the small boat through raging ocean waves.",
+        family: "brave (adj) • bravery (n)"
+      },
+      "rescued": {
+        meaning: "Saved someone or something from a dangerous or distressing situation.",
+        phonetic: "/ˈres.kjuːd/",
+        pos: "Verb (Past)",
+        cefr: "A2",
+        syn: ["saved", "freed", "delivered", "liberated", "protected", "salvaged"],
+        ant: ["abandoned", "captured", "harmed", "endangered", "neglected"],
+        example: "The heroic woodcutter rescued the girl from the treacherous predator.",
+        family: "rescue (v/n) • rescuer (n)"
+      },
+      "approached": {
+        meaning: "Came near or nearer to someone or something in distance or time.",
+        phonetic: "/əˈprəʊtʃt/",
+        pos: "Verb (Past)",
+        cefr: "A2",
+        syn: ["advanced", "neared", "drew closer", "reached", "contacted"],
+        ant: ["retreated", "withdrew", "departed", "receded"],
+        example: "As dusk approached, shadows lengthened across the forest floor.",
+        family: "approach (v/n) • approachable (adj)"
+      },
+      "transformed": {
+        meaning: "Made a marked change in form, nature, or appearance.",
+        phonetic: "/trænsˈfɔːmd/",
+        pos: "Verb (Past)",
+        cefr: "B1",
+        syn: ["converted", "altered", "metamorphosed", "transmuted", "reformed"],
+        ant: ["preserved", "maintained", "retained", "stagnated"],
+        example: "With a flick of her wand, the godmother transformed a pumpkin into a carriage.",
+        family: "transform (v) • transformation (n) • transformative (adj)"
+      },
+      "captivated": {
+        meaning: "Attracted and held the intense interest, charm, or attention of.",
+        phonetic: "/ˈkæp.tɪ.veɪ.tɪd/",
+        pos: "Verb / Participle",
+        cefr: "B2",
+        syn: ["enchanted", "charmed", "fascinated", "beguiled", "entranced", "mesmerized"],
+        ant: ["repelled", "bored", "disgusted", "alienated"],
+        example: "The entire audience was captivated by the soloist's stunning performance.",
+        family: "captivate (v) • captivating (adj) • captivation (n)"
+      },
+      "fled": {
+        meaning: "Ran away from a place or situation of danger or urgency.",
+        phonetic: "/fled/",
+        pos: "Verb (Past of flee)",
+        cefr: "B1",
+        syn: ["escaped", "ran away", "retreated", "bolted", "absconded", "vanished"],
+        ant: ["remained", "stayed", "stood", "confronted", "arrived"],
+        example: "When the castle clock struck twelve, Cinderella fled down the grand stairs.",
+        family: "flee (v)"
+      },
+      "walked": {
+        meaning: "Moved at a regular pace by lifting and setting down each foot in turn.",
+        phonetic: "/wɔːkt/",
+        pos: "Verb (Past)",
+        cefr: "A1",
+        syn: ["strolled", "marched", "stepped", "paced", "hiked", "sauntered"],
+        ant: ["ran", "stayed", "halted", "stood"],
+        example: "They walked together along the quiet path beside the crystal stream.",
+        family: "walk (v/n) • walker (n) • walking (n/adj)"
+      },
+      "noticed": {
+        meaning: "Became aware of something by seeing, hearing, or sensing it.",
+        phonetic: "/ˈnəʊ.tɪst/",
+        pos: "Verb (Past)",
+        cefr: "A2",
+        syn: ["observed", "spotted", "perceived", "detected", "remarked", "glimpsed"],
+        ant: ["overlooked", "missed", "ignored", "neglected"],
+        example: "She immediately noticed a subtle change in his voice and manner.",
+        family: "notice (v/n) • noticeable (adj) • noticeably (adv)"
+      },
+      "strange": {
+        meaning: "Unusual or surprising in a way that is unsettling or hard to understand.",
+        phonetic: "/streɪndʒ/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["unusual", "odd", "peculiar", "bizarre", "curious", "abnormal"],
+        ant: ["normal", "familiar", "ordinary", "typical", "conventional"],
+        example: "A strange glow appeared deep inside the ancient temple at midnight.",
+        family: "strangeness (n) • strangely (adv) • stranger (n)"
+      },
+      "retrieved": {
+        meaning: "Got or brought something back from a place; regained possession.",
+        phonetic: "/rɪˈtriːvd/",
+        pos: "Verb (Past)",
+        cefr: "B2",
+        syn: ["recovered", "fetched", "reclaimed", "repossessed", "salvaged", "retook"],
+        ant: ["lost", "misplaced", "forfeited", "abandoned", "surrendered"],
+        example: "The diver retrieved an antique chest from the bottom of the lake.",
+        family: "retrieve (v) • retrieval (n) • retrievable (adj)"
+      },
+      "solid": {
+        meaning: "Firm and stable in shape; not liquid or hollow; strongly constructed.",
+        phonetic: "/ˈsɒl.ɪd/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["firm", "hard", "sturdy", "substantial", "dense", "sound"],
+        ant: ["hollow", "liquid", "fragile", "flimsy", "soft", "weak"],
+        example: "The castle walls were built from solid granite blocks.",
+        family: "solidify (v) • solidarity (n) • solidly (adv)"
+      },
+      "swung": {
+        meaning: "Moved or caused to move back and forth or in a curved arc.",
+        phonetic: "/swʌŋ/",
+        pos: "Verb (Past of swing)",
+        cefr: "B1",
+        syn: ["swayed", "waved", "brandished", "pivoted", "rocked", "hurled"],
+        ant: ["stabilized", "held still", "fixed"],
+        example: "The pendulum swung rhythmically back and forth in the grand clock.",
+        family: "swing (v/n)"
+      },
+      "struck": {
+        meaning: "Hit forcibly and deliberately with one's hand or an implement; or of a clock sounding the hour.",
+        phonetic: "/strʌk/",
+        pos: "Verb (Past of strike)",
+        cefr: "B1",
+        syn: ["hit", "smote", "slapped", "sounded", "impacted", "clashed"],
+        ant: ["missed", "avoided", "shielded", "caressed"],
+        example: "The lightning struck the tall oak tree, illuminating the night sky.",
+        family: "strike (v/n) • striker (n)"
+      },
+      "mused": {
+        meaning: "Reflected, meditated, or pondered silently and deeply.",
+        phonetic: "/mjuːzd/",
+        pos: "Verb (Past)",
+        cefr: "B2",
+        syn: ["pondered", "reflected", "contemplated", "meditated", "deliberated", "ruminated"],
+        ant: ["ignored", "overlooked", "dismissed", "reacted instinctively"],
+        example: "The old philosopher mused softly about the wonders of the universe.",
+        family: "muse (v/n) • musing (n)"
+      },
+      "bluntly": {
+        meaning: "In an uncompromisingly forthright and direct manner without diplomatic tact.",
+        phonetic: "/ˈblʌnt.li/",
+        pos: "Adverb",
+        cefr: "B2",
+        syn: ["frankly", "directly", "plainly", "candidly", "abruptly", "outspokenly"],
+        ant: ["tactfully", "subtly", "politely", "diplomatically", "gently"],
+        example: "He stated bluntly that the project was too costly to continue.",
+        family: "blunt (adj/v) • bluntness (n)"
+      },
+      "tirelessly": {
+        meaning: "With great effort and determination, without becoming fatigued.",
+        phonetic: "/ˈtaɪə.ləs.li/",
+        pos: "Adverb",
+        cefr: "B2",
+        syn: ["unceasingly", "industriously", "diligently", "persistently", "indefatigably"],
+        ant: ["lazily", "sluggishly", "idly", "half-heartedly"],
+        example: "Volunteers worked tirelessly through the night to build flood barriers.",
+        family: "tireless (adj) • tire (v) • tiredness (n)"
+      },
+      "crashed": {
+        meaning: "Collided violently with an obstacle; fell with a sudden loud noise.",
+        phonetic: "/kræʃt/",
+        pos: "Verb (Past)",
+        cefr: "A2",
+        syn: ["smashed", "collided", "shattered", "fell heavily", "plunged"],
+        ant: ["soared", "floated", "landed softly", "glided"],
+        example: "The stormy waves crashed relentlessly against the jagged sea cliffs.",
+        family: "crash (v/n)"
+      },
+      "impatient": {
+        meaning: "Having or showing a tendency to be quickly irritated or provoked by delay.",
+        phonetic: "/ɪmˈpeɪ.ʃənt/",
+        pos: "Adjective",
+        cefr: "B1",
+        syn: ["restless", "eager", "intolerant", "fidgety", "irritable", "short-tempered"],
+        ant: ["patient", "tolerant", "calm", "forbearing", "composed"],
+        example: "The impatient traveler kept checking his wristwatch every few seconds.",
+        family: "patience (n) • patiently (adv) • impatience (n)"
+      },
+      "whispered": {
+        meaning: "Spoke very softly using one's breath without vibrating the vocal cords.",
+        phonetic: "/ˈwɪs.pəd/",
+        pos: "Verb (Past)",
+        cefr: "A2",
+        syn: ["murmured", "breathed", "muttered", "hushed", "confided"],
+        ant: ["shouted", "yelled", "screamed", "bellowed", "proclaimed"],
+        example: "She whispered a secret into her best friend's ear during the performance.",
+        family: "whisper (v/n) • whisperer (n)"
+      },
+      "defended": {
+        meaning: "Resisted an attack made on someone or something; protected from harm or criticism.",
+        phonetic: "/dɪˈfen.dɪd/",
+        pos: "Verb (Past)",
+        cefr: "B1",
+        syn: ["protected", "shielded", "guarded", "championed", "upheld", "advocated"],
+        ant: ["attacked", "condemned", "abandoned", "surrendered", "criticized"],
+        example: "The loyal knight defended the castle gates against the advancing invaders.",
+        family: "defend (v) • defense (n) • defensive (adj) • defender (n)"
+      },
+      "solace": {
+        meaning: "Comfort or consolation in a time of distress, sadness, or loneliness.",
+        phonetic: "/ˈsɒl.ɪs/",
+        pos: "Noun",
+        cefr: "C1",
+        syn: ["comfort", "consolation", "relief", "cheer", "refuge", "soothing"],
+        ant: ["anguish", "distress", "torment", "misery", "grief"],
+        example: "She found solace in playing the piano during difficult winter months.",
+        family: "solace (v)"
+      },
+      "dignity": {
+        meaning: "The state or quality of being worthy of honor, respect, and self-worth.",
+        phonetic: "/ˈdɪɡ.nə.ti/",
+        pos: "Noun",
+        cefr: "B2",
+        syn: ["self-respect", "honor", "nobility", "grace", "stateliness", "worth"],
+        ant: ["dishonor", "shame", "degradation", "humiliation", "disgrace"],
+        example: "Despite hardships, the elderly craftsperson maintained immense dignity.",
+        family: "dignified (adj) • dignify (v)"
+      },
+      "deserted": {
+        meaning: "Empty of people; abandoned and forsaken.",
+        phonetic: "/dɪˈzɜː.tɪd/",
+        pos: "Adjective",
+        cefr: "B1",
+        syn: ["abandoned", "empty", "uninhabited", "vacant", "isolated", "forsaken"],
+        ant: ["crowded", "bustling", "populous", "busy", "occupied"],
+        example: "The deserted cobblestone streets were illuminated only by glowing streetlamps.",
+        family: "desert (v/n) • desertion (n)"
+      },
+      "luxurious": {
+        meaning: "Extremely comfortable, elegant, or enjoyable, especially in an expensive way.",
+        phonetic: "/lʌɡˈʒʊə.ri.əs/",
+        pos: "Adjective",
+        cefr: "B1",
+        syn: ["opulent", "lavish", "sumptuous", "deluxe", "plush", "grand"],
+        ant: ["austere", "meager", "poor", "spartan", "humble", "shabby"],
+        example: "They spent the weekend in a luxurious suite overlooking the tranquil lake.",
+        family: "luxury (n) • luxuriate (v) • luxuriously (adv)"
+      },
+      "suspicious": {
+        meaning: "Having or showing a cautious distrust of someone or something; questionable.",
+        phonetic: "/səˈspɪʃ.əs/",
+        pos: "Adjective",
+        cefr: "B1",
+        syn: ["distrustful", "skeptical", "wary", "dubious", "doubtful", "apprehensive"],
+        ant: ["trusting", "confident", "unsuspecting", "naive", "certain"],
+        example: "The guard grew suspicious when the visitor hesitated at the doorway.",
+        family: "suspicion (n) • suspect (v/n) • suspiciously (adv)"
+      },
+      "swift": {
+        meaning: "Happening quickly or moving with great speed; prompt.",
+        phonetic: "/swɪft/",
+        pos: "Adjective",
+        cefr: "B1",
+        syn: ["fast", "rapid", "speedy", "quick", "prompt", "fleet"],
+        ant: ["slow", "sluggish", "delayed", "ponderous", "unhurried"],
+        example: "The swift falcon swooped down gracefully over the green meadow.",
+        family: "swiftly (adv) • swiftness (n)"
+      },
+      "swiftly": {
+        meaning: "At high speed; quickly and without delay.",
+        phonetic: "/ˈswɪft.li/",
+        pos: "Adverb",
+        cefr: "B1",
+        syn: ["quickly", "rapidly", "promptly", "hastily", "speedily", "fleetly"],
+        ant: ["slowly", "sluggishly", "gradually", "leisurely"],
+        example: "The message was swiftly delivered to the king before dusk.",
+        family: "swift (adj) • swiftness (n)"
+      },
+      "peacefully": {
+        meaning: "In a peaceful, untroubled, or tranquil manner; without disturbance.",
+        phonetic: "/ˈpiːs.fəl.i/",
+        pos: "Adverb",
+        cefr: "A2",
+        syn: ["calmly", "quietly", "serenely", "tranquilly", "placidly"],
+        ant: ["noisily", "violently", "turbulently", "chaotically", "restlessly"],
+        example: "The slumbering infant rested peacefully in the warm cradle.",
+        family: "peace (n) • peaceful (adj) • peacefulness (n)"
+      },
+      "desperately": {
+        meaning: "In a way that shows a feeling of urgency, despair, or hopelessness.",
+        phonetic: "/ˈdes.pər.ət.li/",
+        pos: "Adverb",
+        cefr: "B1",
+        syn: ["frantically", "urgently", "wildly", "intensely", "hopelessly"],
+        ant: ["calmly", "composedly", "patiently", "confidently"],
+        example: "He looked desperately for his lost passport before boarding the plane.",
+        family: "despair (n/v) • desperate (adj) • desperation (n)"
+      },
+      "accidentally": {
+        meaning: "By chance or mistake; unintentionally.",
+        phonetic: "/ˌæk.sɪˈden.təl.i/",
+        pos: "Adverb",
+        cefr: "A2",
+        syn: ["unintentionally", "inadvertently", "by mistake", "by chance", "unwittingly"],
+        ant: ["intentionally", "deliberately", "purposely", "consciously"],
+        example: "She accidentally dropped her porcelain tea cup on the wooden floor.",
+        family: "accident (n) • accidental (adj)"
+      },
+      "suddenly": {
+        meaning: "Quickly and unexpectedly; in an instant.",
+        phonetic: "/ˈsʌd.ən.li/",
+        pos: "Adverb",
+        cefr: "A1",
+        syn: ["abruptly", "unexpectedly", "instantly", "all at once", "spontaneously"],
+        ant: ["gradually", "slowly", "predictably", "eventually"],
+        example: "Suddenly, a bright flash of lightning lit up the entire valley.",
+        family: "sudden (adj) • suddenness (n)"
+      },
+      "magic": {
+        meaning: "The power of influencing events by mysterious or supernatural forces; enchantment.",
+        phonetic: "/ˈmædʒ.ɪk/",
+        pos: "Noun / Adjective",
+        cefr: "A2",
+        syn: ["sorcery", "enchantment", "wizardry", "charm", "supernatural", "miraculous"],
+        ant: ["reality", "science", "fact", "logic", "ordinary"],
+        example: "The wizard used his ancient magic to mend the broken amulet.",
+        family: "magical (adj) • magically (adv) • magician (n)"
+      },
+      "happily": {
+        meaning: "In a happy or joyful manner; with contentment.",
+        phonetic: "/ˈhæp.ɪ.li/",
+        pos: "Adverb",
+        cefr: "A1",
+        syn: ["joyfully", "cheerfully", "gladly", "merrily", "blissfully", "contentedly"],
+        ant: ["sadly", "miserably", "reluctantly", "gloomily", "sorrowfully"],
+        example: "They lived happily ever after in their cottage on the hillside.",
+        family: "happy (adj) • happiness (n)"
+      },
+      "hungry": {
+        meaning: "Feeling or displaying the need for food; famished.",
+        phonetic: "/ˈhʌŋ.ɡri/",
+        pos: "Adjective",
+        cefr: "A1",
+        syn: ["famished", "starving", "ravenous", "peckish", "empty"],
+        ant: ["full", "satiated", "stuffed", "satisfied"],
+        example: "After walking through the mountains all day, the travelers were very hungry.",
+        family: "hunger (n/v) • hungrily (adv)"
+      },
+      "scorching": {
+        meaning: "Very hot; burning with intense heat and light.",
+        phonetic: "/ˈskɔː.tʃɪŋ/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["blistering", "sweltering", "blazing", "baking", "torrid", "scalding"],
+        ant: ["freezing", "chilly", "icy", "frosty", "cool"],
+        example: "The desert nomads rested beneath palm fronds away from the scorching midday sun.",
+        family: "scorch (v) • scorchingly (adv)"
+      },
+      "ingenious": {
+        meaning: "Clever, original, and inventive in idea, design, or execution.",
+        phonetic: "/ɪnˈdʒiː.ni.əs/",
+        pos: "Adjective",
+        cefr: "B2",
+        syn: ["brilliant", "inventive", "clever", "creative", "shrewd", "resourceful"],
+        ant: ["foolish", "dull", "uninspired", "clumsy", "inept"],
+        example: "She created an ingenious filtration mechanism using sand and charcoal.",
+        family: "ingenuity (n) • ingeniously (adv)"
+      },
+      "mighty": {
+        meaning: "Possessing great and impressive power or strength.",
+        phonetic: "/ˈmaɪ.ti/",
+        pos: "Adjective",
+        cefr: "B1",
+        syn: ["powerful", "strong", "potent", "robust", "commanding", "formidable"],
+        ant: ["weak", "fragile", "feeble", "powerless", "helpless"],
+        example: "The mighty river carved a deep canyon through solid stone over millennia.",
+        family: "might (n) • mightily (adv)"
+      },
+      "warmly": {
+        meaning: "In a warm, cordial, affectionate, or enthusiastic manner.",
+        phonetic: "/ˈwɔːm.li/",
+        pos: "Adverb",
+        cefr: "A2",
+        syn: ["cordially", "affectionately", "hospitably", "kindly", "fondly"],
+        ant: ["coldly", "frostily", "distantly", "indifferently", "harshly"],
+        example: "She warmly welcomed the exchange students to her family home.",
+        family: "warm (adj/v) • warmth (n)"
+      },
+      "kindly": {
+        meaning: "In a kind, pleasant, or sympathetic manner.",
+        phonetic: "/ˈkaɪnd.li/",
+        pos: "Adverb",
+        cefr: "A2",
+        syn: ["benevolently", "graciously", "sympathetically", "tenderly", "politely"],
+        ant: ["rudely", "cruelly", "harshly", "spitefully", "callously"],
+        example: "The elderly librarian kindly helped the student find the rare manuscript.",
+        family: "kind (adj) • kindness (n)"
+      },
+      "constantly": {
+        meaning: "Continuously over a period of time; always or repeatedly.",
+        phonetic: "/ˈkɒn.stənt.li/",
+        pos: "Adverb",
+        cefr: "B1",
+        syn: ["always", "continually", "persistently", "perpetually", "incessantly"],
+        ant: ["rarely", "occasionally", "never", "seldom", "infrequently"],
+        example: "Science is constantly evolving with new discoveries and insights.",
+        family: "constant (adj) • constancy (n)"
+      },
+      "teamwork": {
+        meaning: "The combined action of a group, especially when effective and efficient.",
+        phonetic: "/ˈtiːm.wɜːk/",
+        pos: "Noun",
+        cefr: "A2",
+        syn: ["collaboration", "cooperation", "partnership", "synergy", "joint effort"],
+        ant: ["individualism", "opposition", "rivalry", "conflict", "discord"],
+        example: "Their victory in the championship was a shining example of flawless teamwork.",
+        family: "team (n) • teammate (n)"
+      },
+      "friendship": {
+        meaning: "The emotions or conduct of friends; the state of being friends.",
+        phonetic: "/ˈfrend.ʃɪp/",
+        pos: "Noun",
+        cefr: "A2",
+        syn: ["companionship", "camaraderie", "bond", "fellowship", "affinity", "harmony"],
+        ant: ["hostility", "enmity", "rivalry", "animosity", "estrangement"],
+        example: "Their enduring friendship survived decades of travel and distance.",
+        family: "friend (n) • friendly (adj) • befriend (v)"
+      },
+      "beautiful": {
+        meaning: "Pleasing the senses or mind aesthetically; possessing beauty.",
+        phonetic: "/ˈbjuː.tɪ.fəl/",
+        pos: "Adjective",
+        cefr: "A1",
+        syn: ["gorgeous", "stunning", "lovely", "attractive", "radiant", "exquisite"],
+        ant: ["ugly", "hideous", "unattractive", "plain", "unsightly"],
+        example: "A beautiful golden sunset reflected off the crystal-clear ocean.",
+        family: "beauty (n) • beautify (v) • beautifully (adv)"
+      },
+      "basket": {
+        meaning: "A container used to hold or carry things, typically made from woven cane or straw.",
+        phonetic: "/ˈbɑː.skɪt/",
+        pos: "Noun",
+        cefr: "A2",
+        syn: ["hamper", "container", "crate", "pannier", "punnet"],
+        ant: [],
+        example: "Little Red Riding Hood carried a basket filled with freshly baked bread and jam.",
+        family: "basketry (n)"
+      }
     };
 
-    function getSmartLexis(word, type, info) {
-      const key = word.toLowerCase().replace(/[^a-z]/g, '');
-      if (smartLexisDb[key]) {
-        return smartLexisDb[key];
+    // Common Irregular & Inflected Verb Lemma Dictionary
+    const LEMMA_ROOT_MAP = {
+      "lived": "live", "lives": "live", "living": "live",
+      "wakes": "wake", "waking": "wake", "woke": "wake", "woken": "wake", "wakes up": "wake up", "woke up": "wake up",
+      "discovered": "discover", "discovering": "discover", "discovers": "discover",
+      "feels": "feel", "felt": "feel", "feeling": "feel",
+      "pointed": "point", "pointing": "point", "points": "point",
+      "shrouded": "shroud", "shrouding": "shroud", "shrouds": "shroud",
+      "sailed": "sail", "sailing": "sail", "sails": "sail",
+      "landing": "land", "landed": "land", "lands": "land",
+      "uncovered": "uncover", "uncovering": "uncover", "uncovers": "uncover",
+      "stayed": "stay", "staying": "stay", "stays": "stay",
+      "supported": "support", "supporting": "support", "supports": "support",
+      "faced": "face", "facing": "face", "faces": "face",
+      "passed": "pass", "passing": "pass", "passes": "pass",
+      "promised": "promise", "promising": "promise", "promises": "promise",
+      "means": "mean", "meant": "mean", "meaning": "mean",
+      "stabilizes": "stabilize", "stabilized": "stabilize", "stabilizing": "stabilize",
+      "orbits": "orbit", "orbited": "orbit", "orbiting": "orbit",
+      "creates": "create", "created": "create", "creating": "create",
+      "continues": "continue", "continued": "continue", "continuing": "continue",
+      "appeared": "appear", "appearing": "appear", "appears": "appear",
+      "transformed": "transform", "transforming": "transform", "transforms": "transform",
+      "warned": "warn", "warning": "warn", "warns": "warn",
+      "struck": "strike", "striking": "strike", "strikes": "strike",
+      "fled": "flee", "fleeing": "flee", "flees": "flee",
+      "walked": "walk", "walking": "walk", "walks": "walk",
+      "carried": "carry", "carrying": "carry", "carries": "carry",
+      "approached": "approach", "approaching": "approach", "approaches": "approach",
+      "asked": "ask", "asking": "ask", "asks": "ask",
+      "told": "tell", "telling": "tell", "tells": "tell",
+      "ran": "run", "running": "run", "runs": "run",
+      "heard": "hear", "hearing": "hear", "hears": "hear",
+      "rescued": "rescue", "rescuing": "rescue", "rescues": "rescue",
+      "learned": "learn", "learning": "learn", "learns": "learn",
+      "drank": "drink", "drinking": "drink", "drinks": "drink", "drunk": "drink",
+      "announced": "announce", "announcing": "announce", "announces": "announce",
+      "retrieved": "retrieve", "retrieving": "retrieve", "retrieves": "retrieve",
+      "swung": "swing", "swinging": "swing", "swings": "swing",
+      "crashed": "crash", "crashing": "crash", "crashes": "crash",
+      "arrived": "arrive", "arriving": "arrive", "arrives": "arrive",
+      "ate": "eat", "eating": "eat", "eats": "eat", "eaten": "eat",
+      "mused": "muse", "musing": "muse", "muses": "muse",
+      "began": "begin", "beginning": "begin", "begins": "begin", "begun": "begin",
+      "sat": "sit", "sitting": "sit", "sits": "sit",
+      "made": "make", "making": "make", "makes": "make",
+      "liked": "like", "liking": "like", "likes": "like",
+      "watched": "watch", "watching": "watch", "watches": "watch",
+      "said": "say", "saying": "say", "says": "say",
+      "became": "become", "becoming": "become", "becomes": "become",
+      "marched": "march", "marching": "march", "marches": "march",
+      "poured": "pour", "pouring": "pour", "pours": "pour",
+      "refused": "refuse", "refusing": "refuse", "refuses": "refuse",
+      "defended": "defend", "defending": "defend", "defends": "defend",
+      "whispered": "whisper", "whispering": "whisper", "whispers": "whisper",
+      "cried": "cry", "crying": "cry", "cries": "cry",
+      "bought": "buy", "buying": "buy", "buys": "buy",
+      "taught": "teach", "teaching": "teach", "teaches": "teach",
+      "thought": "think", "thinking": "think", "thinks": "think",
+      "caught": "catch", "catching": "catch", "catches": "catch",
+      "wrote": "write", "writing": "write", "writes": "write", "written": "write",
+      "spoke": "speak", "speaking": "speak", "speaks": "speak", "spoken": "speak",
+      "flew": "fly", "flying": "fly", "flies": "fly", "flown": "fly",
+      "grew": "grow", "growing": "grow", "grows": "grow", "grown": "grow",
+      "drew": "draw", "drawing": "draw", "draws": "draw", "drawn": "draw",
+      "fell": "fall", "falling": "fall", "falls": "fall", "fallen": "fall",
+      "knew": "know", "knowing": "know", "knows": "know", "known": "know",
+      "took": "take", "taking": "take", "takes": "take", "taken": "take",
+      "gave": "give", "giving": "give", "gives": "give", "given": "give",
+      "saw": "see", "seeing": "see", "sees": "see", "seen": "see",
+      "held": "hold", "holding": "hold", "holds": "hold"
+    };
+
+    function lemmatizeWord(rawWord) {
+      if (!rawWord) return "";
+      let clean = rawWord.toLowerCase().trim().replace(/^[^a-z]+|[^a-z]+$/g, '');
+      if (LEMMA_ROOT_MAP[clean]) return LEMMA_ROOT_MAP[clean];
+      
+      // Handle phrasal verbs e.g. "wakes up"
+      if (clean.includes(' ')) {
+        const parts = clean.split(' ');
+        if (LEMMA_ROOT_MAP[parts[0]]) {
+          return LEMMA_ROOT_MAP[parts[0]] + ' ' + parts.slice(1).join(' ');
+        }
       }
-      return { 
-        syn: [], 
-        ant: [], 
-        example: `In this context, "${word}" means: ${info.toLowerCase()}` 
+
+      // Adverbs ending in -ly
+      if (clean.endsWith('ily') && clean.length > 4) {
+        return clean.slice(0, -3) + 'y';
+      }
+      if (clean.endsWith('ly') && clean.length > 4) {
+        const root = clean.slice(0, -2);
+        if (LEXICON_DATABASE[root]) return root;
+      }
+
+      // Past tense -ed / -d
+      if (clean.endsWith('ied') && clean.length > 4) {
+        return clean.slice(0, -3) + 'y';
+      }
+      if (clean.endsWith('ed') && clean.length > 4) {
+        const rootNoEd = clean.slice(0, -2);
+        if (LEXICON_DATABASE[rootNoEd]) return rootNoEd;
+        const rootNoD = clean.slice(0, -1);
+        if (LEXICON_DATABASE[rootNoD]) return rootNoD;
+      }
+
+      // -ing form
+      if (clean.endsWith('ing') && clean.length > 4) {
+        const rootNoIng = clean.slice(0, -3);
+        if (LEXICON_DATABASE[rootNoIng]) return rootNoIng;
+        if (LEXICON_DATABASE[rootNoIng + 'e']) return rootNoIng + 'e';
+      }
+
+      // Plural / 3rd person -s
+      if (clean.endsWith('ies') && clean.length > 4) {
+        return clean.slice(0, -3) + 'y';
+      }
+      if (clean.endsWith('es') && clean.length > 3) {
+        const root = clean.slice(0, -2);
+        if (LEXICON_DATABASE[root]) return root;
+      }
+      if (clean.endsWith('s') && clean.length > 3 && !clean.endsWith('ss')) {
+        const root = clean.slice(0, -1);
+        if (LEXICON_DATABASE[root]) return root;
+      }
+
+      return clean;
+    }
+
+    // Clean any markup annotation text to produce a pristine definition
+    function sanitizeDefinition(rawInfo, word) {
+      if (!rawInfo) return `In this story, "${word}" is used in context.`;
+      let def = rawInfo.trim();
+      
+      // If the annotation is just a grammar tag like "Past Simple - Found", extract "Found" or expand
+      if (def.includes(' - ')) {
+        const parts = def.split(' - ');
+        // If the right side has a real meaning e.g. "Found" or "Clever and deceitful"
+        if (parts[1] && parts[1].length > 2 && !/^[A-C][1-2]$/i.test(parts[1])) {
+          def = parts[1].replace(/ - [A-C][1-2]$/i, '').trim();
+          // capitalize first letter
+          return def.charAt(0).toUpperCase() + def.slice(1);
+        }
+      }
+      
+      // Clean level tags like "- B2"
+      def = def.replace(/ - [A-C][1-2]$/i, '').trim();
+      return def.charAt(0).toUpperCase() + def.slice(1);
+    }
+
+    // Master Lexical Resolver (DB -> Lemmatized DB -> Datamuse API -> FreeDict API -> Rule Fallback)
+    async function resolveLexisData(word, tokenType, tokenInfo, tokenExtra) {
+      const clean = word.toLowerCase().trim().replace(/^[^a-z]+|[^a-z]+$/g, '');
+      const lemma = lemmatizeWord(word);
+
+      // 1. Direct match in local Lexicon Database
+      if (LEXICON_DATABASE[clean]) {
+        const item = LEXICON_DATABASE[clean];
+        return {
+          source: 'local_exact',
+          word: word,
+          baseWord: clean,
+          meaning: item.meaning,
+          phonetic: item.phonetic || '',
+          pos: item.pos || getGrammarCategoryName(tokenType, tokenExtra),
+          cefr: item.cefr || 'B1',
+          synonyms: item.syn || [],
+          antonyms: item.ant || [],
+          example: item.example || `"${word}" is illustrated in this context.`,
+          family: item.family || ''
+        };
+      }
+
+      // 2. Lemmatized match in local Lexicon Database
+      if (LEXICON_DATABASE[lemma]) {
+        const item = LEXICON_DATABASE[lemma];
+        return {
+          source: 'local_lemma',
+          word: word,
+          baseWord: lemma,
+          meaning: item.meaning,
+          phonetic: item.phonetic || '',
+          pos: item.pos || getGrammarCategoryName(tokenType, tokenExtra),
+          cefr: item.cefr || 'B1',
+          synonyms: item.syn || [],
+          antonyms: item.ant || [],
+          example: item.example || `"${word}" is derived from the root "${lemma}".`,
+          family: item.family || ''
+        };
+      }
+
+      // 3. Fallback: Query Online Thesaurus & Dictionary (Datamuse & FreeDictionary API)
+      let onlineMeaning = sanitizeDefinition(tokenInfo, word);
+      let onlineSyns = [];
+      let onlineAnts = [];
+      let onlinePhonetic = "";
+      let onlineExample = "";
+      let onlinePos = getGrammarCategoryName(tokenType, tokenExtra);
+
+      try {
+        const queryTarget = lemma || clean;
+        const timeoutSignal = (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) ? AbortSignal.timeout(1800) : undefined;
+        const fetchOpts = timeoutSignal ? { signal: timeoutSignal } : {};
+        const [dictRes, synRes, antRes] = await Promise.allSettled([
+          fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${queryTarget}`, fetchOpts),
+          fetch(`https://api.datamuse.com/words?rel_syn=${queryTarget}&max=8`, fetchOpts),
+          fetch(`https://api.datamuse.com/words?rel_ant=${queryTarget}&max=6`, fetchOpts)
+        ]);
+
+        // Process Datamuse Synonyms
+        if (synRes.status === 'fulfilled' && synRes.value.ok) {
+          const synData = await synRes.value.json();
+          if (Array.isArray(synData)) {
+            onlineSyns = synData.map(item => item.word).filter(w => w !== clean && w !== lemma);
+          }
+        }
+
+        // Process Datamuse Antonyms
+        if (antRes.status === 'fulfilled' && antRes.value.ok) {
+          const antData = await antRes.value.json();
+          if (Array.isArray(antData)) {
+            onlineAnts = antData.map(item => item.word).filter(w => w !== clean && w !== lemma);
+          }
+        }
+
+        // Process Dictionary API
+        if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
+          const dictData = await dictRes.value.json();
+          if (Array.isArray(dictData) && dictData[0]) {
+            const entry = dictData[0];
+            if (entry.phonetic) onlinePhonetic = entry.phonetic;
+            else if (entry.phonetics && entry.phonetics[0] && entry.phonetics[0].text) {
+              onlinePhonetic = entry.phonetics[0].text;
+            }
+
+            if (entry.meanings && entry.meanings.length > 0) {
+              const firstMeaning = entry.meanings[0];
+              if (firstMeaning.partOfSpeech) {
+                onlinePos = firstMeaning.partOfSpeech.charAt(0).toUpperCase() + firstMeaning.partOfSpeech.slice(1);
+              }
+              if (firstMeaning.definitions && firstMeaning.definitions[0]) {
+                const defObj = firstMeaning.definitions[0];
+                if (defObj.definition) onlineMeaning = defObj.definition;
+                if (defObj.example) onlineExample = defObj.example;
+                if (defObj.synonyms && defObj.synonyms.length > 0) {
+                  onlineSyns.push(...defObj.synonyms);
+                }
+                if (defObj.antonyms && defObj.antonyms.length > 0) {
+                  onlineAnts.push(...defObj.antonyms);
+                }
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("External dictionary query error:", err);
+      }
+
+      // Deduplicate synonyms & antonyms
+      onlineSyns = [...new Set(onlineSyns)].slice(0, 6);
+      onlineAnts = [...new Set(onlineAnts)].slice(0, 5);
+
+      // Smart rule-based contextual example if none found
+      if (!onlineExample) {
+        onlineExample = `In this narrative, "${word}" conveys: ${onlineMeaning.toLowerCase()}`;
+      }
+
+      return {
+        source: 'online_synthesized',
+        word: word,
+        baseWord: lemma || clean,
+        meaning: onlineMeaning,
+        phonetic: onlinePhonetic,
+        pos: onlinePos,
+        cefr: 'B1',
+        synonyms: onlineSyns,
+        antonyms: onlineAnts,
+        example: onlineExample,
+        family: `${lemma || clean} (base form)`
       };
     }
+
+    function getGrammarCategoryName(type, extra) {
+      if (extra && extra.trim()) return extra.trim();
+      const map = {
+        'L': 'Vocabulary Lexis',
+        'T': 'Verb Tense / Action',
+        'ADJ': 'Descriptive Adjective',
+        'ADV': 'Adverb of Manner/Time',
+        'N': 'Noun / Subject',
+        'P': 'Preposition / Phrasal Form',
+        'C': 'Conjunction / Connector',
+        'S': 'Sentence Structure / Clause'
+      };
+      return map[type] || 'English Lexis';
+    }
+
 
     async function showAnnotationModal(token) {
       currentAnnotationWord = token.text;
       currentAnnotationObj = token;
-      document.getElementById('sheetWord').innerText = token.text;
-      document.getElementById('sheetTypeTitle').innerText = token.extra ? token.extra : token.type;
-      document.getElementById('sheetBadge').innerText = token.type;
-      document.getElementById('sheetDesc').innerText = token.info;
 
+      const cleanWord = token.text.replace(/[^a-zA-Zs-]/g, '').trim();
+      document.getElementById('sheetWord').innerText = token.text;
+      
+      const badgeEl = document.getElementById('sheetBadge');
+      badgeEl.innerText = token.type || 'WORD';
+      badgeEl.className = `badge badge-${(token.type || 'l').toLowerCase()}`;
+
+      const categoryTitleEl = document.getElementById('sheetTypeTitle');
+      categoryTitleEl.innerText = getGrammarCategoryName(token.type, token.extra);
+
+      const descEl = document.getElementById('sheetDesc');
       const synEl = document.getElementById('sheetSynonyms');
       const antEl = document.getElementById('sheetAntonyms');
-      const lexisBox = document.getElementById('sheetSynonyms').parentElement.parentElement;
+      const lexisBox = synEl.parentElement.parentElement;
       const lexisTitle = lexisBox.querySelector('div:first-child');
       const exampleEl = document.getElementById('sheetExample');
+      const phoneticEl = document.getElementById('sheetPhonetic');
+      const familyEl = document.getElementById('sheetFamily');
 
-      // Set Loading State
-      lexisTitle.innerText = "⏳ Fetching Expanded Lexis...";
-      synEl.parentElement.style.display = 'none';
-      antEl.parentElement.style.display = 'none';
-      exampleEl.innerText = "Loading...";
+      // Set Loading / Initial UI State
+      descEl.innerHTML = `<div style="color:var(--text-muted); font-size:12.5px;">⏳ Analyzing definition and contextual nuance...</div>`;
+      lexisTitle.innerHTML = `💡 Smart Lexis Analysis & Thesaurus`;
+      synEl.innerHTML = `<span style="color:var(--text-muted); font-size:11.5px;">Searching synonyms...</span>`;
+      antEl.innerHTML = `<span style="color:var(--text-muted); font-size:11.5px;">Searching antonyms...</span>`;
+      synEl.parentElement.style.display = 'block';
+      antEl.parentElement.style.display = 'block';
+      exampleEl.innerText = "Loading contextual example...";
+      if (phoneticEl) phoneticEl.innerText = "";
+      if (familyEl) familyEl.parentElement.style.display = 'none';
 
       openModal('annotationModal');
 
-      try {
-        const cleanWord = token.text.toLowerCase().replace(/[^a-z]/g, '');
-        const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${cleanWord}`);
-        if (!res.ok) throw new Error("Not found");
-        const data = await res.json();
+      // Resolve high accuracy data
+      const data = await resolveLexisData(token.text, token.type, token.info, token.extra);
 
-        let allSyns = [];
-        let allAnts = [];
-        let firstExample = "";
-        let firstDef = "";
+      // Render Meaning
+      descEl.innerHTML = `
+        <div style="background:rgba(99, 102, 241, 0.08); border-left:3px solid var(--primary); padding:8px 12px; border-radius:8px; margin:6px 0;">
+          <div style="font-weight:700; color:var(--text-main); font-size:13px; line-height:1.45;">${escapeHtml(data.meaning)}</div>
+          ${token.info && token.info !== data.meaning ? `<div style="font-size:11px; color:var(--text-muted); margin-top:4px;">Grammar Note: ${escapeHtml(token.info)}</div>` : ''}
+        </div>
+      `;
 
-        data.forEach(entry => {
-          entry.meanings.forEach(meaning => {
-            if (meaning.synonyms) allSyns.push(...meaning.synonyms);
-            if (meaning.antonyms) allAnts.push(...meaning.antonyms);
-            meaning.definitions.forEach(def => {
-              if (def.synonyms) allSyns.push(...def.synonyms);
-              if (def.antonyms) allAnts.push(...def.antonyms);
-              if (!firstDef && def.definition) firstDef = def.definition;
-              if (!firstExample && def.example) firstExample = def.example;
-            });
-          });
-        });
-
-        allSyns = [...new Set(allSyns)].slice(0, 5);
-        allAnts = [...new Set(allAnts)].slice(0, 5);
-
-        if (firstDef) {
-          document.getElementById('sheetDesc').innerText = firstDef;
-          token.info = firstDef;
-        }
-
-        lexisTitle.innerText = "💡 Expanded Lexis Analysis";
-
-        if (allSyns.length > 0) {
-          synEl.parentElement.style.display = 'block';
-          synEl.innerText = allSyns.join(', ');
-        } else {
-          synEl.parentElement.style.display = 'none';
-        }
-
-        if (allAnts.length > 0) {
-          antEl.parentElement.style.display = 'block';
-          antEl.innerText = allAnts.join(', ');
-        } else {
-          antEl.parentElement.style.display = 'none';
-        }
-
-        exampleEl.innerText = firstExample ? `"${firstExample}"` : `In this context, "${cleanWord}" means: ${token.info.toLowerCase()}`;
-
-        // Save for notebook
-        currentAnnotationObj.fetchedSyn = allSyns;
-        currentAnnotationObj.fetchedAnt = allAnts;
-        currentAnnotationObj.fetchedExample = firstExample || `In this context, "${cleanWord}" means: ${token.info.toLowerCase()}`;
-
-      } catch (e) {
-        // Fallback to local
-        const lexis = getSmartLexis(token.text, token.type, token.info);
-        
-        if ((!lexis.syn || lexis.syn.length === 0) && (!lexis.ant || lexis.ant.length === 0)) {
-          lexisTitle.innerText = "📖 Contextual Usage";
-          synEl.parentElement.style.display = 'none';
-          antEl.parentElement.style.display = 'none';
-        } else {
-          lexisTitle.innerText = "💡 Smart Lexis Analysis";
-          if (lexis.syn && lexis.syn.length > 0) {
-            synEl.parentElement.style.display = 'block';
-            synEl.innerText = lexis.syn.join(', ');
-          } else {
-            synEl.parentElement.style.display = 'none';
-          }
-          if (lexis.ant && lexis.ant.length > 0) {
-            antEl.parentElement.style.display = 'block';
-            antEl.innerText = lexis.ant.join(', ');
-          } else {
-            antEl.parentElement.style.display = 'none';
-          }
-        }
-        
-        exampleEl.innerText = `"${lexis.example}"`;
-        currentAnnotationObj.fetchedSyn = lexis.syn;
-        currentAnnotationObj.fetchedAnt = lexis.ant;
-        currentAnnotationObj.fetchedExample = lexis.example;
+      // Render Phonetics
+      if (phoneticEl) {
+        phoneticEl.innerText = data.phonetic ? `[${data.phonetic}]` : '';
       }
+
+      // Render Synonyms
+      if (data.synonyms && data.synonyms.length > 0) {
+        synEl.parentElement.style.display = 'block';
+        synEl.innerHTML = data.synonyms.map(s => 
+          `<span class="syn-chip" onclick="lookupQuickWord('${escapeHtml(s)}')">${escapeHtml(s)}</span>`
+        ).join(' ');
+      } else {
+        synEl.parentElement.style.display = 'block';
+        synEl.innerHTML = `<span style="color:var(--text-muted); font-style:italic;">No direct one-to-one synonyms recorded for this exact inflected form</span>`;
+      }
+
+      // Render Antonyms
+      if (data.antonyms && data.antonyms.length > 0) {
+        antEl.parentElement.style.display = 'block';
+        antEl.innerHTML = data.antonyms.map(a => 
+          `<span class="ant-chip" onclick="lookupQuickWord('${escapeHtml(a)}')">${escapeHtml(a)}</span>`
+        ).join(' ');
+      } else {
+        antEl.parentElement.style.display = 'block';
+        antEl.innerHTML = `<span style="color:var(--text-muted); font-style:italic;">No direct opposite antonyms recorded for this specific form</span>`;
+      }
+
+      // Render Example
+      exampleEl.innerHTML = `"${escapeHtml(data.example)}"`;
+
+      // Render Word Family if available
+      if (familyEl) {
+        if (data.family) {
+          familyEl.parentElement.style.display = 'block';
+          familyEl.innerText = data.family;
+        } else {
+          familyEl.parentElement.style.display = 'none';
+        }
+      }
+
+      // Store in memory for vocab notebook saving
+      currentAnnotationObj.fetchedMeaning = data.meaning;
+      currentAnnotationObj.fetchedSyn = data.synonyms;
+      currentAnnotationObj.fetchedAnt = data.antonyms;
+      currentAnnotationObj.fetchedExample = data.example;
+      currentAnnotationObj.fetchedPos = data.pos;
+      currentAnnotationObj.fetchedPhonetic = data.phonetic;
+    }
+
+    // Interactive Chip Quick Lookup (Tapping a synonym/antonym opens its definition!)
+    async function lookupQuickWord(word) {
+      const syntheticToken = {
+        text: word,
+        type: 'L',
+        info: `Synonym / Antonym Exploration`,
+        extra: 'Related Vocabulary'
+      };
+      showAnnotationModal(syntheticToken);
     }
 
     function saveCurrentWordToVocab() {
@@ -4866,46 +6424,58 @@
       }
     }
 
-    // --- AI COMPANION (LINGOBOT) LOGIC ---
+    // --- AI COMPANION (LINGOBOT) GLASS LOGIC ---
     let companionHistory = [];
 
     function openAiCompanion() {
-      const container = document.getElementById('companionChatContainer');
       if (companionHistory.length === 0) {
-        const welcomeText = `Hello Abdelmalek! 👋 I am **LingoBot**, your AI English Tutor.\n\nWe are currently reading **"${currentStory ? currentStory.title : 'a story'}"** (${currentStory ? currentStory.level : 'A2'} level). How can I assist your learning today?`;
-        companionHistory.push({ sender: 'bot', text: welcomeText });
-        renderCompanionChat();
+        initCompanionWelcome();
       }
+      renderCompanionChat();
       openModal('aiCompanionModal');
     }
 
+    function initCompanionWelcome() {
+      const title = currentStory ? currentStory.title : 'English Story';
+      const level = currentStory ? currentStory.level : 'A2';
+      const welcomeText = `Hello Abdelmalek! 👋 I am **LingoBot**, your Glass AI English Tutor.\n\nWe are currently exploring **"${title}"** (${level} level). How can I guide your English learning today? Ask for vocabulary breakdowns, grammar tenses, or practice conversation!`;
+      companionHistory.push({ sender: 'bot', text: welcomeText });
+    }
+
     function renderCompanionChat() {
-      const container = document.getElementById('companionChatContainer');
-      container.innerHTML = "";
-      companionHistory.forEach((msg) => {
-        const isUser = msg.sender === 'user';
-        const bubble = document.createElement('div');
-        bubble.style = `max-width:85%; padding:10px 14px; border-radius:14px; font-size:12.5px; line-height:1.45; ${
-          isUser
-            ? 'align-self:flex-end; background:var(--primary); color:white; border-bottom-right-radius:2px;'
-            : 'align-self:flex-start; background:var(--surface); color:var(--text-main); border:1px solid var(--border); border-bottom-left-radius:2px;'
-        }`;
-        
-        let formattedText = msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>');
-        
-        if (!isUser) {
-          bubble.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
-              <div>${formattedText}</div>
-              <button class="icon-btn" style="padding:2px 6px; font-size:11px; flex-shrink:0;" onclick="speakWord('${msg.text.replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, ' ')}')">🔊</button>
-            </div>
-          `;
-        } else {
-          bubble.innerHTML = formattedText;
-        }
-        container.appendChild(bubble);
-      });
-      container.scrollTop = container.scrollHeight;
+      const modalContainer = document.getElementById('companionChatContainer');
+      const storyContainer = document.getElementById('storyCompanionChat');
+
+      const renderInto = (container) => {
+        if (!container) return;
+        container.innerHTML = "";
+        companionHistory.forEach((msg) => {
+          const isUser = msg.sender === 'user';
+          const bubble = document.createElement('div');
+          bubble.className = isUser ? 'glass-user-bubble' : 'glass-bot-bubble';
+          
+          let formattedText = msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>');
+          
+          if (!isUser) {
+            bubble.innerHTML = `
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                <div style="flex:1;">${formattedText}</div>
+                <div style="display:flex; gap:4px; flex-shrink:0;">
+                  <button class="icon-btn" style="width:24px; height:24px; font-size:11px; background:rgba(168,85,247,0.15); color:#a855f7;" title="Listen to Pronunciation" onclick="speakWord('${msg.text.replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, ' ')}')">🔊</button>
+                  <button class="icon-btn" style="width:24px; height:24px; font-size:11px; background:rgba(99,102,241,0.15); color:#6366f1;" title="Copy" onclick="navigator.clipboard.writeText('${msg.text.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')">📋</button>
+                </div>
+              </div>
+            `;
+          } else {
+            bubble.innerHTML = formattedText;
+          }
+          container.appendChild(bubble);
+        });
+        container.scrollTop = container.scrollHeight;
+      };
+
+      renderInto(modalContainer);
+      renderInto(storyContainer);
     }
 
     function sendQuickPrompt(promptText) {
@@ -4913,28 +6483,49 @@
       sendCompanionMessage();
     }
 
+    function sendQuickCompanionPrompt(promptText) {
+      document.getElementById('storyCompanionInput').value = promptText;
+      sendStoryCompanionMessage();
+    }
+
     async function sendCompanionMessage() {
       const input = document.getElementById('companionInput');
       const text = input.value.trim();
       if (!text) return;
-
       input.value = "";
+      await handleUserCompanionMessage(text);
+    }
+
+    async function sendStoryCompanionMessage() {
+      const input = document.getElementById('storyCompanionInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = "";
+      await handleUserCompanionMessage(text);
+    }
+
+    async function handleUserCompanionMessage(text) {
       companionHistory.push({ sender: 'user', text: text });
       renderCompanionChat();
 
-      // Show typing indicator
-      const container = document.getElementById('companionChatContainer');
-      const typingDiv = document.createElement('div');
-      typingDiv.id = "companionTyping";
-      typingDiv.style = "align-self:flex-start; padding:8px 12px; border-radius:12px; background:var(--surface); font-size:11px; color:var(--text-muted); font-style:italic;";
-      typingDiv.innerText = "🤖 LingoBot is thinking...";
-      container.appendChild(typingDiv);
-      container.scrollTop = container.scrollHeight;
+      // Show typing indicator in both containers
+      ['companionChatContainer', 'storyCompanionChat'].forEach(id => {
+        const c = document.getElementById(id);
+        if (c) {
+          const t = document.createElement('div');
+          t.className = "glass-bot-bubble companion-typing-indicator";
+          t.style.fontStyle = "italic";
+          t.style.opacity = "0.85";
+          t.innerHTML = "🤖 <em>LingoBot is analyzing & drafting response...</em>";
+          c.appendChild(t);
+          c.scrollTop = c.scrollHeight;
+        }
+      });
 
       const reply = await generateCompanionResponse(text);
       
-      const typingEl = document.getElementById('companionTyping');
-      if (typingEl) typingEl.remove();
+      // Remove typing indicators
+      document.querySelectorAll('.companion-typing-indicator').forEach(el => el.remove());
 
       companionHistory.push({ sender: 'bot', text: reply });
       renderCompanionChat();
@@ -4948,7 +6539,7 @@
 
       if (apiKey) {
         try {
-          const systemPrompt = `You are LingoBot, an encouraging English language tutor companion in the LingoStory app. The user is learning English at ${storyLevel} level. The current story being read is "${storyTitle}". Here is the raw story context:\n"${storyText.substring(0, 800)}"\n\nKeep your answer concise (2-4 sentences), friendly, clear, and highly educational. Highlight key vocabulary with **bold** text.`;
+          const systemPrompt = `You are LingoBot, an encouraging English language tutor companion in the LingoStory app. The user is learning English at ${storyLevel} level. The current story being read is "${storyTitle}". Here is the raw story context:\n"${storyText.substring(0, 900)}"\n\nKeep your answer concise (2-4 sentences), friendly, clear, and highly educational. Highlight key vocabulary with **bold** text.`;
           
           const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
@@ -4969,18 +6560,20 @@
         }
       }
 
-      // Intelligent Fallback Companion Engine
+      // Intelligent Contextual Fallback Engine
       const lower = userText.toLowerCase();
       if (lower.includes('moral') || lower.includes('lesson')) {
-        return `💡 **Core Moral of "${storyTitle}"**: The central lesson teaches us that kindness, patience, and creative problem-solving overcome difficult obstacles. Keep practicing these themes in your everyday English!`;
+        return `💡 **Core Moral of "${storyTitle}"**: The central lesson teaches us that persistence, empathy, and creative problem-solving overcome even the greatest challenges. Notice how the characters make deliberate choices when faced with adversity!`;
       } else if (lower.includes('conversation') || lower.includes('practice chat')) {
-        return `🗣️ **Let's Practice!** Imagine you were in "${storyTitle}". How would you feel if you met the main character today? Reply in 1 or 2 simple sentences in English!`;
+        return `🗣️ **Interactive Conversation Practice**: Imagine you were alongside the characters in "${storyTitle}". What advice would you have given them during the climax? Reply in 1 or 2 simple English sentences!`;
       } else if (lower.includes('quiz') || lower.includes('vocabulary')) {
-        return `📝 **Quick Vocabulary Check for "${storyTitle}"**:\n1. What does **"kind-hearted"** mean? (a) Generous & caring (b) Angry\n2. Which word means "extremely beautiful"? (**magnificent**)\n\nTry answering in our chat!`;
-      } else if (lower.includes('grammar') || lower.includes('rules')) {
-        return `🔍 **Grammar Insight**: Notice how "${storyTitle}" uses the **Past Simple tense** (e.g., *lived*, *discovered*, *trapped*) to narrate sequential story events. Tapping highlighted words in the reader gives you instant tense breakdowns!`;
+        return `📝 **Vocabulary Challenge for "${storyTitle}"**:\n1. Can you name two descriptive **adjectives** used in this story?\n2. What is the opposite (**antonym**) of "cruel" or "treacherous"?\n\nShare your answers in our chat!`;
+      } else if (lower.includes('grammar') || lower.includes('rules') || lower.includes('tenses')) {
+        return `🔍 **Grammar Insight**: This story showcases **narrative past tenses** (Past Simple & Past Continuous) to sequence actions smoothly. Notice how time conjunctions like *When*, *While*, and *Suddenly* connect key story moments.`;
+      } else if (lower.includes('summary') || lower.includes('summarize')) {
+        return `⚡ **Quick Summary of "${storyTitle}"**:\n1. The protagonist encounters an unexpected turning point or challenge.\n2. Through ingenuity and courage, a decisive resolution is reached.\n3. The ending highlights key lessons on growth and character.`;
       } else {
-        return `🤖 **Great question!** In "${storyTitle}" (${storyLevel} Level), we focus on building **vocabulary** and understanding **sentence structures**. Would you like me to explain a specific word or give you a quick 3-question quiz?`;
+        return `🤖 **Great exploration!** In "${storyTitle}" (${storyLevel} Level), we focus on mastering **natural sentence flow** and **contextual vocabulary**. Would you like me to explain a specific highlighted word, test your understanding with a quick quiz, or discuss the plot?`;
       }
     }
 
