@@ -4770,6 +4770,20 @@
 
     function getStoryRawText(story) {
       if (!story) return "";
+
+      // Look up in defaultStoriesMap if story.raw is missing or short
+      if (story && story.id && typeof defaultStoriesMap !== 'undefined' && defaultStoriesMap[story.id]) {
+        const builtIn = defaultStoriesMap[story.id];
+        if (!story.raw || typeof story.raw !== 'string' || story.raw.trim().length < 50) {
+          if (builtIn.raw && builtIn.raw.trim().length > 50) {
+            story.raw = builtIn.raw; // Auto-repair missing text
+          }
+        }
+        if (!story.quiz || !Array.isArray(story.quiz) || story.quiz.length === 0) {
+          if (builtIn.quiz) story.quiz = builtIn.quiz;
+        }
+      }
+
       if (story.raw && typeof story.raw === 'string' && story.raw.trim().length > 0) return story.raw;
       if (Array.isArray(story.pages) && story.pages.length > 0) {
         const pText = story.pages.map(p => (p && p.content) ? p.content : '').join('\n\n').trim();
@@ -4777,14 +4791,14 @@
       }
       if (story.content && typeof story.content === 'string' && story.content.trim().length > 0) return story.content;
       if (story.text && typeof story.text === 'string' && story.text.trim().length > 0) return story.text;
-      if (story.description) return story.description;
+      if (story.description && story.description.trim().length > 0) return story.description;
       return "";
     }
 
     // Always ensure ALL default stories exist in allStories with complete text & quizzes!
     let savedStories = [];
     try {
-      savedStories = JSON.parse(localStorage.getItem('lingo_stories_v8') || localStorage.getItem('lingo_stories_v7') || localStorage.getItem('lingo_stories_v6')) || [];
+      savedStories = JSON.parse(localStorage.getItem('lingo_stories_v9') || localStorage.getItem('lingo_stories_v8') || localStorage.getItem('lingo_stories_v7') || localStorage.getItem('lingo_stories_v6')) || [];
     } catch (e) {
       savedStories = [];
     }
@@ -4803,12 +4817,22 @@
       savedStories.forEach(s => {
         if (s && s.id && !defaultStoriesMap[s.id]) {
           combinedStoriesMap[s.id] = s;
+        } else if (s && s.id && defaultStoriesMap[s.id]) {
+          // Ensure built-in story has complete text & quiz
+          if (!s.raw || s.raw.trim().length < 50) {
+            s.raw = defaultStoriesMap[s.id].raw;
+          }
+          if (!s.quiz || !Array.isArray(s.quiz) || s.quiz.length === 0) {
+            s.quiz = defaultStoriesMap[s.id].quiz;
+          }
+          combinedStoriesMap[s.id] = s;
         }
       });
     }
 
     let allStories = Object.values(combinedStoriesMap);
     try {
+      localStorage.setItem('lingo_stories_v9', JSON.stringify(allStories));
       localStorage.setItem('lingo_stories_v8', JSON.stringify(allStories));
       localStorage.setItem('lingo_stories_v7', JSON.stringify(allStories));
       localStorage.setItem('lingo_stories_v6', JSON.stringify(allStories));
@@ -8931,6 +8955,7 @@
         }
 
         allStories.unshift(newStory);
+        localStorage.setItem('lingo_stories_v9', JSON.stringify(allStories));
         localStorage.setItem('lingo_stories_v8', JSON.stringify(allStories));
         localStorage.setItem('lingo_stories_v7', JSON.stringify(allStories));
         localStorage.setItem('lingo_stories_v6', JSON.stringify(allStories));
@@ -9367,6 +9392,9 @@
     let userQuizSelections = {};
 
     function openQuizPractice(story) {
+      if (story && (!currentStory || currentStory.id !== story.id)) {
+        loadStory(story);
+      }
       activeQuizStory = story;
       userQuizSelections = {};
       document.getElementById('quizPracticeTitle').innerText = `🧠 Quiz: ${story.title}`;
