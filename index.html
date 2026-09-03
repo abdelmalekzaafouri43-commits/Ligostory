@@ -156,14 +156,20 @@
     .filter-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
 
     .reader-scroll { flex: 1; overflow-y: auto; padding: 16px 16px 60px 16px; line-height: 1.9; pointer-events: auto; }
-    .reader-scroll .story-word { transition: all 0.2s ease-in-out; border-radius: 4px; padding: 0 1px; }
+    .reader-scroll .story-word { transition: all 0.1s ease-out; border-radius: 4px; padding: 0 1px; display: inline-block; }
+    
+    @keyframes wordGlowPulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 rgba(99, 102, 241, 0); }
+      40% { transform: scale(1.08); box-shadow: 0 0 16px rgba(168, 85, 247, 0.5); }
+      100% { transform: scale(1.05); box-shadow: 0 0 10px rgba(99, 102, 241, 0.45); }
+    }
+
     .reader-scroll .story-word.active-spoken-word {
       background: linear-gradient(135deg, rgba(99, 102, 241, 0.28), rgba(168, 85, 247, 0.28));
       color: var(--primary);
       font-weight: 700;
-      box-shadow: 0 0 14px rgba(99, 102, 241, 0.45);
-      transform: scale(1.06);
       border-bottom: 2px solid var(--primary);
+      animation: wordGlowPulse 0.3s ease-out forwards;
     }
     .font-14 { font-size: 14px; } .font-16 { font-size: 16px; } .font-18 { font-size: 18px; } .font-21 { font-size: 21px; }
 
@@ -457,6 +463,11 @@
       <button class="filter-pill" onclick="setGrammarFilter('P', this)">Prepositions</button>
       <button class="filter-pill" onclick="setGrammarFilter('C', this)">Conjunctions</button>
       <button class="filter-pill" onclick="setGrammarFilter('S', this)">Structures</button>
+    </div>
+
+    <!-- Reading Progress Bar -->
+    <div style="width: 100%; height: 4px; background: var(--border); flex-shrink: 0;">
+      <div id="scrollProgressBar" style="width: 100%; height: 100%; background: var(--primary); transform-origin: left; transform: scaleX(0); transition: transform 0.1s ease-out;"></div>
     </div>
 
     <div id="readerArea" class="reader-scroll font-16">
@@ -1113,7 +1124,102 @@
           { type: "open", question: "Personal Opinion: How does this story show that nobody is too small to make a difference?" }
         ]
       },
-
+      {
+        id: "boy_cried_wolf",
+        title: "The Boy Who Cried Wolf",
+        level: "B1",
+        theme: "Fable",
+        description: "A shepherd boy learns a hard lesson about honesty when he repeatedly tricks the villagers.",
+        imageUrl: "https://image.pollinations.ai/prompt/shepherd%20boy%20laughing%20at%20villagers%20on%20a%20green%20hill%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "A young shepherd [N:boy](Noun) [T:watched](Past Simple) a flock of sheep near a village. [C:Because] he felt [ADJ:bored](Adjective), he [T:decided](Past Simple) to play a trick. \"Wolf! Wolf!\" he [T:shouted](Past Simple) [ADV:loudly](Adverb of Manner). The villagers [T:rushed](Past Simple) up the hill to help him, but they [T:found](Past Simple) no wolf. The boy [T:laughed](Past Simple) at their angry faces.\n\nHe [T:repeated](Past Simple) this trick a few days later, and again the villagers [T:came](Past Simple) running. [ADV:Eventually](Adverb of Time), a real wolf [T:appeared](Past Simple). The frightened boy [T:cried](Past Simple) for help, but [P:this](Pronoun) time, no one [T:came](Past Simple). They [T:believed](Past Simple) he [T:was lying](Past Continuous) again, and the wolf [T:scattered](Past Simple) the entire flock.",
+        quiz: [
+          { type: "mc", question: "Reference: Why did the boy shout 'Wolf' the first time?", options: ["Because he saw a real wolf", "Because he was bored", "Because he lost a sheep"], correct: 1, explanation: "He felt bored, so he decided to play a trick." },
+          { type: "mc", question: "Sequence: What happened when the real wolf appeared?", options: ["The villagers rushed to help", "The boy laughed at the villagers", "Nobody came to help the boy"], correct: 2, explanation: "The villagers thought he was lying again, so nobody came." },
+          { type: "mc", question: "Character: How did the villagers react to the boy's trick the first time?", options: ["They laughed with him", "They had angry faces", "They did not care"], correct: 1, explanation: "The boy laughed at their angry faces." },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Anger, Adjective: Angry, Adverb: [?]", options: ["Angrily", "Angered", "Angerly"], correct: 0, explanation: "The adverb form is angrily." },
+          { type: "open", question: "Personal Opinion: Why is it important to tell the truth?" }
+        ]
+      },
+      {
+        id: "tortoise_hare",
+        title: "The Tortoise and the Hare",
+        level: "A2",
+        theme: "Fable",
+        description: "A slow tortoise challenges a fast hare to a race, proving that consistency wins.",
+        imageUrl: "https://image.pollinations.ai/prompt/tortoise%20and%20hare%20running%20a%20race%20in%20a%20forest%20path%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "A fast [N:hare](Noun) [T:mocked](Past Simple) a slow [N:tortoise](Noun) for his short legs and sluggish pace. The tortoise, [ADV:calmly](Adverb of Manner), [T:challenged](Past Simple) him to a race. As the race [T:began](Past Simple), the hare [T:darted](Past Simple) ahead, leaving the tortoise far [P:behind](Preposition).\n\n[C:Since] he was so far ahead, the overconfident hare [T:decided](Past Simple) to take a nap under a large tree. [C:Meanwhile], the tortoise [T:kept](Past Simple) walking, [ADV:slowly](Adverb of Manner) but [ADV:steadily](Adverb of Manner). When the hare finally [T:woke](Past Simple) up, he [T:saw](Past Simple) the tortoise crossing the finish line. The hare [T:realized](Past Simple) that slow and steady [T:wins](Present Simple) the race.",
+        quiz: [
+          { type: "mc", question: "Reference: Why did the hare take a nap?", options: ["Because he was tired", "Because he thought he had plenty of time", "Because it was nighttime"], correct: 1, explanation: "Since he was so far ahead, the overconfident hare decided to take a nap." },
+          { type: "mc", question: "Sequence: What did the hare do when the race began?", options: ["He took a nap", "He darted ahead", "He waited for the tortoise"], correct: 1, explanation: "As the race began, the hare darted ahead." },
+          { type: "mc", question: "Character: How did the tortoise react to the hare's mocking?", options: ["He calmly challenged him to a race", "He cried", "He shouted at the hare"], correct: 0, explanation: "The tortoise calmly challenged him to a race." },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Slowness, Adjective: Slow, Adverb: [?]", options: ["Slowly", "Sluggish", "Slowed"], correct: 0, explanation: "The adverb form is slowly." },
+          { type: "open", question: "Personal Opinion: Have you ever achieved a goal by being slow and steady?" }
+        ]
+      },
+      {
+        id: "ugly_duckling",
+        title: "The Ugly Duckling",
+        level: "B1",
+        theme: "Fairy Tale",
+        description: "A little bird faces rejection but eventually discovers his true, beautiful identity.",
+        imageUrl: "https://image.pollinations.ai/prompt/beautiful%20white%20swan%20in%20a%20lake%20with%20ducks%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "On a beautiful summer morning, a mother [N:duck](Noun) [T:watched](Past Simple) her eggs hatch. The last egg [T:produced](Past Simple) a large, clumsy bird that [T:looked](Past Simple) completely [ADJ:different](Adjective). The other animals [T:teased](Past Simple) him [ADV:cruelly](Adverb of Manner), calling him [ADJ:ugly](Adjective). [ADJ:Saddened](Adjective) by their rejection, the poor duckling [T:ran away](Phrasal Verb) to find a place where he belonged.\n\nHe [T:survived](Past Simple) a cold and lonely winter [P:by](Preposition) hiding in the reeds. When spring [T:arrived](Past Simple), he [T:flew](Past Simple) to a quiet pond and [T:saw](Past Simple) a group of elegant swans. [ADV:Nervously](Adverb of Manner), he [T:approached](Past Simple) them. Looking at his reflection in the clear water, he [T:was astonished](Past Simple Passive). He was no longer an ugly duckling, [C:but] a [ADJ:magnificent](Adjective) white swan.",
+        quiz: [
+          { type: "mc", question: "Reference: Why did the duckling run away?", options: ["Because he wanted an adventure", "Because the other animals teased him cruelly", "Because winter was coming"], correct: 1, explanation: "Saddened by their rejection, the poor duckling ran away." },
+          { type: "mc", question: "Sequence: What happened when the duckling looked at his reflection in the spring?", options: ["He saw an ugly duckling", "He was astonished to see he was a swan", "He saw the other animals laughing"], correct: 1, explanation: "Looking at his reflection... he was astonished. He was no longer an ugly duckling, but a magnificent white swan." },
+          { type: "mc", question: "Character: How did the duckling feel when he approached the swans?", options: ["Confident", "Nervously", "Angry"], correct: 1, explanation: "The text says 'Nervously, he approached them.'" },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Beauty, Adjective: Beautiful, Adverb: [?]", options: ["Beautifully", "Beautify", "Beautiful"], correct: 0, explanation: "The adverb form is beautifully." },
+          { type: "open", question: "Personal Opinion: Why shouldn't we judge someone based on their appearance?" }
+        ]
+      },
+      {
+        id: "magic_pen",
+        title: "The Magic Pen",
+        level: "A2",
+        theme: "Fantasy",
+        description: "A boy discovers a pen that makes everything he draws come to life.",
+        imageUrl: "https://image.pollinations.ai/prompt/a%20glowing%20magic%20pen%20drawing%20a%20butterfly%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "[N:Tom](Proper Noun) [T:found](Past Simple) a shiny [ADJ:silver](Descriptive Adjective) pen [P:on](Preposition) his desk. [C:When](Subordinating Conjunction) he [T:drew](Past Simple) an apple on a piece of paper, the apple [T:became](Past Simple) real! He could smell its [ADJ:sweet](Descriptive Adjective) scent. He [T:was](Past Simple) [ADV:extremely](Adverb of Degree) surprised.\n\nNext, he [T:sketched](Past Simple) a small [N:bird](Noun). The bird [T:flew](Past Simple) [P:off](Preposition) the page and [T:chirped](Past Simple) [ADV:happily](Adverb of Manner). But when he drew a scary [N:monster](Noun), he had [P:to](Preposition) erase it [ADV:quickly](Adverb of Manner) before it [T:jumped](Past Simple) out! Tom [T:learned](Past Simple) to use his new power [ADV:carefully](Adverb of Manner).",
+        quiz: [
+          { type: "mc", question: "Reference: What happened when Tom drew an apple?", options: ["It became real", "It turned red", "It disappeared"], correct: 0, explanation: "The story says 'the apple became real!' after he drew it." },
+          { type: "mc", question: "Sequence: What did Tom draw after the apple?", options: ["A small bird", "A scary monster", "A shiny pen"], correct: 0, explanation: "After the apple, the text says 'Next, he sketched a small bird.'" },
+          { type: "mc", question: "Character: Why did Tom erase the monster quickly?", options: ["So it wouldn't jump out", "Because it was ugly", "Because he made a mistake"], correct: 0, explanation: "He had to erase it quickly 'before it jumped out!'" },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Care, Adjective: Careful, Adverb: [?]", options: ["Carefully", "Caring", "Cares"], correct: 0, explanation: "The adverb form of careful is 'carefully'." },
+          { type: "open", question: "Personal Opinion: What would you draw if you had a magic pen?" }
+        ]
+      },
+      {
+        id: "new_school",
+        title: "First Day at a New School",
+        level: "B1",
+        theme: "Realistic Fiction",
+        description: "A student overcomes anxiety and makes new friends on her first day.",
+        imageUrl: "https://image.pollinations.ai/prompt/a%20friendly%20school%20hallway%20with%20students%20talking%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "[N:Sarah](Proper Noun) [T:stood](Past Simple) [P:outside](Preposition) the [ADJ:enormous](Descriptive Adjective) brick building, feeling [L:anxious](Worried and nervous - B1). She [T:took](Past Simple) a [ADJ:deep](Descriptive Adjective) breath and [T:walked](Past Simple) [P:into](Preposition) the hallway. [C:Although](Conjunction) the corridor was crowded, everyone [T:seemed](Past Simple) busy chatting [ADV:loudly](Adverb of Manner) [P:with](Preposition) their friends.\n\nDuring lunchtime, she [T:sat](Past Simple) alone [P:at](Preposition) a table. Suddenly, a [ADJ:cheerful](Descriptive Adjective) girl named Emma [T:approached](Past Simple) and asked [P:if](Conjunction) she could join her. They [T:shared](Past Simple) their sandwiches and talked about their favorite movies. Sarah [T:realized](Past Simple) that starting over [T:isn't](Present Simple) always [L:intimidating](Frightening or making one feel afraid - B2).",
+        quiz: [
+          { type: "mc", question: "Reference: How did Sarah feel before entering the school?", options: ["Anxious", "Excited", "Angry"], correct: 0, explanation: "The story says she was 'feeling anxious'." },
+          { type: "mc", question: "Sequence: When did Emma approach Sarah?", options: ["During lunchtime", "Before school started", "During a test"], correct: 0, explanation: "It happened 'During lunchtime' while Sarah sat alone." },
+          { type: "mc", question: "Character: Which word best describes Emma?", options: ["Cheerful", "Quiet", "Intimidating"], correct: 0, explanation: "The text describes Emma as a 'cheerful girl'." },
+          { type: "mc", question: "Vocabulary Table: Complete: Verb: Realize, Noun: [?], Adjective: Realizable", options: ["Realization", "Reality", "Realizing"], correct: 0, explanation: "The noun form referring to the act of realizing is 'Realization'." },
+          { type: "open", question: "Personal Opinion: Can you remember your first day at a new school or job? How did you feel?" }
+        ]
+      },
+      {
+        id: "mysterious_clockmaker",
+        title: "The Mysterious Clockmaker",
+        level: "B2",
+        theme: "Mystery",
+        description: "An investigator visits a peculiar clock shop where time seems to stand still.",
+        imageUrl: "https://image.pollinations.ai/prompt/a%20dimly%20lit%20clockmaker%20shop%20with%20glowing%20gears%20storybook%20illustration?width=800&height=400&nologo=true",
+        raw: "Detective [N:Harrison](Proper Noun) [T:pushed](Past Simple) open the heavy oak door, triggering a [ADJ:melodic](Descriptive Adjective) chime. The interior [T:was](Past Simple) filled with hundreds of ticking clocks, [L:orchestrating](Arranging or directing a complex situation - B2) a [ADJ:symphonic](Descriptive Adjective) rhythm. Behind the counter stood an [ADJ:elderly](Descriptive Adjective) man polishing a [ADJ:golden](Descriptive Adjective) pocket watch [ADV:meticulously](Adverb of Manner).\n\n\"I [T:have been expecting](Present Perfect Continuous) you,\" the clockmaker [T:whispered](Past Simple) [ADV:cryptically](Adverb of Manner). [C:Before](Conjunction) Harrison could speak, the man [T:handed](Past Simple) him the pocket watch. The hands on the dial [T:were spinning](Past Continuous) backwards. Harrison [T:understood](Past Simple) that the rumors were true; this shop [T:could control](Modal Verb) time itself.",
+        quiz: [
+          { type: "mc", question: "Reference: What was the clockmaker doing when Harrison entered?", options: ["Polishing a golden pocket watch", "Fixing a wall clock", "Sweeping the floor"], correct: 0, explanation: "He was polishing a golden pocket watch meticulously." },
+          { type: "mc", question: "Sequence: What happened immediately after the clockmaker spoke?", options: ["He handed Harrison the pocket watch", "Harrison asked a question", "The clocks stopped ticking"], correct: 0, explanation: "Before Harrison could speak, the man handed him the pocket watch." },
+          { type: "mc", question: "Character: How did the clockmaker speak?", options: ["Cryptically", "Loudly", "Nervously"], correct: 0, explanation: "The text says the clockmaker 'whispered cryptically'." },
+          { type: "mc", question: "Vocabulary Table: Complete: Noun: Mystery, Adjective: Mysterious, Adverb: [?]", options: ["Mysteriously", "Mysteries", "Mystery"], correct: 0, explanation: "The adverb form is 'Mysteriously'." },
+          { type: "open", question: "Personal Opinion: If you could control time with a pocket watch, what would you change?" }
+        ]
+      }
     ];
 
     let currentStory = allStories[0];
@@ -1142,6 +1248,17 @@
       updateVocabCount();
       renderFeedbacks();
       setTimeout(initPageCurlEngine, 100);
+
+      // Initialize reading progress bar listener
+      const readerArea = document.getElementById('readerArea');
+      const progressBar = document.getElementById('scrollProgressBar');
+      if (readerArea && progressBar) {
+        readerArea.addEventListener('scroll', () => {
+          const maxScroll = readerArea.scrollHeight - readerArea.clientHeight;
+          const scrollPercent = maxScroll > 0 ? (readerArea.scrollTop / maxScroll) : 0;
+          progressBar.style.transform = `scaleX(${scrollPercent})`;
+        });
+      }
     }
 
     function loadStory(story) {
@@ -1155,6 +1272,7 @@
           void readerEl.offsetWidth; // force reflow
           readerEl.classList.add('story-slide-in');
           readerEl.scrollTop = 0;
+          readerEl.dispatchEvent(new Event('scroll'));
         }, 180);
       } else {
         renderStoryContent(story);
@@ -1162,6 +1280,8 @@
           readerEl.classList.remove('story-slide-in');
           void readerEl.offsetWidth;
           readerEl.classList.add('story-slide-in');
+          readerEl.scrollTop = 0;
+          readerEl.dispatchEvent(new Event('scroll'));
         }
       }
     }
