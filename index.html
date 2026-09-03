@@ -295,16 +295,63 @@
       font-family: 'Georgia', 'Times New Roman', serif;
     }
     
-    .story-fade-out {
-      opacity: 0 !important;
-      transform: translateY(10px) scale(0.98) !important;
+    /* 3D Story Card & Page Flip Animation */
+    .reader-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 16px 60px 16px;
+      line-height: 1.9;
+      perspective: 1400px;
     }
-    .story-slide-in {
-      animation: storySlideIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+    .story-card-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      will-change: transform, opacity, box-shadow;
     }
-    @keyframes storySlideIn {
-      0% { opacity: 0; transform: translateY(18px); }
-      100% { opacity: 1; transform: translateY(0); }
+
+    .story-flip-out {
+      animation: pageFlipOut 0.22s cubic-bezier(0.4, 0, 0.7, 0.2) forwards;
+    }
+
+    .story-flip-in {
+      animation: pageFlipIn 0.36s cubic-bezier(0.16, 0.9, 0.28, 1.05) forwards;
+    }
+
+    @keyframes pageFlipOut {
+      0% {
+        opacity: 1;
+        transform: perspective(1400px) rotateY(0deg) scale(1);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+      }
+      100% {
+        opacity: 0;
+        transform: perspective(1400px) rotateY(-80deg) scale(0.93) translateY(-4px);
+        box-shadow: -15px 12px 28px rgba(0, 0, 0, 0.16);
+      }
+    }
+
+    @keyframes pageFlipIn {
+      0% {
+        opacity: 0;
+        transform: perspective(1400px) rotateY(70deg) scale(0.93) translateY(4px);
+        box-shadow: 15px 12px 28px rgba(0, 0, 0, 0.16);
+      }
+      70% {
+        opacity: 0.96;
+        transform: perspective(1400px) rotateY(-3.5deg) scale(1.008);
+      }
+      100% {
+        opacity: 1;
+        transform: perspective(1400px) rotateY(0deg) scale(1) translateY(0);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+      }
     }
     
     .premium-reveal {
@@ -509,7 +556,7 @@
     <div id="readerArea" class="reader-scroll font-18">
         <img id="storyHeroImage" class="story-hero-image" src="" alt="Story Illustration" />
         
-        <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px 22px; margin-bottom:20px; box-shadow:0 2px 10px rgba(0,0,0,0.04);">
+        <div id="storyCardContainer" class="story-card-container">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">
             <span style="font-size:11.5px; font-weight:700; color:var(--primary); text-transform:uppercase; letter-spacing:0.5px;">📖 Complete Story Narrative</span>
             <span style="font-size:11px; color:var(--text-muted);">Tap any annotated word for insights</span>
@@ -935,7 +982,908 @@
 
   <script>
     // Initial stories featuring learner Alex and Classic Fairy Tales
-    let allStories = JSON.parse(localStorage.getItem('lingo_stories_v5')) || [
+    let allStories = JSON.parse(localStorage.getItem('lingo_stories_v6')) || [
+      {
+      "id": "lamb_to_the_slaughter",
+      "title": "Lamb to the Slaughter",
+      "author": "Roald Dahl",
+      "level": "B2",
+      "theme": "Mystery & Thriller",
+      "description": "A cunning housewife turns a frozen leg of lamb into the ultimate undetected weapon.",
+      "imageUrl": "https://image.pollinations.ai/prompt/Lamb%20to%20the%20Slaughter%20vintage%20mystery%20kitchen%20roald%20dahl%20illustration?width=800&height=400&nologo=true",
+      "raw": "The room [T:was warm](Past Simple) and [ADJ:tranquil](Descriptive Adjective), the curtains [T:were closed](Past Simple Passive), and the two table lamps [T:were lit](Past Simple Passive). [N:Mary Maloney](Proper Noun) [T:was waiting](Past Continuous) for her husband [P:to come](Infinitive) home from work.\n\n[C:When](Subordinating Conjunction) [N:Patrick Maloney](Proper Noun) [T:walked](Past Simple) in, Mary [T:noticed](Past Simple) a [ADJ:strange](Descriptive Adjective), [ADJ:unusual](Descriptive Adjective) coldness in his manner. He [T:drank](Past Simple) his whiskey [ADV:quickly](Adverb of Manner) and [T:announced](Past Simple) [ADV:bluntly](Adverb of Manner) that he [T:was leaving](Past Continuous) her. In a state of [L:disbelief](Lack of belief or shock - B2), Mary [T:retrieved](Past Simple) a [ADJ:heavy](Descriptive Adjective), [ADJ:frozen](Past Participle as Adjective) leg of lamb from the cellar freezer.\n\n[C:Without](Preposition) thinking, she [T:swung](Past Simple) the [ADJ:solid](Descriptive Adjective) club through the air and [T:struck](Past Simple) him [ADV:violently](Adverb of Manner) on the back of his head. Patrick [T:crashed](Past Simple) onto the carpet, [ADJ:dead](Adjective). Realizing the consequences, she [T:put](Past Simple) the meat [P:into](Preposition of Direction) the hot oven [P:to](Infinitive of Purpose) roast. She then [T:visited](Past Simple) the grocery store [P:to establish](Infinitive of Purpose) an [ADJ:airtight](Descriptive Adjective) alibi.\n\n[C:Later](Adverb of Time), detectives and police officers [T:arrived](Past Simple) to investigate the [ADJ:baffling](Descriptive Adjective - Confusing) crime. [C:While](Subordinating Conjunction) searching [ADV:tirelessly](Adverb of Manner) for the murder weapon, they [T:grew](Past Simple) hungry. Mary [ADV:graciously](Adverb of Manner) [T:offered](Past Simple) them the cooked leg of lamb for supper. [C:As](Subordinating Conjunction) they [T:ate](Past Simple) the roasted meat in the kitchen, one officer [T:mused](Past Simple), \"The weapon is probably right under our very noses.\" In the adjoining room, Mary [T:began](Past Simple) [P:to](Infinitive) giggle quietly.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: What murder weapon did Mary Maloney use?",
+                  "options": [
+                        "A frozen leg of lamb",
+                        "A heavy brass lamp",
+                        "An antique revolver"
+                  ],
+                  "correct": 0,
+                  "explanation": "She used a frozen leg of lamb from the deep freezer."
+            },
+            {
+                  "type": "mc",
+                  "question": "Sequence: What did Mary do immediately after striking Patrick?",
+                  "options": [
+                        "She put the meat in the oven and visited the grocery store",
+                        "She called the police immediately",
+                        "She buried the meat in the garden"
+                  ],
+                  "correct": 0,
+                  "explanation": "She put the meat into the oven to roast and went to the grocer to create an alibi."
+            },
+            {
+                  "type": "mc",
+                  "question": "Irony: Why is the detectives' dialogue ironic at the end?",
+                  "options": [
+                        "They are literally eating the murder weapon they are looking for",
+                        "They arrested the wrong suspect",
+                        "The husband was still alive"
+                  ],
+                  "correct": 0,
+                  "explanation": "The detectives eat the roasted leg of lamb while guessing the weapon is right under their noses."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete the table: Noun: Tranquility, Verb: Tranquilize, Adjective: [?]",
+                  "options": [
+                        "Tranquil",
+                        "Tranquilly",
+                        "Tranquilness"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adjective form is 'Tranquil'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: Do you think Mary's crime was planned or an impulse in the heat of the moment? Explain your view."
+            }
+      ]
+},
+      {
+      "id": "speckled_band",
+      "title": "The Adventure of the Speckled Band",
+      "author": "Arthur Conan Doyle",
+      "level": "B2",
+      "theme": "Detective & Mystery",
+      "description": "Sherlock Holmes investigates a terrifying midnight whistle and a deadly spotted snake.",
+      "imageUrl": "https://image.pollinations.ai/prompt/Sherlock%20Holmes%20investigating%20dark%20Victorian%20mansion%20speckled%20band%20illustration?width=800&height=400&nologo=true",
+      "raw": "One [ADJ:chilly](Descriptive Adjective) morning in London, [N:Helen Stoner](Proper Noun) [T:visited](Past Simple) [N:Sherlock Holmes](Proper Noun) and [N:Dr. Watson](Proper Noun) at Baker Street. She [T:was trembling](Past Continuous) with [ADJ:sheer](Descriptive Adjective) terror. Her twin sister [N:Julia](Proper Noun) [T:had died](Past Perfect) two years earlier in their ancestral manor of Stoke Moran [ADV:shortly](Adverb of Time) [P:before](Preposition) her wedding.\n\nJulia's dying words [T:had been](Past Perfect), \"It was the band! The speckled band!\" Now, Helen [T:was engaged](Past Simple Passive) to be married and [T:had been moved](Past Perfect Passive) into Julia's old bedroom. In the dead of night, Helen [T:heard](Past Simple) the same [ADJ:eerie](Descriptive Adjective - Spooky) low whistle that [T:had signaled](Past Perfect) her sister's demise.\n\nHolmes and Watson [T:traveled](Past Simple) [ADV:discreetly](Adverb of Manner) to the crumbling manor. Inspecting the bedroom, Holmes [T:discovered](Past Simple) a [ADJ:dummy](Descriptive Adjective) bell-rope connected to a ventilator leading [P:into](Preposition) the room of her [ADJ:violent](Descriptive Adjective) stepfather, [N:Dr. Grimesby Roylott](Proper Noun). The bed [T:was clamped](Past Simple Passive) to the floor beneath the vent.\n\nThat night, Holmes and Watson [T:waited](Past Simple) in total darkness. [C:When](Subordinating Conjunction) the sinister whistle [T:sounded](Past Simple), Holmes [T:struck](Past Simple) a match and [T:lashed](Past Simple) [ADV:furiously](Adverb of Manner) at the bell-rope with his cane. A [ADJ:furious](Descriptive Adjective) hiss [T:echoed](Past Simple). Moments later, a [ADJ:blood-curdling](Descriptive Adjective) shriek [T:pierced](Past Simple) the hall. They [T:found](Past Simple) Dr. Roylott dead, bitten by his own [ADJ:deadly](Descriptive Adjective) swamp adder—the deadliest speckled band of India.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: What was the 'speckled band' in reality?",
+                  "options": [
+                        "A venomous swamp adder snake",
+                        "A spotted gypsy scarf",
+                        "A piece of poisonous rope"
+                  ],
+                  "correct": 0,
+                  "explanation": "The speckled band was a deadly Indian swamp adder snake."
+            },
+            {
+                  "type": "mc",
+                  "question": "Sequence: What clue did Holmes examine inside Julia's bedroom?",
+                  "options": [
+                        "A dummy bell-rope connected to a ventilator and a clamped bed",
+                        "A footprint on the window sill",
+                        "A poison bottle under the rug"
+                  ],
+                  "correct": 0,
+                  "explanation": "Holmes found a fake bell-rope leading to a ventilator and a bed clamped to the floor."
+            },
+            {
+                  "type": "mc",
+                  "question": "Character: What was Dr. Roylott's motive for the crime?",
+                  "options": [
+                        "To prevent paying his stepdaughters their inherited marriage funds",
+                        "To steal antique paintings",
+                        "To escape to India"
+                  ],
+                  "correct": 0,
+                  "explanation": "Roylott wanted to retain total control of his deceased wife's fortune."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete the table: Noun: Terror, Verb: Terrify, Adjective: [?]",
+                  "options": [
+                        "Terrifying",
+                        "Terrorism",
+                        "Terrific"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adjective form related to causing fear is 'Terrifying' (or 'Terrified')."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: How does Holmes use logical deduction to solve mysteries rather than mere guessing?"
+            }
+      ]
+},
+      {
+      "id": "murders_rue_morgue",
+      "title": "The Murders in the Rue Morgue",
+      "author": "Edgar Allan Poe",
+      "level": "C1",
+      "theme": "Gothic & Mystery",
+      "description": "C. Auguste Dupin unravels an impossible locked-room double homicide in Paris.",
+      "imageUrl": "https://image.pollinations.ai/prompt/Edgar%20Allan%20Poe%20Murders%20in%20the%20Rue%20Morgue%20Parisian%20dark%20gothic%20mystery%20illustration?width=800&height=400&nologo=true",
+      "raw": "In Paris, the public [T:was shocked](Past Simple Passive) by the [ADJ:gruesome](Descriptive Adjective) slayings of [N:Madame L'Espanaye](Proper Noun) and her daughter [N:Camille](Proper Noun) in a fourth-floor apartment on the Rue Morgue. The doors and windows [T:were locked](Past Simple Passive) [P:from](Preposition) the inside, and [ADJ:numerous](Descriptive Adjective) witnesses [T:reported](Past Simple) hearing two distinct voices [P:during](Preposition) the struggle: one a Frenchman, and the other an [ADJ:unintelligible](Descriptive Adjective - Impossible to understand), harsh foreign tongue.\n\n[C:While](Subordinating Conjunction) the police [T:were confounded](Past Simple Passive), the [ADJ:brilliant](Descriptive Adjective) amateur detective [N:C. Auguste Dupin](Proper Noun) [T:approached](Past Simple) the enigma with [ADJ:unrivaled](Descriptive Adjective) [L:analytical](Pertaining to methodical logical deduction - C1) prowess. Dupin [T:examined](Past Simple) the physical evidence [ADV:scrupulously](Adverb of Manner): non-human hairs, superhuman agility required [P:to scale](Infinitive) the lightning rod, and finger marks on Camille's throat that [T:matched](Past Simple) no human anatomy.\n\nDupin [T:advertised](Past Simple) in the newspaper that an Ourang-Outang [T:had been recovered](Past Perfect Passive). A Maltese sailor soon [T:arrived](Past Simple) at Dupin's quarters. Cornered by Dupin's evidence, the sailor [T:confessed](Past Simple) that the wild animal [T:had escaped](Past Perfect) with his razor, [T:scaled](Past Simple) the exterior rod into the chamber, and [T:perpetrated](Past Simple - Committed) the tragic violence in a frenzy of panic. Dupin's [ADJ:rigorous](Descriptive Adjective) deduction [T:established](Past Simple) the foundation of modern detective literature.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: Who was the actual perpetrator of the killings?",
+                  "options": [
+                        "An escaped Ourang-Outang",
+                        "A Maltese sailor",
+                        "A Parisian burglar"
+                  ],
+                  "correct": 0,
+                  "explanation": "An escaped Ourang-Outang from Borneo entered through the fourth-floor window."
+            },
+            {
+                  "type": "mc",
+                  "question": "Sequence: How did Dupin lure the sailor to his apartment?",
+                  "options": [
+                        "He placed a newspaper advertisement about finding a lost Ourang-Outang",
+                        "He waited by the shipping docks",
+                        "He sent the police commissioner to arrest him"
+                  ],
+                  "correct": 0,
+                  "explanation": "Dupin advertised in the Parisian press claiming he had captured an Ourang-Outang."
+            },
+            {
+                  "type": "mc",
+                  "question": "Literary History: Why is this story celebrated worldwide?",
+                  "options": [
+                        "It is considered the very first modern detective story",
+                        "It was the first story written in French",
+                        "It inspired the creation of the telephone"
+                  ],
+                  "correct": 0,
+                  "explanation": "Poe's story created the modern detective fiction genre and introduced the 'locked room' mystery."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Analysis, Verb: Analyze, Adjective: [?]",
+                  "options": [
+                        "Analytical",
+                        "Analyst",
+                        "Analyzable"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adjective form is 'Analytical'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: What makes locked-room mysteries fascinating to readers across generations?"
+            }
+      ]
+},
+      {
+      "id": "cask_of_amontillado",
+      "title": "The Cask of Amontillado",
+      "author": "Edgar Allan Poe",
+      "level": "B2",
+      "theme": "Gothic & Revenge",
+      "description": "A sinister nobleman exacts cold, calculated revenge in the damp subterranean wine vaults.",
+      "imageUrl": "https://image.pollinations.ai/prompt/The%20Cask%20of%20Amontillado%20dark%20catacombs%20wine%20cellar%20torches%20illustration?width=800&height=400&nologo=true",
+      "raw": "The [ADJ:thousand](Numeral Adjective) injuries of [N:Fortunato](Proper Noun) I [T:had borne](Past Perfect) as I best could, but [C:when](Subordinating Conjunction) he [T:ventured](Past Simple) upon insult, I [T:vowed](Past Simple) [L:revenge](The action of inflicting harm in return for an injury - B2). [N:Montresor](Proper Noun), cloaked in black silk, [T:encountered](Past Simple) Fortunato in the midst of the lively carnival madness. Fortunato [T:was dressed](Past Simple Passive) in motley, wearing a jester's cap and bells, [ADV:heavily](Adverb of Manner) [ADJ:intoxicated](Past Participle as Adjective).\n\nMontresor [T:baited](Past Simple) his victim with the promise of an [ADJ:exquisite](Descriptive Adjective) pipe of rare [N:Amontillado](Proper Noun) wine stored [P:deep within](Preposition of Place) the ancestral catacombs. Despite Fortunato's [ADJ:hacking](Descriptive Adjective) cough and the white nitre encrusting the damp cavern walls, the foolish connoisseur [T:insisted](Past Simple) on descending [P:into](Preposition of Direction) the dark vaults.\n\n[C:At](Preposition of Time) the deepest recess of the crypt, Montresor [T:guided](Past Simple) Fortunato into a narrow niche and [ADV:swiftly](Adverb of Manner) [T:fettered](Past Simple - Chained) him to the granite wall. Fortunato, too [ADJ:dazed](Descriptive Adjective) to comprehend, [T:watched](Past Simple) [P:with](Preposition) mounting horror as Montresor [T:began](Past Simple) [P:to lay](Infinitive) tier after tier of masonry, sealing the entrance forever. As the final stone [T:was placed](Past Simple Passive), Fortunato's jingling bells [T:fell](Past Simple) silent. For fifty years, no mortal [T:has disturbed](Present Perfect) his resting place.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: What pretext did Montresor use to lure Fortunato?",
+                  "options": [
+                        "Testing the authenticity of a cask of Amontillado wine",
+                        "Attending a secret masquerade ball",
+                        "Selling a collection of antique coins"
+                  ],
+                  "correct": 0,
+                  "explanation": "He tempted him with the promise of rare Amontillado wine."
+            },
+            {
+                  "type": "mc",
+                  "question": "Setting: Where does the climax of the story take place?",
+                  "options": [
+                        "In the deepest damp catacombs of the Montresor palazzo",
+                        "On a crowded carnival street",
+                        "In a bustling tavern"
+                  ],
+                  "correct": 0,
+                  "explanation": "It takes place in the subterranean crypts and vaults lined with nitre."
+            },
+            {
+                  "type": "mc",
+                  "question": "Character: What tragic flaw led to Fortunato's downfall?",
+                  "options": [
+                        "His supreme vanity regarding wine connoisseurship",
+                        "His physical cowardice",
+                        "His poverty"
+                  ],
+                  "correct": 0,
+                  "explanation": "Fortunato prided himself on his expert knowledge of fine wines."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Revenge, Adjective: Revengeful / Vengeful, Adverb: [?]",
+                  "options": [
+                        "Vengefully",
+                        "Revenging",
+                        "Vengeance"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adverb form is 'Vengefully'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: How does Poe create a sense of psychological suspense and dread in this story?"
+            }
+      ]
+},
+      {
+      "id": "walter_mitty",
+      "title": "The Secret Life of Walter Mitty",
+      "author": "James Thurber",
+      "level": "B1",
+      "theme": "Modern Fiction & Imagination",
+      "description": "An ordinary, timid husband escapes daily boredom through heroic, cinematic daydreams.",
+      "imageUrl": "https://image.pollinations.ai/prompt/Walter%20Mitty%20flying%20airplane%20daydreaming%20vintage%20comic%20storybook%20illustration?width=800&height=400&nologo=true",
+      "raw": "\"We're going through!\" [T:roared](Past Simple) the Commander, as the huge Navy hydroplane [T:broke](Past Simple) through the [ADJ:blinding](Descriptive Adjective) hurricane. The crew [T:cheered](Past Simple) [ADV:wildly](Adverb of Manner). \"The Old Man [T:will get](Future Simple) us through!\"\n\n\"Not so fast! You're driving too fast!\" [T:snapped](Past Simple) [N:Mrs. Mitty](Proper Noun). [N:Walter Mitty](Proper Noun) [T:blinked](Past Simple) and [T:slowed](Past Simple) the car [P:down to](Preposition) thirty-five miles an hour as they [T:entered](Past Simple) the town of Waterbury. While his wife [T:visited](Past Simple) the hairdresser, Mitty [T:continued](Past Simple) his daily errands, slipping [ADV:effortlessly](Adverb of Manner) [P:into](Preposition) one [ADJ:thrilling](Descriptive Adjective) daydream after another.\n\nIn one moment, he [T:was](Past Simple) a [ADJ:world-renowned](Descriptive Adjective) surgeon repairing a [ADJ:delicate](Descriptive Adjective) anesthetizer with a fountain pen. In the next, he [T:was](Past Simple) a [ADJ:fearless](Descriptive Adjective) courtroom defendant proving his marksmanship. [C:Later](Adverb of Time), as he [T:stood](Past Simple) against a drugstore wall in the pouring rain waiting for his wife, Walter Mitty [T:straightened](Past Simple) his shoulders, lit a cigarette, and [T:faced](Past Simple) the imaginary firing squad—undefeated, [ADJ:inscrutable](Descriptive Adjective - Mysterious), and [L:triumphant](Victorious and proud - B1) to the end.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: What triggers Walter Mitty's extravagant daydreams?",
+                  "options": [
+                        "Everyday ordinary occurrences and nagging errands",
+                        "Watching spy movies at the cinema",
+                        "Reading scientific encyclopedias"
+                  ],
+                  "correct": 0,
+                  "explanation": "Ordinary sights and sounds trigger vivid cinematic adventures in his mind."
+            },
+            {
+                  "type": "mc",
+                  "question": "Sequence: Which of these was NOT one of Mitty's heroic personas?",
+                  "options": [
+                        "A deep-sea pirate captain",
+                        "A Navy hydroplane commander",
+                        "A brilliant surgical doctor"
+                  ],
+                  "correct": 0,
+                  "explanation": "He imagined being a hydroplane commander, a surgeon, and an ace pilot, but not a pirate."
+            },
+            {
+                  "type": "mc",
+                  "question": "Theme: What central theme does Thurber explore in the story?",
+                  "options": [
+                        "The power of imagination as an escape from mundane reality",
+                        "The dangers of driving fast",
+                        "The history of medical surgery"
+                  ],
+                  "correct": 0,
+                  "explanation": "The story highlights how human fantasy provides sanctuary from boring everyday life."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Triumph, Verb: Triumph, Adverb: [?]",
+                  "options": [
+                        "Triumphantly",
+                        "Triumphant",
+                        "Triumphing"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adverb form is 'Triumphantly'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: Do you ever daydream when doing routine chores? What kind of adventures do you imagine?"
+            }
+      ]
+},
+      {
+      "id": "hansel_and_gretel",
+      "title": "Hansel and Gretel",
+      "author": "Brothers Grimm",
+      "level": "A2",
+      "theme": "Contes de Fées & Fantastique",
+      "description": "Two lost siblings outsmart a wicked forest witch living in a house of gingerbread and candy.",
+      "imageUrl": "https://image.pollinations.ai/prompt/Hansel%20and%20Gretel%20gingerbread%20house%20in%20enchanted%20forest%20storybook%20illustration?width=800&height=400&nologo=true",
+      "raw": "Near a vast forest [T:lived](Past Simple) a poor woodcutter [P:with](Preposition) his two children, [N:Hansel](Proper Noun) and [N:Gretel](Proper Noun). Times [T:were hard](Past Simple), and during a great famine, their stepmother [T:convinced](Past Simple) the father [P:to leave](Infinitive) them [P:in](Preposition) the woods. Hansel [T:had dropped](Past Perfect) small white pebbles along the path, which [T:glistened](Past Simple) in the moonlight and [T:guided](Past Simple) them safely home.\n\nThe second time, however, Hansel only [T:had](Past Simple) breadcrumbs. Forest birds [T:ate](Past Simple) the crumbs [ADV:quickly](Adverb of Manner), leaving the children [ADJ:hopelessly](Adverb) [ADJ:lost](Adjective). After walking for days, they [T:discovered](Past Simple) a [ADJ:marvelous](Descriptive Adjective) cottage [T:built](Past Participle) entirely of gingerbread, sugar windows, and chocolate roofs. [ADV:Hungrily](Adverb of Manner), they [T:nibbled](Past Simple) on the delicious walls.\n\nAn [ADJ:ancient](Descriptive Adjective) witch [T:crept](Past Simple) out and [T:trapped](Past Simple) them inside. She [T:locked](Past Simple) Hansel in a cage [P:to fatten](Infinitive) him up, while making Gretel work [ADV:endlessly](Adverb of Manner). [C:When](Subordinating Conjunction) the witch [T:ordered](Past Simple) Gretel [P:to crawl](Infinitive) into the fiery oven, clever Gretel [T:pretended](Past Simple) [P:not to understand](Infinitive). [C:As](Subordinating Conjunction) the witch [T:leaned](Past Simple) in to show her, Gretel [T:pushed](Past Simple) the villain inside and [T:bolted](Past Simple) the heavy iron door.\n\nFreeing Hansel, they [T:filled](Past Simple) their pockets with sparkling pearls and gold gems, and [T:returned](Past Simple) home [P:to](Preposition) live in joy and comfort forever.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: What happened to Hansel's breadcrumb trail?",
+                  "options": [
+                        "Forest birds ate all the crumbs",
+                        "The rain washed them away",
+                        "The stepmother swept them"
+                  ],
+                  "correct": 0,
+                  "explanation": "Birds in the forest ate the breadcrumbs, leaving the children lost."
+            },
+            {
+                  "type": "mc",
+                  "question": "Sequence: How did Gretel defeat the wicked witch?",
+                  "options": [
+                        "She tricked the witch into leaning into the oven and pushed her in",
+                        "She cast a magic spell",
+                        "She ran away to call the woodcutter"
+                  ],
+                  "correct": 0,
+                  "explanation": "Gretel pretended not to know how to enter, causing the witch to demonstrate, and Gretel pushed her into the oven."
+            },
+            {
+                  "type": "mc",
+                  "question": "Character: Which word best describes Gretel's actions?",
+                  "options": [
+                        "Clever and courageous",
+                        "Timid and helpless",
+                        "Cruel and greedy"
+                  ],
+                  "correct": 0,
+                  "explanation": "Gretel acted with great courage and intelligence to save her brother."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Hunger, Verb: Hunger, Adverb: [?]",
+                  "options": [
+                        "Hungrily",
+                        "Hungry",
+                        "Hungriness"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adverb form is 'Hungrily'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: Why do fairy tales often feature clever children triumphing over dangerous monsters?"
+            }
+      ]
+},
+      {
+      "id": "jack_and_the_beanstalk",
+      "title": "Jack and the Beanstalk",
+      "author": "English Fairy Tale",
+      "level": "A2",
+      "theme": "Contes de Fées & Fantastique",
+      "description": "A daring young boy climbs a gigantic beanstalk into the clouds to outwit a fierce giant.",
+      "imageUrl": "https://image.pollinations.ai/prompt/Jack%20climbing%20giant%20beanstalk%20into%20clouds%20castle%20storybook%20illustration?width=800&height=400&nologo=true",
+      "raw": "[N:Jack](Proper Noun) [T:lived](Past Simple) with his widowed mother in a [ADJ:humble](Descriptive Adjective) country cottage. Their only possession of value [T:was](Past Simple) a dairy cow named Milky-White. [C:When](Subordinating Conjunction) the cow stopped giving milk, Jack's mother [T:told](Past Simple) him [P:to sell](Infinitive) her at the market. On the way, Jack [T:met](Past Simple) an eccentric old man who [T:offered](Past Simple) him five [ADJ:magic](Descriptive Adjective) beans [P:in exchange for](Preposition) the cow.\n\nFurious at his foolishness, Jack's mother [T:hurled](Past Simple) the beans out the window and [T:sent](Past Simple) him to bed without supper. The next morning, a [ADJ:colossal](Descriptive Adjective - Enormous) beanstalk [T:had grown](Past Perfect) past the highest clouds. Jack [ADV:eagerly](Adverb of Manner) [T:climbed](Past Simple) up to a [ADJ:stupendous](Descriptive Adjective) castle in the sky.\n\nInside, he [T:hid](Past Simple) [P:inside](Preposition) a copper pot from a [ADJ:fearsome](Descriptive Adjective) giant who [T:roared](Past Simple), \"Fee-fi-fo-fum, I smell the blood of an Englishman!\" [C:When](Subordinating Conjunction) the giant fell asleep, Jack [T:snatched](Past Simple) a bag of gold coins and a magical hen that [T:laid](Past Simple) golden eggs. On his final visit, Jack [T:took](Past Simple) a golden harp that [T:could sing](Modal Verb) [ADV:enchantingly](Adverb of Manner).\n\nThe harp [T:cried](Past Simple) out, \"Master, master!\" waking the giant. Jack [T:scrambled](Past Simple) down the beanstalk and [T:shouted](Past Simple) for an axe. With three [ADJ:mighty](Descriptive Adjective) strokes, he [T:chopped](Past Simple) the stalk in two. The giant [T:tumbled](Past Simple) down to earth and died, leaving Jack and his mother prosperous forever.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: What did Jack receive in trade for Milky-White?",
+                  "options": [
+                        "Five magical beans",
+                        "A sack of silver coins",
+                        "A golden saddle"
+                  ],
+                  "correct": 0,
+                  "explanation": "Jack traded the cow for five magical beans."
+            },
+            {
+                  "type": "mc",
+                  "question": "Sequence: What was the last treasure Jack retrieved from the cloud castle?",
+                  "options": [
+                        "The golden singing harp",
+                        "The bag of gold coins",
+                        "The hen that lays golden eggs"
+                  ],
+                  "correct": 0,
+                  "explanation": "The golden singing harp was the final magical object Jack took."
+            },
+            {
+                  "type": "mc",
+                  "question": "Action: How did Jack stop the pursuing giant?",
+                  "options": [
+                        "He chopped down the beanstalk with an axe",
+                        "He trapped him in a cage",
+                        "He shot an arrow"
+                  ],
+                  "correct": 0,
+                  "explanation": "Jack cut the beanstalk with an axe, causing the giant to fall."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Magic, Adjective: Magical, Adverb: [?]",
+                  "options": [
+                        "Magically",
+                        "Magic",
+                        "Magician"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adverb form is 'Magically'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: If you found a beanstalk leading into the clouds, would you dare to climb it?"
+            }
+      ]
+},
+      {
+      "id": "emperors_new_clothes",
+      "title": "The Emperor's New Clothes",
+      "author": "Hans Christian Andersen",
+      "level": "B1",
+      "theme": "Contes de Fées & Satire",
+      "description": "A vain monarch's pride is exposed when two weavers craft an 'invisible' royal suit.",
+      "imageUrl": "https://image.pollinations.ai/prompt/The%20Emperors%20New%20Clothes%20royal%20procession%20fairytale%20storybook%20illustration?width=800&height=400&nologo=true",
+      "raw": "Many years ago, there [T:lived](Past Simple) an [N:Emperor](Proper Noun) who [T:was](Past Simple) [ADV:passionately](Adverb of Manner) fond of new clothes. He [T:spent](Past Simple) all his royal treasury on lavish garments. One day, two [ADJ:cunning](Descriptive Adjective) swindlers [T:arrived](Past Simple) in the imperial capital. They [T:claimed](Past Simple) [P:to be](Infinitive) weavers who [T:could make](Modal Verb) the most [ADJ:splendid](Descriptive Adjective) fabric imaginable, with a [ADJ:magical](Descriptive Adjective) property: the clothes [T:were invisible](Past Simple) to anyone who [T:was stupid](Past Simple) or unfit for their post.\n\nThe Emperor [T:paid](Past Simple) them enormous sums of gold and silk. The weavers [T:set up](Past Simple) two empty looms and [T:pretended](Past Simple) [P:to work](Infinitive) [ADV:furiously](Adverb of Manner) late into the night. When the Emperor's most [ADJ:trusted](Past Participle as Adjective) ministers [T:inspected](Past Simple) the work, they [T:saw](Past Simple) nothing at all on the looms. [C:Yet](Coordinating Conjunction), [ADJ:terrified](Past Participle as Adjective) of looking foolish, each minister [T:praised](Past Simple) the colors and patterns [ADV:lavishly](Adverb of Manner).\n\nOn the day of the grand procession, the swindlers [T:dressed](Past Simple) the Emperor in his \"invisible\" robes. The Emperor [T:marched](Past Simple) proudly beneath the royal canopy before thousands of cheering citizens, none of whom [T:dared](Past Simple) to speak the truth. Suddenly, an [ADJ:innocent](Descriptive Adjective) child [T:shouted](Past Simple), \"But he [T:has](Present Simple) nothing on!\"\n\nThe whisper [T:spread](Past Simple) like wildfire until the whole crowd [T:gasped](Past Simple) in laughter. The Emperor [T:shivered](Past Simple) with [L:humiliation](State of feeling foolish or ashamed - B1), but [T:held](Past Simple) himself even more stiffly and [T:completed](Past Simple) the walk.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: What supposed special property did the weavers' fabric possess?",
+                  "options": [
+                        "It was invisible to anyone who was incompetent or foolish",
+                        "It was completely fireproof",
+                        "It could make the wearer fly"
+                  ],
+                  "correct": 0,
+                  "explanation": "The swindlers claimed the cloth was invisible to stupid or unfit people."
+            },
+            {
+                  "type": "mc",
+                  "question": "Sequence: Who was the first person to speak the truth aloud during the procession?",
+                  "options": [
+                        "An innocent young child",
+                        "The prime minister",
+                        "A foreign ambassador"
+                  ],
+                  "correct": 0,
+                  "explanation": "An innocent child yelled out that the Emperor had no clothes on."
+            },
+            {
+                  "type": "mc",
+                  "question": "Moral: What is the main message of Andersen's satire?",
+                  "options": [
+                        "The danger of vanity and fear of public opinion",
+                        "The importance of buying fine silks",
+                        "How to run a royal government"
+                  ],
+                  "correct": 0,
+                  "explanation": "The story satirizes human vanity, pretension, and fear of speaking out against false praise."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Pride, Verb: Pride, Adjective: [?]",
+                  "options": [
+                        "Proud",
+                        "Proudly",
+                        "Prideful"
+                  ],
+                  "correct": 0,
+                  "explanation": "The standard adjective form is 'Proud'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: Why is it often difficult for adults to speak the truth when everyone else agrees with a falsehood?"
+            }
+      ]
+},
+      {
+      "id": "rumpelstiltskin",
+      "title": "Rumpelstiltskin",
+      "author": "Brothers Grimm",
+      "level": "A2",
+      "theme": "Contes de Fées & Fantastique",
+      "description": "A clever queen must discover the secret name of an impish creature who spins straw into gold.",
+      "imageUrl": "https://image.pollinations.ai/prompt/Rumpelstiltskin%20spinning%20straw%20into%20gold%20fairytale%20illustration?width=800&height=400&nologo=true",
+      "raw": "A poor [N:miller](Noun) [ADV:foolishly](Adverb of Manner) [T:boasted](Past Simple) to the King that his beautiful daughter [T:could spin](Modal Verb) straw into gold. Greedy for wealth, the King [T:summoned](Past Simple) the maiden and [T:locked](Past Simple) her in a tower chamber [ADJ:filled](Past Participle) with straw, warning that she [T:would die](Conditional) if the straw [T:was not](Past Simple) spun into gold by dawn.\n\nAs the maiden [T:wept](Past Simple) [ADV:bitterly](Adverb of Manner), a [ADJ:tiny](Descriptive Adjective) man [T:stepped](Past Simple) through the door and [T:offered](Past Simple) [P:to spin](Infinitive) the straw in exchange for her necklace. The next night, he [T:spun](Past Simple) an even larger room for her ring. On the third night, having nothing left to give, the desperate girl [T:promised](Past Simple) her firstborn child [C:if](Conditional Conjunction) she [T:became](Past Simple) Queen.\n\nA year later, the new Queen [T:gave birth](Past Simple) to a lovely baby. When the little man [T:returned](Past Simple) to claim his prize, the Queen [T:begged](Past Simple) [P:for](Preposition) mercy. Moved by her tears, he [T:gave](Past Simple) her three days [P:to guess](Infinitive) his true name.\n\nOn the final evening, a royal messenger [T:returned](Past Simple) from the dark mountains and [T:reported](Past Simple) seeing a bizarre little creature dancing [P:around](Preposition) a fire, singing: \"Today I brew, tomorrow I bake, the next the Queen's child I will take; for nobody knows, far or near, that [N:Rumpelstiltskin](Proper Noun) is my name dear!\" When the imp [T:arrived](Past Simple), the Queen [T:spoke](Past Simple) his name, and in a fury of rage, he [T:vanished](Past Simple) into the earth forever.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: What did the miller's daughter promise on the third night?",
+                  "options": [
+                        "Her firstborn child after becoming Queen",
+                        "Her gold crown",
+                        "All the kingdom's jewels"
+                  ],
+                  "correct": 0,
+                  "explanation": "She promised her firstborn child because she had no more jewelry to offer."
+            },
+            {
+                  "type": "mc",
+                  "question": "Sequence: How did the Queen discover the creature's true name?",
+                  "options": [
+                        "A royal scout overheard him singing his name around a midnight campfire",
+                        "She read an ancient book of spells",
+                        "The King guessed it"
+                  ],
+                  "correct": 0,
+                  "explanation": "A messenger saw the creature dancing by a fire singing 'Rumpelstiltskin is my name'."
+            },
+            {
+                  "type": "mc",
+                  "question": "Theme: What lesson does this tale teach about foolish boasting?",
+                  "options": [
+                        "Careless words can lead to dangerous and unintended obligations",
+                        "Gold is easy to create",
+                        "Kings always keep their word"
+                  ],
+                  "correct": 0,
+                  "explanation": "The miller's reckless lie nearly cost his daughter her child."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Promise, Verb: Promise, Adjective: [?]",
+                  "options": [
+                        "Promised",
+                        "Promising",
+                        "Promiseful"
+                  ],
+                  "correct": 1,
+                  "explanation": "The adjective describing potential or a committed future is 'Promising'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: Why is the concept of a 'true name' possessing magical power so common in world folklore?"
+            }
+      ]
+},
+      {
+      "id": "happy_prince",
+      "title": "The Happy Prince",
+      "author": "Oscar Wilde",
+      "level": "B1",
+      "theme": "Contes de Fées & Littérature",
+      "description": "A golden statue and a generous swallow sacrifice all their beauty to aid the suffering poor.",
+      "imageUrl": "https://image.pollinations.ai/prompt/The%20Happy%20Prince%20golden%20statue%20swallow%20Oscar%20Wilde%20storybook%20illustration?width=800&height=400&nologo=true",
+      "raw": "High above the city, on a tall column, [T:stood](Past Simple) the statue of the [N:Happy Prince](Proper Noun). He [T:was gilded](Past Simple Passive) all over with thin leaves of fine gold, for eyes he [T:had](Past Simple) two bright sapphires, and a large red ruby [T:glowed](Past Simple) on his sword-hilt. One autumn night, a little [N:Swallow](Proper Noun) [T:alighted](Past Simple - Landed) between the feet of the Prince [P:to rest](Infinitive) on his flight to Egypt.\n\nA large drop of water [T:fell](Past Simple) on the bird. Looking up, the Swallow [T:saw](Past Simple) that the eyes of the Happy Prince [T:were filled](Past Simple Passive) with tears. \"When I was alive,\" [T:explained](Past Simple) the Prince, \"I [T:lived](Past Simple) in the Palace of Sans-Souci, where sorrow [T:was not allowed](Past Simple Passive) to enter. Now that I am dead, they [T:have set](Present Perfect) me up here so high that I [T:can see](Modal Verb) all the misery and ugliness of my city.\"\n\nThe Prince [T:begged](Past Simple) the Swallow [P:to stay](Infinitive) for one night. The bird [T:plucked](Past Simple) the ruby [P:to give](Infinitive) to a poor seamstress whose boy [T:was feverish](Past Simple). Next, he [T:took](Past Simple) the sapphires from the Prince's eyes to help a starving playwright and a shivering match-girl. Finally, the Swallow [T:stripped](Past Simple) all the golden leaves [P:to feed](Infinitive) the hungry orphans.\n\nWinter [T:came](Past Simple), and snow [T:covered](Past Simple) the streets with ice. Blind and cold, the Prince [T:was beloved](Past Simple Passive) by the Swallow, who [T:refused](Past Simple) [P:to leave](Infinitive) him. At last, freezing to death, the bird [T:kissed](Past Simple) the Prince and fell at his feet. At that moment, the lead heart inside the statue [T:snapped](Past Simple) in two. In Heaven, God [T:declared](Past Simple) them the two most precious treasures in the world.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: Why did the Happy Prince weep on his pedestal?",
+                  "options": [
+                        "He saw the widespread poverty and suffering across his city",
+                        "He missed his palace gardens",
+                        "He was lonely in the winter rain"
+                  ],
+                  "correct": 0,
+                  "explanation": "From his high pedestal, he could see all the misery and poverty of his citizens."
+            },
+            {
+                  "type": "mc",
+                  "question": "Sequence: What happened to the Swallow when winter arrived?",
+                  "options": [
+                        "He stayed with the blind Prince out of loyalty and froze to death",
+                        "He flew south to the Pyramids of Egypt",
+                        "He nested in the church belfry"
+                  ],
+                  "correct": 0,
+                  "explanation": "The loyal swallow stayed by the Prince's side through the bitter frost until he died."
+            },
+            {
+                  "type": "mc",
+                  "question": "Symbolism: What do the Prince and Swallow represent in Wilde's tale?",
+                  "options": [
+                        "Selfless empathy, genuine charity, and supreme love",
+                        "Political ambition and power",
+                        "The value of physical wealth"
+                  ],
+                  "correct": 0,
+                  "explanation": "They symbolize pure love and sacrificial compassion for the needy."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Compassion, Adjective: Compassionate, Adverb: [?]",
+                  "options": [
+                        "Compassionately",
+                        "Compassion",
+                        "Compassioning"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adverb form is 'Compassionately'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: Oscar Wilde contrasts outward physical beauty with inner moral beauty. How is that reflected in the ending?"
+            }
+      ]
+},
+      {
+      "id": "gift_of_the_magi",
+      "title": "The Gift of the Magi",
+      "author": "O. Henry",
+      "level": "B1",
+      "theme": "Histoires Modernes & Célèbres",
+      "description": "A devoted young husband and wife secretly sell their most prized possessions for Christmas.",
+      "imageUrl": "https://image.pollinations.ai/prompt/The%20Gift%20of%20the%20Magi%20vintage%20Christmas%20Eve%20couple%20storybook%20illustration?width=800&height=400&nologo=true",
+      "raw": "One dollar and eighty-seven cents. That [T:was](Past Simple) all [N:Della Young](Proper Noun) [T:had saved](Past Perfect) after months of careful budgeting, and the next day [T:was](Past Simple) Christmas. There [T:was](Past Simple) clearly nothing to do but [T:flop](Infinitive) down on the shabby little couch and [T:howl](Infinitive).\n\nDella and her husband [N:Jim](Proper Noun) [T:took](Past Simple) great pride in two possessions: Jim's gold pocket watch, which [T:had belonged](Past Perfect) to his father and grandfather, and Della's long, [ADJ:magnificent](Descriptive Adjective) brown hair that [T:rippled](Past Simple) like a cascade of brown waters. Determined [P:to buy](Infinitive) Jim a worthy gift, Della [T:hurried](Past Simple) to Madame Sofronie's shop and [T:sold](Past Simple) her hair for twenty dollars. She [T:spent](Past Simple) the rest of the afternoon searching the shops for an [ADJ:elegant](Descriptive Adjective) platinum watch fob chain.\n\nWhen Jim [T:stepped](Past Simple) inside the flat that evening, his eyes [T:fixed](Past Simple) upon Della with an [ADJ:unreadable](Descriptive Adjective) expression. Della [T:confessed](Past Simple) that she [T:had cut](Past Perfect) her hair to buy his Christmas present. With a faint smile, Jim [T:drew](Past Simple) a package from his coat. Inside [T:were](Past Simple) The Combs—the pure tortoiseshell combs with jeweled rims that Della [T:had worshiped](Past Perfect) in a Broadway window.\n\n[C:When](Subordinating Conjunction) Della [T:held out](Past Simple) the gleaming platinum chain, Jim [T:tumbled](Past Simple) onto the sofa and [T:smiled](Past Simple). He [T:had sold](Past Perfect) his gold watch [P:to buy](Infinitive) her combs. O. Henry [T:reminds](Present Simple) us that of all who give gifts, these two [T:were](Past Simple) the wisest—they [T:were](Past Simple) the Magi.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: What did Della sell in order to buy Jim's Christmas gift?",
+                  "options": [
+                        "Her long, beautiful hair",
+                        "Her wedding ring",
+                        "An antique fur coat"
+                  ],
+                  "correct": 0,
+                  "explanation": "Della sold her prized hair for twenty dollars to Madame Sofronie."
+            },
+            {
+                  "type": "mc",
+                  "question": "Irony: What made both gifts unusable on Christmas night?",
+                  "options": [
+                        "Jim sold his watch to buy combs for hair she had just cut and sold",
+                        "The store delivered the wrong packages",
+                        "Both gifts were stolen on the subway"
+                  ],
+                  "correct": 0,
+                  "explanation": "Jim sold the watch that needed the chain, and Della cut the hair that needed the combs."
+            },
+            {
+                  "type": "mc",
+                  "question": "Theme: Why does the narrator call Della and Jim 'the Magi'?",
+                  "options": [
+                        "Because they sacrificed their greatest treasures out of unconditional love",
+                        "Because they traveled from the East",
+                        "Because they were extraordinarily wealthy"
+                  ],
+                  "correct": 0,
+                  "explanation": "Their mutual, selfless sacrifice embodies the true wisdom of gift-giving."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Generosity, Adjective: Generous, Adverb: [?]",
+                  "options": [
+                        "Generously",
+                        "Generosity",
+                        "Generousing"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adverb form is 'Generously'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: What makes a gift valuable: its financial price tag or the sentiment behind it?"
+            }
+      ]
+},
+      {
+      "id": "the_necklace",
+      "title": "The Necklace",
+      "author": "Guy de Maupassant",
+      "level": "B2",
+      "theme": "Histoires Modernes & Célèbres",
+      "description": "Ten years of brutal hardship to repay a lost diamond necklace end with a shocking revelation.",
+      "imageUrl": "https://image.pollinations.ai/prompt/The%20Necklace%20Guy%20de%20Maupassant%2019th%20century%20Parisian%20ballroom%20illustration?width=800&height=400&nologo=true",
+      "raw": "[N:Mathilde Loisel](Proper Noun) [T:was](Past Simple) an [ADJ:exquisite](Descriptive Adjective) and charming woman who [T:felt](Past Simple) herself born for all delicacies and luxuries. Married to a humble clerk in the Ministry of Education, she [T:suffered](Past Simple) [ADV:incessantly](Adverb of Manner - Constantly) from the poverty of her apartment and the plainness of her life. When her husband [T:secured](Past Simple) an invitation to an [ADJ:exclusive](Descriptive Adjective) ball, Mathilde [T:wept](Past Simple) because she [T:had](Past Simple) no jewelry.\n\nShe [T:visited](Past Simple) her wealthy friend, [N:Madame Forestier](Proper Noun), and [T:borrowed](Past Simple) a [ADJ:dazzling](Descriptive Adjective) diamond necklace. At the ball, Mathilde [T:was](Past Simple) a triumphant success—admired by all, intoxicated with pleasure. But [P:upon](Preposition) returning home at 4 a.m., she [T:discovered](Past Simple) [P:with](Preposition) a cry of horror that the necklace [T:was missing](Past Continuous) from her neck.\n\nUnable to find it, the Loisels [T:decided](Past Simple) [P:to replace](Infinitive) it secretly. They [T:purchased](Past Simple) a matching necklace for 36,000 francs, borrowing vast sums at ruinous interest rates. For ten [ADJ:agonizing](Descriptive Adjective) years, they [T:endured](Past Simple) the heavy burden of debt: dismissed their maid, moved to a garret, and worked exhausting manual jobs until Mathilde [T:looked](Past Simple) like an old, worn woman.\n\nOne Sunday, while walking in the Champs-Élysées, Mathilde [T:encountered](Past Simple) Madame Forestier, still young and beautiful. Mathilde proudly [T:revealed](Past Simple) that they [T:had spent](Past Perfect) a decade repaying the lost jewels. Deeply moved, Madame Forestier [T:took](Past Simple) her hands and [T:exclaimed](Past Simple), \"Oh, my poor Mathilde! Mine was fake paste—it was worth at most five hundred francs!\"",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: How much was the original borrowed necklace actually worth?",
+                  "options": [
+                        "At most 500 francs because it was imitation paste",
+                        "36,000 francs",
+                        "100,000 francs"
+                  ],
+                  "correct": 0,
+                  "explanation": "Madame Forestier reveals her original necklace was costume jewelry worth only 500 francs."
+            },
+            {
+                  "type": "mc",
+                  "question": "Sequence: What drastic lifestyle changes did the Loisels make for ten years?",
+                  "options": [
+                        "They dismissed their servant, moved into an attic, and worked multiple grueling jobs",
+                        "They fled Paris to live in London",
+                        "They declared bankruptcy in court"
+                  ],
+                  "correct": 0,
+                  "explanation": "They lived ten years of extreme poverty to repay 36,000 francs of high-interest debt."
+            },
+            {
+                  "type": "mc",
+                  "question": "Theme: What fatal flaw caused Mathilde's tragic fate?",
+                  "options": [
+                        "Her false pride and inability to confess the loss to her friend",
+                        "Her inability to dance",
+                        "Her hatred of fashion"
+                  ],
+                  "correct": 0,
+                  "explanation": "Had she been honest with Madame Forestier immediately, ten years of misery would have been avoided."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Luxury, Verb: Luxuriate, Adjective: [?]",
+                  "options": [
+                        "Luxurious",
+                        "Luxuriously",
+                        "Luxuriant"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adjective form meaning characterized by luxury is 'Luxurious'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: How does social pretension and the desire for status damage people's lives today?"
+            }
+      ]
+},
+      {
+      "id": "clean_well_lighted_place",
+      "title": "A Clean, Well-Lighted Place",
+      "author": "Ernest Hemingway",
+      "level": "B2",
+      "theme": "Histoires Modernes & Célèbres",
+      "description": "Two waiters observe an old deaf man seeking refuge in a brightly lit late-night café.",
+      "imageUrl": "https://image.pollinations.ai/prompt/A%20Clean%20Well-Lighted%20Place%20Hemingway%20Spanish%20cafe%20at%20night%20illustration?width=800&height=400&nologo=true",
+      "raw": "It [T:was very late](Past Simple) and everyone [T:had left](Past Perfect) the café except an old man who [T:sat](Past Simple) in the shadow the leaves of the tree [T:made](Past Simple) against the electric light. In the daytime the street [T:was dusty](Past Simple), but at night the dew [T:settled](Past Simple) the dust and the old man [T:liked](Past Simple) [P:to sit](Infinitive) late because he [T:was deaf](Past Simple) and now at night it [T:was quiet](Past Simple) and he [T:felt](Past Simple) the difference.\n\nThe two waiters inside the café [T:watched](Past Simple) him. \"Last week he [T:tried](Past Simple) [P:to commit](Infinitive) suicide,\" one waiter [T:said](Past Simple). The younger waiter, eager [P:to return](Infinitive) home to his wife, [T:became](Past Simple) [ADJ:impatient](Descriptive Adjective). He [T:marched](Past Simple) out, [T:poured](Past Simple) the brandy carelessly, and [T:refused](Past Simple) [P:to serve](Infinitive) another drink, forcing the old deaf customer [P:to leave](Infinitive).\n\nThe older waiter [T:defended](Past Simple) the patron, remarking that an unhurried, clean, well-lighted café [T:provides](Present Simple) dignity and solace against the terrifying emptiness of the world. Walking home through the deserted streets, the older waiter [T:whispered](Past Simple) a prayer of nada (nothingness), recognizing that light, order, and clean shelter [T:are](Present Simple) all that humans [T:have](Present Simple) [P:to hold back](Infinitive) the darkness.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: Why did the old man prefer sitting in the café late at night?",
+                  "options": [
+                        "It was quiet and clean, allowing him to feel peace in his deafness",
+                        "He had no home",
+                        "He was waiting for a train"
+                  ],
+                  "correct": 0,
+                  "explanation": "He liked the late-night quiet, clean light, and absence of daytime bustle."
+            },
+            {
+                  "type": "mc",
+                  "question": "Contrast: How do the two waiters differ in their worldview?",
+                  "options": [
+                        "The young waiter values youth and haste; the older waiter understands loneliness and existential dread",
+                        "One is wealthy, the other is poor",
+                        "One speaks Spanish, the other English"
+                  ],
+                  "correct": 0,
+                  "explanation": "The younger waiter has youth and confidence, while the older waiter sympathizes with those needing sanctuary from despair."
+            },
+            {
+                  "type": "mc",
+                  "question": "Theme: What does the 'clean, well-lighted place' symbolize?",
+                  "options": [
+                        "A refuge of order and dignity against the void and chaos of existence",
+                        "A modern commercial restaurant",
+                        "A place to meet business associates"
+                  ],
+                  "correct": 0,
+                  "explanation": "Hemingway uses the café as a symbol of human dignity and shelter against existential nothingness."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Patience, Adjective: Patient, Adverb: [?]",
+                  "options": [
+                        "Patiently",
+                        "Patience",
+                        "Impatient"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adverb form is 'Patiently'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: What places in your own life serve as a 'clean, well-lighted place' for quiet thinking?"
+            }
+      ]
+},
+      {
+      "id": "the_dead",
+      "title": "The Dead",
+      "author": "James Joyce",
+      "level": "B2",
+      "theme": "Histoires Modernes & Célèbres",
+      "description": "A snowy Dublin evening stirs bittersweet memories and an unforgettable moment of epiphany.",
+      "imageUrl": "https://image.pollinations.ai/prompt/James%20Joyce%20The%20Dead%20snow%20falling%20over%20Dublin%20lamppost%20illustration?width=800&height=400&nologo=true",
+      "raw": "On the feast of the Epiphany in Dublin, [N:Gabriel Conroy](Proper Noun) and his wife [N:Gretta](Proper Noun) [T:attended](Past Simple) the annual holiday dinner party given by his elderly aunts, [N:Kate](Proper Noun) and [N:Julia Morkan](Proper Noun). The house [T:was](Past Simple) filled with music, feast, and laughter. Gabriel [T:delivered](Past Simple) a [ADJ:gracious](Descriptive Adjective) speech praising Irish hospitality and the memories of the past.\n\n[C:As](Subordinating Conjunction) the party [T:was ending](Past Continuous), Gabriel [T:saw](Past Simple) his wife standing [P:at](Preposition of Place) the top of the stairs, listening [ADV:transfixed](Adverb of Manner) to an old ballad, \"The Lass of Aughrim,\" [T:sung](Past Participle) in a distant room. Her eyes [T:were shining](Past Continuous) with [ADJ:mysterious](Descriptive Adjective) emotion.\n\nLater, at the Gresham Hotel, Gabriel [T:anticipated](Past Simple) a romantic encounter, but Gretta [T:burst](Past Simple) into tears. She [T:confessed](Past Simple) that the song [T:had reminded](Past Perfect) her of [N:Michael Furey](Proper Noun), a delicate boy in Galway who [T:had loved](Past Perfect) her passionately and [T:had died](Past Perfect) in the cold rain for her sake when he was only seventeen.\n\n[C:While](Subordinating Conjunction) Gretta [T:slept](Past Simple), Gabriel [T:looked](Past Simple) out the window. A sense of [L:epiphany](A moment of sudden, profound spiritual realization - B2) [T:swept](Past Simple) over him as he [T:watched](Past Simple) the snow [P:falling](Present Participle) faintly throughout Ireland, softly descending upon all the living and the dead.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: What song triggered Gretta's poignant childhood memories?",
+                  "options": [
+                        "'The Lass of Aughrim'",
+                        "'Danny Boy'",
+                        "'Greensleeves'"
+                  ],
+                  "correct": 0,
+                  "explanation": "The old ballad 'The Lass of Aughrim' stirred her memories of Michael Furey."
+            },
+            {
+                  "type": "mc",
+                  "question": "Sequence: Who was Michael Furey in Gretta's past?",
+                  "options": [
+                        "A youth from Galway who died of illness after waiting in the cold rain for her",
+                        "Her first husband",
+                        "Her cousin who emigrated to America"
+                  ],
+                  "correct": 0,
+                  "explanation": "He was a young Galway boy who loved Gretta with pure devotion and died young."
+            },
+            {
+                  "type": "mc",
+                  "question": "Symbolism: What does the falling snow represent at the climax of Joyce's novella?",
+                  "options": [
+                        "The shared, quiet mortality and unity connecting all living souls and past ancestors",
+                        "A severe winter blizzard",
+                        "The cold climate of Northern Europe"
+                  ],
+                  "correct": 0,
+                  "explanation": "The universal snow symbolizes mortality, connection, and empathy between the living and the dead."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Passion, Adjective: Passionate, Adverb: [?]",
+                  "options": [
+                        "Passionately",
+                        "Passion",
+                        "Passioned"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adverb form is 'Passionately'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: How do past memories and unexpressed feelings shape our present relationships?"
+            }
+      ]
+},
+      {
+      "id": "the_lottery_ticket",
+      "title": "The Lottery Ticket",
+      "author": "Anton Chekhov",
+      "level": "B1",
+      "theme": "Histoires Modernes & Célèbres",
+      "description": "A middle-class couple daydreams of sudden riches, unraveling their hidden jealousies.",
+      "imageUrl": "https://image.pollinations.ai/prompt/The%20Lottery%20Ticket%20Anton%20Chekhov%20Victorian%20couple%20reading%20newspaper%20illustration?width=800&height=400&nologo=true",
+      "raw": "[N:Ivan Dmitritch](Proper Noun), a middle-class Russian householder, [T:was reading](Past Continuous) the newspaper on the sofa after dinner. His wife [N:Masha](Proper Noun) [T:asked](Past Simple) him [P:to check](Infinitive) the lottery results for series 9499, number 26. Looking at the column, Ivan [T:saw](Past Simple) series 9499 right before his eyes!\n\nWithout checking the specific ticket number, the couple [T:began](Past Simple) [P:to daydream](Infinitive) of spending the 75,000 roubles prize. Ivan [T:pictured](Past Simple) purchasing a grand summer estate in Tula, resting beneath lilac trees, and traveling [P:across](Preposition) southern Europe in luxury. Masha, too, [T:dreamt](Past Simple) of independence and vacations abroad.\n\nHowever, [C:as](Subordinating Conjunction) the minutes [T:passed](Past Simple), their blissful fantasies [T:turned](Past Simple) into [ADJ:bitter](Descriptive Adjective) suspicion. Ivan [T:thought](Past Simple) that Masha [T:would become](Conditional) stingy and tyrannical with her money, while Masha [T:looked](Past Simple) at Ivan with [L:resentment](Bitter indignation at having been treated unfairly - B1), suspecting he [T:wanted](Past Simple) to squander her fortune on himself. Hatred [T:simmered](Past Simple) between the two spouses.\n\nIvan [T:glanced](Past Simple) back at the newspaper to inspect the ticket number. Series 9499, number 46! Not 26. Instantaneously, their grand illusions [T:collapsed](Past Simple). The apartment suddenly [T:looked](Past Simple) dark, small, and wretched, and Ivan [T:muttered](Past Simple) in fury about the misery of daily life.",
+      "quiz": [
+            {
+                  "type": "mc",
+                  "question": "Reference: What was the actual winning ticket number compared to Masha's?",
+                  "options": [
+                        "Series 9499, number 46 (Masha had number 26)",
+                        "Series 1000, number 26",
+                        "Series 9499, number 26"
+                  ],
+                  "correct": 0,
+                  "explanation": "The winning series matched (9499), but the ticket number was 46 instead of 26."
+            },
+            {
+                  "type": "mc",
+                  "question": "Psychology: How did the illusion of sudden wealth affect the couple's feelings toward each other?",
+                  "options": [
+                        "It exposed their hidden selfishness, greed, and mutual distrust",
+                        "It brought them closer together in love",
+                        "It made them donate to charity"
+                  ],
+                  "correct": 0,
+                  "explanation": "The anticipation of wealth triggered intense jealousy, suspicion, and resentment between husband and wife."
+            },
+            {
+                  "type": "mc",
+                  "question": "Theme: What aspect of human nature does Chekhov satirize?",
+                  "options": [
+                        "How imaginary greed can instantly poison contentment and marriage",
+                        "The technical rules of state lotteries",
+                        "The cost of Russian summer homes"
+                  ],
+                  "correct": 0,
+                  "explanation": "Chekhov exposes how rapidly human discontent and greed can emerge when tempted by money."
+            },
+            {
+                  "type": "mc",
+                  "question": "Vocabulary Table: Complete: Noun: Suspicion, Verb: Suspect, Adjective: [?]",
+                  "options": [
+                        "Suspicious",
+                        "Suspiciously",
+                        "Suspecting"
+                  ],
+                  "correct": 0,
+                  "explanation": "The adjective form is 'Suspicious'."
+            },
+            {
+                  "type": "open",
+                  "question": "Personal Reflection: Why does unexpected wealth or money often create conflict in families and friendships?"
+            }
+      ]
+},
+
       {
         id: "cinderella_1",
         title: "Cinderella and the Glass Slipper",
@@ -1298,24 +2246,32 @@
     }
 
     function loadStory(story) {
+      const cardEl = document.getElementById('storyCardContainer');
       const readerEl = document.querySelector('.reader-scroll');
-      if (readerEl && currentStory && currentStory.id !== story.id) {
-        readerEl.classList.add('story-fade-out');
+      
+      if (cardEl && currentStory && currentStory.id !== story.id) {
+        cardEl.classList.remove('story-flip-in');
+        cardEl.classList.add('story-flip-out');
+        
         setTimeout(() => {
           renderStoryContent(story);
-          readerEl.classList.remove('story-fade-out');
-          readerEl.classList.remove('story-slide-in');
-          void readerEl.offsetWidth; // force reflow
-          readerEl.classList.add('story-slide-in');
-          readerEl.scrollTop = 0;
-          readerEl.dispatchEvent(new Event('scroll'));
-        }, 180);
+          cardEl.classList.remove('story-flip-out');
+          void cardEl.offsetWidth; // force reflow
+          cardEl.classList.add('story-flip-in');
+          if (readerEl) {
+            readerEl.scrollTop = 0;
+            readerEl.dispatchEvent(new Event('scroll'));
+          }
+        }, 220);
       } else {
         renderStoryContent(story);
+        if (cardEl) {
+          cardEl.classList.remove('story-flip-out');
+          cardEl.classList.remove('story-flip-in');
+          void cardEl.offsetWidth;
+          cardEl.classList.add('story-flip-in');
+        }
         if (readerEl) {
-          readerEl.classList.remove('story-slide-in');
-          void readerEl.offsetWidth;
-          readerEl.classList.add('story-slide-in');
           readerEl.scrollTop = 0;
           readerEl.dispatchEvent(new Event('scroll'));
         }
@@ -1484,6 +2440,29 @@
     }
 
     const smartLexisDb = {
+      "tranquil": {"syn":["peaceful","serene","calm"],"ant":["turbulent","chaotic","stormy"],"example":"The quiet garden was tranquil and sheltered from the city noise."},
+      "unusual": {"syn":["rare","extraordinary","uncommon"],"ant":["normal","common","typical"],"example":"He showed an unusual talent for solving complex puzzles."},
+      "disbelief": {"syn":["skepticism","incredulity","doubt"],"ant":["belief","faith","certainty"],"example":"She stared in total disbelief at the shocking news."},
+      "violently": {"syn":["forcefully","fiercely","intensely"],"ant":["gently","mildly","peacefully"],"example":"The gale blew violently across the exposed coast."},
+      "baffling": {"syn":["perplexing","mystifying","puzzling"],"ant":["clear","obvious","comprehensible"],"example":"The sudden disappearance remained a baffling enigma."},
+      "graciously": {"syn":["courteously","kindly","politely"],"ant":["rudely","harshly","ungraciously"],"example":"The host graciously welcomed every guest at the door."},
+      "chilly": {"syn":["cool","crisp","frosty"],"ant":["warm","balmy","hot"],"example":"A chilly autumn breeze rustled the falling leaves."},
+      "eerie": {"syn":["spooky","creepy","mysterious"],"ant":["ordinary","comforting","familiar"],"example":"An eerie silence settled over the deserted mansion."},
+      "discreetly": {"syn":["cautiously","quietly","subtly"],"ant":["openly","loudly","blatantly"],"example":"The detective discreetly followed the suspect through the crowd."},
+      "gruesome": {"syn":["ghastly","horrific","grisly"],"ant":["pleasant","delightful","attractive"],"example":"The mystery writer depicted a gruesome crime scene."},
+      "unrivaled": {"syn":["peerless","matchless","unmatched"],"ant":["inferior","ordinary","mediocre"],"example":"Her analytical skills in deduction were unrivaled in Europe."},
+      "scrupulously": {"syn":["meticulously","carefully","thoroughly"],"ant":["carelessly","sloppily","hastily"],"example":"He scrupulously verified every single fact before publishing."},
+      "revenge": {"syn":["vengeance","retaliation","retribution"],"ant":["forgiveness","pardon","clemency"],"example":"He sought revenge for the injustice he had suffered."},
+      "exquisite": {"syn":["superb","flawless","magnificent"],"ant":["crude","ugly","shoddy"],"example":"The jeweler crafted an exquisite diamond necklace."},
+      "intoxicated": {"syn":["drunk","inebriated","elated"],"ant":["sober","lucid","composed"],"example":"He was intoxicated by the excitement of the masquerade ball."},
+      "triumphant": {"syn":["victorious","successful","jubilant"],"ant":["defeated","failing","crestfallen"],"example":"The hero made a triumphant return to his hometown."},
+      "inscrutable": {"syn":["enigmatic","unfathomable","mysterious"],"ant":["transparent","obvious","clear"],"example":"His face remained calm and inscrutable during questioning."},
+      "fearsome": {"syn":["frightening","terrible","intimidating"],"ant":["gentle","harmless","friendly"],"example":"The castle was guarded by a fearsome dragon."},
+      "humiliation": {"syn":["embarrassment","mortification","shame"],"ant":["honor","pride","glory"],"example":"He suffered deep humiliation when his mistake was revealed."},
+      "boasted": {"syn":["bragged","crowed","vaunted"],"ant":["downplayed","concealed"],"example":"The miller boasted foolishly about his daughter's skills."},
+      "compassionate": {"syn":["caring","kindhearted","sympathetic"],"ant":["indifferent","cruel","harsh"],"example":"The compassionate nurse tended to the sick child with love."},
+      "resentment": {"syn":["bitterness","animosity","indignation"],"ant":["gratitude","contentment","affection"],"example":"Hidden resentment poisoned their longstanding friendship."},
+      "epiphany": {"syn":["realization","revelation","insight"],"ant":["confusion","ignorance","blindness"],"example":"Looking at the winter snow, he experienced a profound epiphany."},
       "hungry": { syn: ["famished", "ravenous", "starving"], ant: ["full", "satiated", "stuffed"], example: "After walking all afternoon, the children felt very hungry." },
       "scorching": { syn: ["blistering", "sweltering", "blazing"], ant: ["freezing", "chilly", "cool"], example: "The travelers sought shade from the scorching desert sun." },
       "ingenious": { syn: ["brilliant", "inventive", "clever"], ant: ["foolish", "dull", "uninspired"], example: "She came up with an ingenious solution to the puzzle." },
@@ -2630,7 +3609,7 @@
         }
 
         allStories.unshift(newStory);
-        localStorage.setItem('lingo_stories_v3', JSON.stringify(allStories));
+        localStorage.setItem('lingo_stories_v6', JSON.stringify(allStories));
         document.getElementById('libCount').innerText = allStories.length;
         loadStory(newStory);
         closeModalDirect('aiModal');
