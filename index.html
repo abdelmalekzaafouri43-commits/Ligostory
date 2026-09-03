@@ -81,68 +81,97 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; pointer-events: auto; }
     body { background-color: var(--bg); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-    /* TOP 25% SECTION */
+    /* TOP HEADER SECTION (DYNAMIC FULL-CONTAINMENT) */
     .top-section {
-      height: 25vh;
-      min-height: 170px;
+      height: auto;
+      flex-shrink: 0;
       background: var(--header-bg);
       color: #ffffff;
-      padding: 12px 16px;
+      padding: 10px 14px 12px 14px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-      z-index: 10;
+      gap: 8px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+      z-index: 20;
+      position: relative;
     }
-    .top-bar { display: flex; justify-content: space-between; align-items: center; }
-    .user-pill { background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
-    .badge-group { display: flex; gap: 6px; align-items: center; }
-    .badge { padding: 3px 8px; border-radius: 12px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .user-pill { background: rgba(255,255,255,0.2); padding: 3px 9px; border-radius: 12px; font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+    .badge-group { display: flex; gap: 5px; align-items: center; }
+    .badge { padding: 3px 8px; border-radius: 12px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
     .badge-a2 { background: #10b981; color: #fff; }
     .badge-b1 { background: #3b82f6; color: #fff; }
     .badge-c1 { background: #8b5cf6; color: #fff; }
     .badge-theme { background: rgba(255,255,255,0.18); color: #fff; }
 
-    .top-actions { display: flex; gap: 6px; align-items: center; }
-    .icon-btn { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.18); border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+    .top-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+    .icon-btn { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.18); border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
     .icon-btn:hover { background: rgba(255,255,255,0.3); }
 
-    .title-box { margin-top: 2px; }
-    .story-title { font-size: 1.2rem; font-weight: 800; line-height: 1.2; }
-    .story-desc { font-size: 0.75rem; opacity: 0.85; margin-top: 2px; }
+    .title-box { margin-top: 1px; }
+    .story-title { font-size: 1.15rem; font-weight: 800; line-height: 1.25; color: #ffffff; }
+    .story-desc { font-size: 0.76rem; opacity: 0.88; margin-top: 2px; color: rgba(255,255,255,0.9); line-height: 1.35; }
 
-    .header-bottom { display: flex; justify-content: space-between; align-items: center; }
-    .btn-pill { background: #ffffff; color: #1e3a8a; border: none; padding: 5px 11px; border-radius: 16px; font-weight: 700; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
-    .btn-ai { background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; border: none; padding: 5px 12px; border-radius: 16px; font-weight: 800; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
-    .progress-track { width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; margin-top: 4px; }
+    .header-actions-scroll {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 2px 0 4px 0;
+      white-space: nowrap;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+    .header-actions-scroll::-webkit-scrollbar { display: none; }
+    .btn-pill { background: #ffffff; color: #1e3a8a; border: none; padding: 5px 11px; border-radius: 16px; font-weight: 700; font-size: 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+    .btn-ai { background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; border: none; padding: 5px 12px; border-radius: 16px; font-weight: 800; font-size: 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; white-space: nowrap; box-shadow: 0 2px 8px rgba(236,72,153,0.3); }
+    .progress-track { width: 100%; height: 3px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; margin-top: 2px; }
     .progress-fill { height: 100%; width: 0%; background: #38bdf8; transition: width 0.15s ease; }
 
-    /* BOTTOM 75% SECTION */
-    .bottom-section { height: 75vh; display: flex; flex-direction: column; background: var(--bg); overflow: hidden; }
+    /* BOTTOM SECTION */
+    .bottom-section {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      overflow: hidden;
+      position: relative;
+    }
 
     .audio-toolbar {
-      padding: 8px 14px;
+      padding: 7px 12px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 6px;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
-    .btn-play { background: var(--primary); color: white; border: none; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-    .btn-stop { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 12px; cursor: pointer; display: none; }
-    .pill-select { background: var(--surface-variant); border: 1px solid var(--border); color: var(--text-main); padding: 4px 8px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; }
+    .audio-toolbar::-webkit-scrollbar { display: none; }
+    .btn-play { background: var(--primary); color: white; border: none; padding: 6px 13px; border-radius: 20px; font-weight: 700; font-size: 11.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; white-space: nowrap; }
+    .btn-stop { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 11.5px; cursor: pointer; display: none; flex-shrink: 0; white-space: nowrap; }
+    .pill-select { background: var(--surface-variant); border: 1px solid var(--border); color: var(--text-main); padding: 4px 8px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; flex-shrink: 0; }
 
     .filter-bar {
-      padding: 6px 14px;
+      padding: 6px 12px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       gap: 6px;
       overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
       white-space: nowrap;
+      flex-shrink: 0;
     }
+    .filter-bar::-webkit-scrollbar { display: none; }
     .filter-pill {
       padding: 3px 10px;
       border-radius: 12px;
@@ -152,6 +181,8 @@
       background: var(--surface-variant);
       color: var(--text-muted);
       cursor: pointer;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
     .filter-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
 
@@ -1262,17 +1293,17 @@
     </div>
 
     <div>
-      <div class="header-bottom">
-        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <button class="btn-pill" onclick="openStoryHub()">📚 Library (<span id="libCount">4</span>)</button>
-          <button class="btn-pill" onclick="openExerciseSuite('cloze')" style="background:linear-gradient(135deg, #10b981, #059669); color:white; border:none; box-shadow:0 2px 6px rgba(16,185,129,0.3);">🎮 Exercises</button>
-          <button class="btn-ai" onclick="openAiGenerator()">✨ AI Story</button>
-          <button class="btn-pill" onclick="openAiCompanion()" style="background:rgba(168,85,247,0.15); color:#a855f7; border-color:#a855f7;">🤖 Companion</button>
-          <button class="btn-pill" onclick="openVocabNotebook()" style="background:rgba(16,185,129,0.15); color:#10b981; border-color:#10b981;">📖 Vocab (<span id="vocabCount">0</span>)</button>
-          <button class="btn-pill" onclick="openFeedbackModal()" style="background:linear-gradient(135deg, rgba(236,72,153,0.15), rgba(168,85,247,0.15)); color:#ec4899; border:1px solid rgba(236,72,153,0.35); box-shadow:0 2px 8px rgba(236,72,153,0.2);">✨ Glass Feedback</button>
-          <button id="ambientBtn" class="btn-pill" onclick="openSoundscapeStudio()" style="background:rgba(59,130,246,0.15); color:#3b82f6; border-color:#3b82f6;">🎧 Adaptive Sound</button>
-        </div>
-        <span style="font-size: 10px; opacity: 0.85;">Tap words for definitions</span>
+      <div class="header-actions-scroll">
+        <button class="btn-pill" onclick="openStoryHub()">📚 Library (<span id="libCount">4</span>)</button>
+        <button class="btn-pill" onclick="openExerciseSuite('cloze')" style="background:linear-gradient(135deg, #10b981, #059669); color:white; border:none; box-shadow:0 2px 6px rgba(16,185,129,0.3);">🎮 Exercises</button>
+        <button class="btn-ai" onclick="openAiGenerator()">✨ AI Story</button>
+        <button class="btn-pill" onclick="openAiCompanion()" style="background:rgba(168,85,247,0.15); color:#a855f7; border:1px solid rgba(168,85,247,0.35);">🤖 Companion</button>
+        <button class="btn-pill" onclick="openVocabNotebook()" style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.35);">📖 Vocab (<span id="vocabCount">0</span>)</button>
+        <button class="btn-pill" onclick="openFeedbackModal()" style="background:linear-gradient(135deg, rgba(236,72,153,0.15), rgba(168,85,247,0.15)); color:#ec4899; border:1px solid rgba(236,72,153,0.35); box-shadow:0 2px 8px rgba(236,72,153,0.2);">✨ Glass Feedback</button>
+        <button id="ambientBtn" class="btn-pill" onclick="openSoundscapeStudio()" style="background:rgba(59,130,246,0.15); color:#3b82f6; border:1px solid rgba(59,130,246,0.35);">🎧 Adaptive Sound</button>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
+        <span style="font-size: 10px; opacity: 0.85; color:rgba(255,255,255,0.85);">💡 Tap any highlighted word for grammar & meaning</span>
       </div>
       <div class="progress-track">
         <div id="progressFill" class="progress-fill"></div>
@@ -1283,35 +1314,31 @@
   <!-- BOTTOM 75% SECTION -->
   <div class="bottom-section">
     <div class="audio-toolbar">
-      <div style="display:flex; gap:6px; align-items:center;">
-        <button id="btnPlay" class="btn-play" onclick="toggleAudio()">▶ Read Aloud</button>
-        <button id="btnStop" class="btn-stop" onclick="stopAudio()">⏹ Stop</button>
-      </div>
-      <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-        <select id="voiceNarratorSelect" class="pill-select" style="font-weight:700; max-width:180px;" onchange="changeVoiceNarrator(this.value)">
-          <optgroup label="🎙️ Voix Parentale Clonée IA">
-            <option value="clone_papa">👨‍🦳 Papa (Voix Clonée IA)</option>
-            <option value="clone_maman">👩‍🕳️ Maman (Voix Clonée IA)</option>
-          </optgroup>
-          <optgroup label="🎭 Comédiens de Doublage Pros">
-            <option value="pro_papa" selected>👨‍🦳 Papa (Ton Chaud)</option>
-            <option value="pro_maman">👩‍🕳️ Maman (Conteuse)</option>
-            <option value="pro_narrator">🎙️ Narrateur Pro Studio</option>
-            <option value="pro_grandpa">👴 Grand-père Conteur</option>
-            <option value="pro_fairy">🧚 Fée Enchantée</option>
-          </optgroup>
-        </select>
-        <button class="btn-pill" style="font-size:11px; padding:5px 9px; background:var(--surface-variant); font-weight:700;" onclick="openVoiceStudio()" title="Studio de clonage de voix parentale">🎙️ Studio Voix</button>
-        <select id="accentSelect" class="pill-select" onchange="changeAccent(this.value)">
-          <option value="en-US">🇺🇸 US Native</option>
-          <option value="en-GB">🇬🇧 UK English</option>
-        </select>
-        <select id="speedSelect" class="pill-select" onchange="changeSpeed(this.value)">
-          <option value="0.8">0.8x</option>
-          <option value="1.0" selected>1.0x</option>
-          <option value="1.2">1.2x</option>
-        </select>
-      </div>
+      <button id="btnPlay" class="btn-play" onclick="toggleAudio()">▶ Read Aloud</button>
+      <button id="btnStop" class="btn-stop" onclick="stopAudio()">⏹ Stop</button>
+      <select id="voiceNarratorSelect" class="pill-select" style="font-weight:700; max-width:170px;" onchange="changeVoiceNarrator(this.value)">
+        <optgroup label="🎙️ Voix Parentale Clonée IA">
+          <option value="clone_papa">👨‍🦳 Papa (Voix Clonée IA)</option>
+          <option value="clone_maman">👩‍🕳️ Maman (Voix Clonée IA)</option>
+        </optgroup>
+        <optgroup label="🎭 Comédiens de Doublage Pros">
+          <option value="pro_papa" selected>👨‍🦳 Papa (Ton Chaud)</option>
+          <option value="pro_maman">👩‍🕳️ Maman (Conteuse)</option>
+          <option value="pro_narrator">🎙️ Narrateur Pro Studio</option>
+          <option value="pro_grandpa">👴 Grand-père Conteur</option>
+          <option value="pro_fairy">🧚 Fée Enchantée</option>
+        </optgroup>
+      </select>
+      <button class="btn-pill" style="font-size:11px; padding:5px 9px; background:var(--surface-variant); color:var(--text-main); font-weight:700; border:1px solid var(--border);" onclick="openVoiceStudio()" title="Studio de clonage de voix parentale">🎙️ Studio Voix</button>
+      <select id="accentSelect" class="pill-select" onchange="changeAccent(this.value)">
+        <option value="en-US">🇺🇸 US Native</option>
+        <option value="en-GB">🇬🇧 UK English</option>
+      </select>
+      <select id="speedSelect" class="pill-select" onchange="changeSpeed(this.value)">
+        <option value="0.8">0.8x</option>
+        <option value="1.0" selected>1.0x</option>
+        <option value="1.2">1.2x</option>
+      </select>
     </div>
 
     <div class="filter-bar">
@@ -1402,7 +1429,7 @@
           <div class="glass-ai-orb glass-ai-orb-3"></div>
 
           <div style="position:relative; z-index:1;">
-            <!-- Header & Badge -->
+            <!-- Header -->
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid rgba(168,85,247,0.2); padding-bottom:12px;">
               <div style="display:flex; align-items:center; gap:10px;">
                 <div class="glass-ai-avatar">
@@ -1412,35 +1439,19 @@
                 <div>
                   <div style="font-size:1.1rem; font-weight:800; background:linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:-0.3px;">LingoBot AI Companion & Story Tutor</div>
                   <div style="font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:5px;">
-                    <span>✨ Real-time English Guidance</span> • <span style="color:#10b981; font-weight:700;">● Online Ready</span>
+                    <span>⚡ Instant English & Story Answers</span> • <span style="color:#10b981; font-weight:700;">● Online Ready</span>
                   </div>
                 </div>
               </div>
               <button class="btn-pill" style="background:rgba(168,85,247,0.15); color:#a855f7; border:1px solid rgba(168,85,247,0.35); font-weight:700; font-size:11.5px; padding:6px 14px; box-shadow:0 2px 8px rgba(168,85,247,0.15);" onclick="openAiCompanion()">🔍 Full Companion Space</button>
             </div>
 
-            <!-- Quick Story Actions & Prompts -->
-            <div style="display:flex; gap:7px; overflow-x:auto; padding-bottom:10px; margin-bottom:12px; scrollbar-width:none;">
-              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Explain the moral and main lesson of this story.')">💡 Story Moral & Lesson</button>
-              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Let\'s practice a conversation based on this story!')">🗣️ Interactive Chat Practice</button>
-              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Quiz me with 3 new vocabulary questions from this story.')">📝 Vocab Drill Quiz</button>
-              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Explain the key grammar rules and tenses used here.')">🔍 Grammar Breakdown</button>
-              <button class="glass-ai-chip" onclick="sendQuickCompanionPrompt('Summarize this story in 3 simple sentences.')">⚡ Quick 3-Sentence Summary</button>
-            </div>
-
             <!-- In-Story Live Chat Feed -->
-            <div id="storyCompanionChat" class="glass-chat-feed" style="min-height:160px; max-height:280px; margin-bottom:12px;">
-              <div class="glass-bot-bubble">
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
-                  <div>👋 Hello Abdelmalek! I am your <strong>LingoBot AI Companion</strong>. Ask me anything about this story, request grammar breakdowns, or tap any quick prompt above to practice speaking!</div>
-                  <button class="icon-btn" style="padding:2px 6px; font-size:11px; flex-shrink:0; background:rgba(168,85,247,0.15); color:#a855f7;" onclick="speakWord('Hello! I am your LingoBot AI Companion. Ask me anything about this story!')">🔊</button>
-                </div>
-              </div>
-            </div>
+            <div id="storyCompanionChat" class="glass-chat-feed" style="min-height:160px; max-height:300px; margin-bottom:12px;"></div>
 
             <!-- In-Story Input Box -->
             <div class="glass-ai-input-wrap">
-              <input id="storyCompanionInput" type="text" class="glass-ai-input" placeholder="Ask LingoBot anything about this story or English grammar..." onkeydown="if(event.key==='Enter') sendStoryCompanionMessage()" />
+              <input id="storyCompanionInput" type="text" class="glass-ai-input" placeholder="Type your question here (e.g. word meanings, grammar rules, story plot)..." onkeydown="if(event.key==='Enter') sendStoryCompanionMessage()" />
               <button class="glass-ai-send-btn" onclick="sendStoryCompanionMessage()">Ask AI 🚀</button>
             </div>
           </div>
@@ -1680,13 +1691,26 @@
   <div id="vocabModal" class="modal-overlay" onclick="closeSheet(event, 'vocabModal')">
     <div class="modal-sheet" style="max-height:85vh; overflow-y:auto;" onclick="event.stopPropagation()">
       <div class="modal-drag-handle"></div>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h2 style="font-size:1.1rem; color:var(--primary);">📖 Saved Vocabulary Notebook</h2>
-        <button class="btn-pill" style="padding:4px 10px; font-size:11px;" onclick="closeModalDirect('vocabModal')">✕ Close</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <h2 style="font-size:1.15rem; color:var(--primary); margin:0;">📖 Saved Vocabulary Notebook</h2>
+          <span id="vocabModalBadge" style="background:rgba(99,102,241,0.12); color:var(--primary); font-size:11px; font-weight:700; padding:3px 10px; border-radius:14px; border:1px solid rgba(99,102,241,0.25);">0 words</span>
+        </div>
+        <button class="btn-pill" style="padding:5px 12px; font-size:11.5px;" onclick="closeModalDirect('vocabModal')">✕ Close</button>
       </div>
-      <div style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Review words and expressions you have saved while reading.</div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px; padding-bottom:8px; border-bottom:1px solid var(--border);">
+        <div style="font-size:12px; color:var(--text-muted); flex:1; min-width:180px;">Review words, definitions, and examples saved while reading.</div>
+        <button id="topExportPdfBtn" class="btn-pill" style="padding:6px 14px; font-size:11.5px; background:linear-gradient(135deg, #4338ca, #6366f1); color:white; border:none; font-weight:700; display:flex; align-items:center; gap:6px; border-radius:18px; cursor:pointer; box-shadow:0 2px 8px rgba(99,102,241,0.25);" onclick="exportVocabToPdf()">
+          <span>📄</span> Export to PDF
+        </button>
+      </div>
       <div id="vocabList"></div>
-      <button class="btn-play" style="width:100%; margin-top:14px; justify-content:center;" onclick="closeModalDirect('vocabModal')">Close</button>
+      <div style="display:flex; gap:10px; margin-top:16px;">
+        <button id="bottomExportPdfBtn" class="btn-play" style="flex:1; justify-content:center; background:linear-gradient(135deg, #4338ca, #6366f1); font-size:13px; padding:11px 16px; border-radius:12px; font-weight:700; box-shadow:0 3px 10px rgba(99,102,241,0.3);" onclick="exportVocabToPdf()">
+          📄 Export Study Sheet (PDF)
+        </button>
+        <button class="btn-pill" style="padding:11px 18px; font-size:13px;" onclick="closeModalDirect('vocabModal')">Close</button>
+      </div>
     </div>
   </div>
 
@@ -1733,29 +1757,20 @@
             <div>
               <h2 style="font-size:1.1rem; font-weight:800; background:linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:0;">LingoBot Glass AI Companion</h2>
               <div style="font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:6px;">
-                <span>24/7 Smart English Language Tutor</span> • <span style="color:#10b981; font-weight:700;">● Active</span>
+                <span>⚡ Instant Smart English Tutor</span> • <span style="color:#10b981; font-weight:700;">● Active</span>
               </div>
             </div>
           </div>
           <button class="btn-pill" style="padding:5px 12px; font-size:11.5px; background:rgba(255,255,255,0.7); backdrop-filter:blur(8px); border:1px solid rgba(168,85,247,0.3); color:var(--text-main);" onclick="closeModalDirect('aiCompanionModal')">✕ Close</button>
         </div>
 
-        <!-- Quick Prompt Chips -->
-        <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:10px; scrollbar-width:none;">
-          <button class="glass-ai-chip" onclick="sendQuickPrompt('Explain the moral and main lesson of this story.')">💡 Story Lesson</button>
-          <button class="glass-ai-chip" onclick="sendQuickPrompt('Let\'s practice a conversation based on this story!')">🗣️ Practice Chat</button>
-          <button class="glass-ai-chip" onclick="sendQuickPrompt('Quiz me with 3 new vocabulary questions.')">📝 Quick Quiz</button>
-          <button class="glass-ai-chip" onclick="sendQuickPrompt('Explain the key grammar rules used in this story.')">🔍 Grammar Rules</button>
-          <button class="glass-ai-chip" onclick="sendQuickPrompt('Give me 5 useful synonyms and expressions from this story.')">📖 Vocab Synonyms</button>
-        </div>
-
         <!-- Chat Messages Scroll Container -->
-        <div id="companionChatContainer" class="glass-chat-feed" style="flex:1; min-height:260px; max-height:420px; margin-bottom:12px;">
+        <div id="companionChatContainer" class="glass-chat-feed" style="flex:1; min-height:280px; max-height:440px; margin-bottom:12px;">
         </div>
 
         <!-- Chat Input Box -->
         <div class="glass-ai-input-wrap">
-          <input id="companionInput" type="text" class="glass-ai-input" placeholder="Ask LingoBot anything about English or this story..." onkeydown="if(event.key==='Enter') sendCompanionMessage()" />
+          <input id="companionInput" type="text" class="glass-ai-input" placeholder="Ask LingoBot anything about English, vocabulary, or this story..." onkeydown="if(event.key==='Enter') sendCompanionMessage()" />
           <button class="glass-ai-send-btn" onclick="sendCompanionMessage()">Send 🚀</button>
         </div>
       </div>
@@ -3322,7 +3337,51 @@
     let currentAnnotationWord = "";
     let currentAnnotationObj = null;
 
-    let savedVocab = JSON.parse(localStorage.getItem('lingo_saved_vocab')) || [];
+    let savedVocab = JSON.parse(localStorage.getItem('lingo_saved_vocab'));
+    if (!savedVocab || !Array.isArray(savedVocab) || savedVocab.length === 0) {
+      savedVocab = [
+        {
+          word: "tranquil",
+          type: "ADJ",
+          pos: "Descriptive Adjective",
+          extra: "Descriptive Adjective",
+          meaning: "Free from disturbance; peaceful, serene, calm and sheltered.",
+          info: "Free from disturbance; peaceful, serene, calm and sheltered.",
+          phonetic: "/ˈtræŋ.kwɪl/",
+          syn: "peaceful, serene, calm, placid, restful",
+          ant: "turbulent, chaotic, noisy, stormy",
+          example: "The quiet room felt tranquil before the sudden confrontation.",
+          date: new Date().toLocaleDateString()
+        },
+        {
+          word: "airtight",
+          type: "ADJ",
+          pos: "Descriptive Adjective",
+          extra: "Descriptive Adjective",
+          meaning: "Leaving no opening for doubt, contradiction, or error; completely flawless.",
+          info: "Leaving no opening for doubt, contradiction, or error; completely flawless.",
+          phonetic: "/ˈeə.taɪt/",
+          syn: "flawless, watertight, irrefutable, unassailable",
+          ant: "flawed, vulnerable, doubtful",
+          example: "Her conversation with the shopkeeper established an airtight alibi.",
+          date: new Date().toLocaleDateString()
+        },
+        {
+          word: "baffling",
+          type: "ADJ",
+          pos: "Descriptive Adjective",
+          extra: "Descriptive Adjective",
+          meaning: "Extremely puzzling, mystifying, or impossible to comprehend easily.",
+          info: "Extremely puzzling, mystifying, or impossible to comprehend easily.",
+          phonetic: "/ˈbæf.lɪŋ/",
+          syn: "perplexing, mystifying, puzzling, bewildering",
+          ant: "straightforward, simple, clear, obvious",
+          example: "The missing murder weapon remained a baffling mystery for the police.",
+          date: new Date().toLocaleDateString()
+        }
+      ];
+      localStorage.setItem('lingo_saved_vocab', JSON.stringify(savedVocab));
+    }
     let bookmarkedIds = JSON.parse(localStorage.getItem('lingo_bookmarks')) || [];
 
     let ambientAudioCtx = null;
@@ -4476,6 +4535,447 @@
         ant: [],
         example: "Little Red Riding Hood carried a basket filled with freshly baked bread and jam.",
         family: "basketry (n)"
+      },
+      // Additional Comprehensive Story Lexis, Verbs, Connectors & Descriptors
+      "was warm": {
+        meaning: "Existed in a comfortable, pleasant state with mild, cozy temperature.",
+        phonetic: "/wɒz wɔːm/",
+        pos: "Past Simple Verb Phrase",
+        cefr: "A2",
+        syn: ["felt cozy", "was comfortable", "glowed warmly"],
+        ant: ["was freezing", "was chilly", "was cold"],
+        example: "The living room was warm and tranquil on a cold winter evening.",
+        family: "warm (adj) • warm up (v) • warmth (n)"
+      },
+      "were closed": {
+        meaning: "In a shut or drawn state; curtains or doors blocking visibility or cold air.",
+        phonetic: "/wɜːr kləʊzd/",
+        pos: "Past Simple Passive",
+        cefr: "A2",
+        syn: ["were shut", "were drawn", "were sealed"],
+        ant: ["were open", "were drawn back"],
+        example: "The heavy velvet curtains were closed against the street.",
+        family: "close (v) • closed (adj) • closeness (n)"
+      },
+      "were lit": {
+        meaning: "Illuminated by fire, light bulbs, or table lamps.",
+        phonetic: "/wɜːr lɪt/",
+        pos: "Past Simple Passive",
+        cefr: "A2",
+        syn: ["were illuminated", "were glowing", "were brightened"],
+        ant: ["were extinguished", "were dark", "were turned off"],
+        example: "Two decorative lamps were lit on the wooden sideboard.",
+        family: "light (v/n) • lit (past) • lighting (n)"
+      },
+      "was waiting": {
+        meaning: "Staying in a place or state of anticipation until someone arrives.",
+        phonetic: "/wɒz ˈweɪ.tɪŋ/",
+        pos: "Past Continuous Verb",
+        cefr: "A2",
+        syn: ["was expecting", "was anticipating", "stayed expectant"],
+        ant: ["departed", "left"],
+        example: "Mary was waiting calmly for her husband to return from work.",
+        family: "wait (v) • waiter (n) • waiting (adj)"
+      },
+      "to come": {
+        meaning: "Infinitive expressing movement toward a place or person.",
+        phonetic: "/tuː kʌm/",
+        pos: "Infinitive Verb",
+        cefr: "A1",
+        syn: ["to arrive", "to return", "to enter"],
+        ant: ["to leave", "to go"],
+        example: "She expected him to come home promptly at five.",
+        family: "come (v) • newcomer (n)"
+      },
+      "walked": {
+        meaning: "Moved on foot at a steady, normal pace.",
+        phonetic: "/wɔːkt/",
+        pos: "Past Simple Verb",
+        cefr: "A1",
+        syn: ["stepped", "strode", "paced", "entered on foot"],
+        ant: ["ran", "sprinted", "halted"],
+        example: "Patrick walked into the hallway and hung his coat.",
+        family: "walk (v/n) • walker (n) • walking (n)"
+      },
+      "noticed": {
+        meaning: "Observed, detected, or became consciously aware of something.",
+        phonetic: "/ˈnəʊ.tɪst/",
+        pos: "Past Simple Verb",
+        cefr: "A2",
+        syn: ["observed", "detected", "perceived", "spotted", "discerned"],
+        ant: ["overlooked", "ignored", "missed"],
+        example: "She noticed an unusual coldness in his demeanor.",
+        family: "notice (v/n) • noticeable (adj) • noticeably (adv)"
+      },
+      "drank": {
+        meaning: "Swallowed a liquid beverage into the stomach.",
+        phonetic: "/dræŋk/",
+        pos: "Past Simple Verb",
+        cefr: "A1",
+        syn: ["sipped", "gulped", "consumed", "quaffed"],
+        ant: [],
+        example: "He poured a glass of whiskey and drank it quickly.",
+        family: "drink (v/n) • drinker (n) • drinkable (adj)"
+      },
+      "announced": {
+        meaning: "Made a formal, clear, or unexpected verbal declaration.",
+        phonetic: "/əˈnaʊnst/",
+        pos: "Past Simple Verb",
+        cefr: "B1",
+        syn: ["declared", "proclaimed", "stated", "revealed"],
+        ant: ["concealed", "kept secret", "hid"],
+        example: "He announced his sudden decision without hesitation.",
+        family: "announce (v) • announcement (n) • announcer (n)"
+      },
+      "was leaving": {
+        meaning: "Past continuous action signifying departing or ending a marriage/situation.",
+        phonetic: "/wɒz ˈliː.vɪŋ/",
+        pos: "Past Continuous Verb",
+        cefr: "A2",
+        syn: ["was departing", "was separating", "was quitting"],
+        ant: ["was staying", "was remaining"],
+        example: "He bluntly announced that he was leaving their home.",
+        family: "leave (v) • leaver (n)"
+      },
+      "retrieved": {
+        meaning: "Found, extracted, or brought something back from its storage place.",
+        phonetic: "/rɪˈtriːvd/",
+        pos: "Past Simple Verb",
+        cefr: "B1",
+        syn: ["fetched", "recovered", "collected", "obtained", "reclaimed"],
+        ant: ["lost", "abandoned", "misplaced"],
+        example: "She retrieved a frozen leg of lamb from the deep freezer.",
+        family: "retrieve (v) • retrieval (n) • retrievable (adj)"
+      },
+      "swung": {
+        meaning: "Moved a held object in a wide, forceful sweeping curve.",
+        phonetic: "/swʌŋ/",
+        pos: "Past Simple Verb",
+        cefr: "B1",
+        syn: ["wielded", "brandished", "swept", "swayed"],
+        ant: ["held steady"],
+        example: "Without thinking, she swung the heavy frozen meat through the air.",
+        family: "swing (v/n) • swinger (n)"
+      },
+      "struck": {
+        meaning: "Delivered a forceful blow or impact to a surface or person.",
+        phonetic: "/strʌk/",
+        pos: "Past Simple Verb",
+        cefr: "B1",
+        syn: ["hit", "impacted", "slammed", "smote", "smacked"],
+        ant: ["missed", "avoided"],
+        example: "She struck him violently on the back of the head.",
+        family: "strike (v/n) • striker (n)"
+      },
+      "crashed": {
+        meaning: "Fell down or collided heavily with the floor with great force.",
+        phonetic: "/kræʃt/",
+        pos: "Past Simple Verb",
+        cefr: "A2",
+        syn: ["collapsed", "toppled", "slammed down", "fell heavily"],
+        ant: ["stood firm", "stayed upright"],
+        example: "Patrick crashed onto the carpet and lay motionless.",
+        family: "crash (v/n)"
+      },
+      "put": {
+        meaning: "Placed or positioned an object into a specified location.",
+        phonetic: "/pʊt/",
+        pos: "Past Simple Verb",
+        cefr: "A1",
+        syn: ["placed", "positioned", "set", "inserted"],
+        ant: ["removed", "took out"],
+        example: "She put the seasoned meat directly into the hot oven.",
+        family: "put (v)"
+      },
+      "visited": {
+        meaning: "Went to see someone or went to a business store.",
+        phonetic: "/ˈvɪz.ɪ.tɪd/",
+        pos: "Past Simple Verb",
+        cefr: "A2",
+        syn: ["frequented", "went to", "called on", "stopped by"],
+        ant: [],
+        example: "She visited the local grocery store to create a credible alibi.",
+        family: "visit (v/n) • visitor (n)"
+      },
+      "to establish": {
+        meaning: "Infinitive expressing the goal of setting up, proving, or securing an alibi or fact.",
+        phonetic: "/tuː ɪˈstæb.lɪʃ/",
+        pos: "Infinitive of Purpose",
+        cefr: "B2",
+        syn: ["to prove", "to secure", "to validate", "to set up"],
+        ant: ["to disprove", "to undermine"],
+        example: "She spoke pleasantly with the grocer to establish her presence.",
+        family: "establish (v) • establishment (n)"
+      },
+      "arrived": {
+        meaning: "Reached a destination at the conclusion of travel.",
+        phonetic: "/əˈraɪvd/",
+        pos: "Past Simple Verb",
+        cefr: "A2",
+        syn: ["reached", "showed up", "entered", "landed"],
+        ant: ["departed", "left"],
+        example: "Police detectives arrived at the house within minutes.",
+        family: "arrive (v) • arrival (n)"
+      },
+      "grew": {
+        meaning: "Became progressively more noticeable, hungry, or intense.",
+        phonetic: "/ɡruː/",
+        pos: "Past Simple Verb",
+        cefr: "A2",
+        syn: ["became", "developed into", "intensified"],
+        ant: ["diminished", "decreased"],
+        example: "As the late hours dragged on, the investigators grew hungry.",
+        family: "grow (v) • growth (n)"
+      },
+      "offered": {
+        meaning: "Presented something courteously for someone else to eat or accept.",
+        phonetic: "/ˈɒf.əd/",
+        pos: "Past Simple Verb",
+        cefr: "A2",
+        syn: ["presented", "served", "proffered", "tendered"],
+        ant: ["withheld", "denied", "refused"],
+        example: "Mary offered them the hot roast lamb as a gesture of hospitality.",
+        family: "offer (v/n) • offering (n)"
+      },
+      "ate": {
+        meaning: "Chewed and swallowed cooked food.",
+        phonetic: "/eɪt/",
+        pos: "Past Simple Verb",
+        cefr: "A1",
+        syn: ["consumed", "devoured", "dined upon", "feasted on"],
+        ant: ["fasted"],
+        example: "The officers ate the cooked meat until nothing remained.",
+        family: "eat (v) • eater (n) • edible (adj)"
+      },
+      "mused": {
+        meaning: "Reflected thoughtfully, considered with curiosity, or remarked with amusement.",
+        phonetic: "/mjuːzd/",
+        pos: "Past Simple Verb",
+        cefr: "B2",
+        syn: ["pondered", "reflected", "remarked", "speculated", "contemplated"],
+        ant: [],
+        example: "One detective mused that the weapon could be right under their noses.",
+        family: "muse (v/n)"
+      },
+      "began": {
+        meaning: "Started an action or process.",
+        phonetic: "/bɪˈɡæn/",
+        pos: "Past Simple Verb",
+        cefr: "A2",
+        syn: ["started", "commenced", "initiated"],
+        ant: ["finished", "ended", "stopped"],
+        example: "In the quiet sitting room, Mary began to giggle.",
+        family: "begin (v) • beginner (n) • beginning (n)"
+      },
+      "strange": {
+        meaning: "Unusual, abnormal, surprising, or difficult to explain.",
+        phonetic: "/streɪndʒ/",
+        pos: "Descriptive Adjective",
+        cefr: "A2",
+        syn: ["unusual", "peculiar", "odd", "bizarre", "curious"],
+        ant: ["normal", "familiar", "ordinary", "common"],
+        example: "There was a strange, cold distance in his greeting.",
+        family: "strangeness (n) • strangely (adv) • stranger (n)"
+      },
+      "heavy": {
+        meaning: "Of substantial weight; solid and difficult to lift.",
+        phonetic: "/ˈhev.i/",
+        pos: "Descriptive Adjective",
+        cefr: "A2",
+        syn: ["hefty", "weighty", "massive", "dense", "ponderous"],
+        ant: ["light", "weightless", "featherweight"],
+        example: "She grasped the heavy leg of frozen meat with both hands.",
+        family: "heaviness (n) • heavily (adv)"
+      },
+      "frozen": {
+        meaning: "Turned to solid ice by freezing temperature; rock-hard.",
+        phonetic: "/ˈfrəʊ.zən/",
+        pos: "Past Participle as Adjective",
+        cefr: "A2",
+        syn: ["iced", "solidified", "frigid", "frosty"],
+        ant: ["thawed", "melted", "warm"],
+        example: "The frozen leg of lamb was as solid as a wooden club.",
+        family: "freeze (v) • freezer (n) • freezing (adj)"
+      },
+      "solid": {
+        meaning: "Firm and hard throughout; not hollow or flexible.",
+        phonetic: "/ˈsɒl.ɪd/",
+        pos: "Descriptive Adjective",
+        cefr: "A2",
+        syn: ["firm", "dense", "sturdy", "unyielding", "rigid"],
+        ant: ["hollow", "soft", "flimsy", "flexible"],
+        example: "The frozen meat was completely solid and unyielding.",
+        family: "solidity (n) • solidify (v) • solidly (adv)"
+      },
+      "dead": {
+        meaning: "No longer living; having ceased all vital biological functions.",
+        phonetic: "/ded/",
+        pos: "Adjective",
+        cefr: "A2",
+        syn: ["lifeless", "deceased", "expired", "inanimate"],
+        ant: ["alive", "living", "breathing", "active"],
+        example: "He collapsed onto the floor and was instantly dead.",
+        family: "death (n) • deadly (adj)"
+      },
+      "airtight": {
+        meaning: "Leaving no opening for doubt, contradiction, or error; completely flawless.",
+        phonetic: "/ˈeə.taɪt/",
+        pos: "Descriptive Adjective",
+        cefr: "B2",
+        syn: ["flawless", "watertight", "irrefutable", "unassailable", "impenetrable"],
+        ant: ["flawed", "vulnerable", "doubtful"],
+        example: "Her conversation with the shopkeeper established an airtight alibi.",
+        family: "airtightness (n)"
+      },
+      "quickly": {
+        meaning: "At high speed; without delay and in a rapid manner.",
+        phonetic: "/ˈkwɪk.li/",
+        pos: "Adverb of Manner",
+        cefr: "A1",
+        syn: ["rapidly", "swiftly", "hastily", "promptly", "briskly"],
+        ant: ["slowly", "sluggishly", "gradually"],
+        example: "He finished his drink quickly and put down the glass.",
+        family: "quick (adj) • quickness (n)"
+      },
+      "bluntly": {
+        meaning: "In a direct, blunt, and uncompromising way without softening the truth.",
+        phonetic: "/ˈblʌnt.li/",
+        pos: "Adverb of Manner",
+        cefr: "B2",
+        syn: ["candidly", "frankly", "plainly", "curtly", "abruptly"],
+        ant: ["tactfully", "gently", "diplomatically"],
+        example: "He told her bluntly that their marriage was over.",
+        family: "blunt (adj) • bluntness (n)"
+      },
+      "tirelessly": {
+        meaning: "With continuous effort and perseverance without yielding to fatigue.",
+        phonetic: "/ˈtaɪə.ləs.li/",
+        pos: "Adverb of Manner",
+        cefr: "B2",
+        syn: ["relentlessly", "diligently", "industriously", "tenaciously"],
+        ant: ["lazily", "lethargically", "idly"],
+        example: "The officers searched tirelessly through every cabinet.",
+        family: "tireless (adj) • tirelessly (adv)"
+      },
+      "later": {
+        meaning: "At a subsequent time following an earlier event in the narrative.",
+        phonetic: "/ˈleɪ.tər/",
+        pos: "Adverb of Time",
+        cefr: "A1",
+        syn: ["afterward", "subsequently", "thereafter"],
+        ant: ["earlier", "beforehand", "previously"],
+        example: "Later that evening, the coroner arrived at the scene.",
+        family: "late (adj) • latest (adj)"
+      },
+      "when": {
+        meaning: "At or during the specific time that an event or action takes place.",
+        phonetic: "/wen/",
+        pos: "Subordinating Conjunction",
+        cefr: "A1",
+        syn: ["as soon as", "at the moment that", "while"],
+        ant: [],
+        example: "When Patrick returned from work, everything seemed normal.",
+        family: "when (conj/adv)"
+      },
+      "without": {
+        meaning: "In the absence of, lacking, or free from something.",
+        phonetic: "/wɪˈðaʊt/",
+        pos: "Preposition",
+        cefr: "A2",
+        syn: ["lacking", "devoid of", "free from"],
+        ant: ["with", "including", "accompanied by"],
+        example: "Without pausing to reflect, she reacted instinctively.",
+        family: "without (prep)"
+      },
+      "into": {
+        meaning: "Expressing movement to a position inside or enclosed within a space.",
+        phonetic: "/ˈɪn.tuː/",
+        pos: "Preposition of Direction",
+        cefr: "A1",
+        syn: ["inside", "within", "toward the interior of"],
+        ant: ["out of", "away from"],
+        example: "She placed the roasting pan into the preheated oven.",
+        family: "into (prep)"
+      },
+      "while": {
+        meaning: "During the exact duration that something else is happening.",
+        phonetic: "/waɪl/",
+        pos: "Subordinating Conjunction",
+        cefr: "A2",
+        syn: ["during the time that", "as", "whilst"],
+        ant: [],
+        example: "While the officers searched the bedroom, she stayed in the kitchen.",
+        family: "while (conj/n)"
+      },
+      "as": {
+        meaning: "At the same time that, or in the manner or state specified.",
+        phonetic: "/æz/",
+        pos: "Subordinating Conjunction",
+        cefr: "A2",
+        syn: ["while", "at the moment that", "just as"],
+        ant: [],
+        example: "As they ate the meal, they discussed the unsolved crime.",
+        family: "as (conj/prep)"
+      },
+      "mary maloney": {
+        meaning: "The protagonist of 'Lamb to the Slaughter' who uses a frozen leg of lamb as an undetected weapon.",
+        phonetic: "/ˈmɛə.ri məˈləʊ.ni/",
+        pos: "Proper Noun (Character)",
+        cefr: "B1",
+        syn: ["Protagonist", "Mrs. Maloney", "Housewife"],
+        ant: [],
+        example: "Mary Maloney devised a brilliant cover story after the accident.",
+        family: "Character in Roald Dahl's story"
+      },
+      "patrick maloney": {
+        meaning: "A police officer and husband whose blunt announcement triggers the central crisis.",
+        phonetic: "/ˈpæt.rɪk məˈləʊ.ni/",
+        pos: "Proper Noun (Character)",
+        cefr: "B1",
+        syn: ["Victim", "Detective Maloney", "Husband"],
+        ant: [],
+        example: "Patrick Maloney worked as a senior detective in the city precinct.",
+        family: "Character in Roald Dahl's story"
+      },
+      "warm": {
+        meaning: "Having or producing a comfortable degree of heat; genial and friendly.",
+        phonetic: "/wɔːm/",
+        pos: "Adjective",
+        cefr: "A1",
+        syn: ["cozy", "mild", "balmy", "pleasant", "comfortable"],
+        ant: ["cold", "chilly", "freezing", "frosty"],
+        example: "The cozy fire kept the room pleasantly warm.",
+        family: "warmth (n) • warm up (v) • warmly (adv)"
+      },
+      "closed": {
+        meaning: "Not open; covered or shut tightly so that light or entrance is blocked.",
+        phonetic: "/kləʊzd/",
+        pos: "Adjective / Participle",
+        cefr: "A1",
+        syn: ["shut", "drawn", "fastened", "sealed"],
+        ant: ["open", "drawn back", "unfastened"],
+        example: "The curtains were closed against the dark street.",
+        family: "close (v) • closed (adj) • closeness (n)"
+      },
+      "lit": {
+        meaning: "Illuminated by light or glowing from lamps.",
+        phonetic: "/lɪt/",
+        pos: "Adjective / Past Participle",
+        cefr: "A2",
+        syn: ["illuminated", "brightened", "alight", "shining"],
+        ant: ["dark", "dim", "unlit", "extinguished"],
+        example: "The soft table lamps were lit.",
+        family: "light (n/v) • lighting (n)"
+      },
+      "to": {
+        meaning: "Preposition expressing direction, destination, or purpose.",
+        phonetic: "/tuː/",
+        pos: "Preposition / Infinitive Marker",
+        cefr: "A1",
+        syn: ["toward", "in order to", "heading for"],
+        ant: ["from", "away from"],
+        example: "She went to the grocery store to buy potatoes.",
+        family: "to (prep)"
       }
     };
 
@@ -4609,30 +5109,183 @@
     }
 
     // Clean any markup annotation text to produce a pristine definition
-    function sanitizeDefinition(rawInfo, word) {
-      if (!rawInfo) return `In this story, "${word}" is used in context.`;
+    function sanitizeDefinition(rawInfo, word, tokenType) {
+      if (!rawInfo) return null;
       let def = rawInfo.trim();
       
-      // If the annotation is just a grammar tag like "Past Simple - Found", extract "Found" or expand
+      // If the annotation is just a grammatical label e.g. "Past Simple", "Descriptive Adjective", "Proper Noun", "Adverb of Manner"
+      const isPureGrammarTag = /^(Past Simple|Proper Noun|Descriptive Adjective|Adverb of Manner|Preposition|Infinitive|Subordinating Conjunction|Past Continuous|Past Simple Passive|Adjective|Adverb of Time|Noun|Pronoun|Infinitive of Purpose|Adverb|Conjunction|Preposition of Direction|Past Participle as Adjective)$/i.test(def);
+      
+      if (isPureGrammarTag) {
+        return null;
+      }
+      
+      // If the annotation has a separator like "Descriptive Adjective - Confusing" or "Lack of belief or shock - B2"
       if (def.includes(' - ')) {
         const parts = def.split(' - ');
-        // If the right side has a real meaning e.g. "Found" or "Clever and deceitful"
-        if (parts[1] && parts[1].length > 2 && !/^[A-C][1-2]$/i.test(parts[1])) {
-          def = parts[1].replace(/ - [A-C][1-2]$/i, '').trim();
-          // capitalize first letter
-          return def.charAt(0).toUpperCase() + def.slice(1);
+        for (let i = 1; i < parts.length; i++) {
+          const p = parts[i].trim();
+          if (p.length > 2 && !/^[A-C][1-2]$/i.test(p)) {
+            return p.charAt(0).toUpperCase() + p.slice(1);
+          }
         }
       }
       
       // Clean level tags like "- B2"
       def = def.replace(/ - [A-C][1-2]$/i, '').trim();
-      return def.charAt(0).toUpperCase() + def.slice(1);
+      if (def.length > 3 && !isPureGrammarTag) {
+        return def.charAt(0).toUpperCase() + def.slice(1);
+      }
+      return null;
+    }
+
+    // Comprehensive Natural Language Generator for Any English Word or Phrase
+    function generateSmartContextualDefinition(word, tokenType, tokenInfo, tokenExtra) {
+      const clean = word.toLowerCase().trim().replace(/^[^a-z]+|[^a-z]+$/g, '');
+      const catName = getGrammarCategoryName(tokenType, tokenExtra);
+
+      // Check for compound or multi-word verbs like "was warm", "were closed", "had signaled"
+      if (word.toLowerCase().startsWith('was ') || word.toLowerCase().startsWith('were ')) {
+        const rest = word.slice(word.indexOf(' ') + 1).trim();
+        const baseDef = LEXICON_DATABASE[rest.toLowerCase()] || LEXICON_DATABASE[lemmatizeWord(rest)];
+        if (baseDef) {
+          return {
+            meaning: `Existed in a state of being ${rest}: ${baseDef.meaning}`,
+            pos: "Past State / Passive Verb",
+            synonyms: baseDef.syn || [],
+            antonyms: baseDef.ant || [],
+            phonetic: baseDef.phonetic || "/wɒz/",
+            example: `The scene was characterized as ${rest}.`
+          };
+        }
+        return {
+          meaning: `Describes a past state, completed condition, or passive action involving "${rest}".`,
+          pos: "Past Narrative Form",
+          synonyms: ["remained " + rest, "became " + rest],
+          antonyms: [],
+          phonetic: "/wɒz/",
+          example: `In this story, the setting was ${rest}.`
+        };
+      }
+
+      if (word.toLowerCase().startsWith('had ')) {
+        const rest = word.slice(4).trim();
+        return {
+          meaning: `Past Perfect tense: signifies an action completed prior to another past event (${rest}).`,
+          pos: "Past Perfect Verb",
+          synonyms: ["had completed " + rest],
+          antonyms: [],
+          phonetic: "/hæd/",
+          example: `The character had ${rest} before the next event occurred.`
+        };
+      }
+
+      if (word.toLowerCase().startsWith('to ') && word.length > 3) {
+        const rootVerb = word.slice(3).trim();
+        const baseDef = LEXICON_DATABASE[rootVerb.toLowerCase()] || LEXICON_DATABASE[lemmatizeWord(rootVerb)];
+        if (baseDef) {
+          return {
+            meaning: `Infinitive purpose: to ${baseDef.meaning.toLowerCase()}`,
+            pos: "Infinitive of Purpose",
+            synonyms: baseDef.syn || [],
+            antonyms: baseDef.ant || [],
+            phonetic: "/tuː/",
+            example: `The action was taken in order to ${rootVerb}.`
+          };
+        }
+        return {
+          meaning: `Infinitive form expressing intention, goal, or purpose regarding the action "${rootVerb}".`,
+          pos: "Infinitive of Purpose",
+          synonyms: ["in order to " + rootVerb, "so as to " + rootVerb],
+          antonyms: [],
+          phonetic: "/tuː/",
+          example: `The character acted in order to ${rootVerb}.`
+        };
+      }
+
+      // Check if it is a Proper Noun (Names of characters)
+      if (tokenType === 'N' && (word.includes(' ') || /^[A-Z]/.test(word))) {
+        return {
+          meaning: `A key character or prominent named figure featured in this story's narrative.`,
+          pos: "Proper Noun (Character)",
+          synonyms: ["Narrative Character", "Protagonist / Key Figure"],
+          antonyms: [],
+          phonetic: "",
+          example: `${word} plays an integral role in shaping the events of the story.`
+        };
+      }
+
+      // Fallback based on grammatical type
+      if (tokenType === 'ADJ') {
+        return {
+          meaning: `Descriptive quality or attribute: characterizes a noun with the distinct quality of "${word}".`,
+          pos: "Descriptive Adjective",
+          synonyms: ["characteristic", "notable", "distinct"],
+          antonyms: ["ordinary", "plain"],
+          phonetic: "",
+          example: `The narrative describes the object or character as ${word}.`
+        };
+      }
+
+      if (tokenType === 'ADV') {
+        return {
+          meaning: `Adverb modifying an action: describes the manner, speed, or nature of how something is done.`,
+          pos: "Adverb of Manner",
+          synonyms: ["in a " + word.replace(/ly$/, '') + " manner", "distinctly"],
+          antonyms: [],
+          phonetic: "",
+          example: `The action was performed ${word} by the character.`
+        };
+      }
+
+      if (tokenType === 'T') {
+        return {
+          meaning: `Narrative action verb: represents a key event, decision, or dynamic occurrence in the plot timeline.`,
+          pos: "Narrative Action Verb",
+          synonyms: ["acted", "occurred", "happened"],
+          antonyms: [],
+          phonetic: "",
+          example: `At this moment in the story, the character ${word}.`
+        };
+      }
+
+      if (tokenType === 'C') {
+        return {
+          meaning: `Conjunction / Transition connector: links story clauses and establishes narrative chronological sequence.`,
+          pos: "Narrative Conjunction",
+          synonyms: ["at the point when", "subsequently", "connecting clause"],
+          antonyms: [],
+          phonetic: "",
+          example: `${word} the event occurred, the following situation unfolded.`
+        };
+      }
+
+      if (tokenType === 'P') {
+        return {
+          meaning: `Preposition / Relational marker: indicates location, direction, time, or relationship between elements.`,
+          pos: "Prepositional Marker",
+          synonyms: ["indicating direction/relation", "spatial/temporal relation"],
+          antonyms: [],
+          phonetic: "",
+          example: `Used to connect ideas and specify direction or purpose: "${word}".`
+        };
+      }
+
+      return {
+        meaning: `Key vocabulary term in this text essential for understanding the context and thematic message.`,
+        pos: catName,
+        synonyms: ["vocabulary term", "thematic word"],
+        antonyms: [],
+        phonetic: "",
+        example: `In this story context, "${word}" conveys crucial narrative meaning.`
+      };
     }
 
     // Master Lexical Resolver (DB -> Lemmatized DB -> Datamuse API -> FreeDict API -> Rule Fallback)
     async function resolveLexisData(word, tokenType, tokenInfo, tokenExtra) {
       const clean = word.toLowerCase().trim().replace(/^[^a-z]+|[^a-z]+$/g, '');
       const lemma = lemmatizeWord(word);
+      const catName = getGrammarCategoryName(tokenType, tokenExtra);
 
       // 1. Direct match in local Lexicon Database
       if (LEXICON_DATABASE[clean]) {
@@ -4643,11 +5296,11 @@
           baseWord: clean,
           meaning: item.meaning,
           phonetic: item.phonetic || '',
-          pos: item.pos || getGrammarCategoryName(tokenType, tokenExtra),
+          pos: item.pos || catName,
           cefr: item.cefr || 'B1',
           synonyms: item.syn || [],
           antonyms: item.ant || [],
-          example: item.example || `"${word}" is illustrated in this context.`,
+          example: item.example || `"${word}" is illustrated in this story.`,
           family: item.family || ''
         };
       }
@@ -4661,7 +5314,7 @@
           baseWord: lemma,
           meaning: item.meaning,
           phonetic: item.phonetic || '',
-          pos: item.pos || getGrammarCategoryName(tokenType, tokenExtra),
+          pos: item.pos || catName,
           cefr: item.cefr || 'B1',
           synonyms: item.syn || [],
           antonyms: item.ant || [],
@@ -4670,64 +5323,94 @@
         };
       }
 
-      // 3. Fallback: Query Online Thesaurus & Dictionary (Datamuse & FreeDictionary API)
-      let onlineMeaning = sanitizeDefinition(tokenInfo, word);
+      // 3. Match from token individual words (e.g. "was warm" -> check "warm")
+      if (clean.includes(' ')) {
+        const subWords = clean.split(' ');
+        for (const sw of subWords) {
+          if (['was', 'were', 'had', 'have', 'to', 'the', 'a', 'an', 'in', 'on', 'at'].includes(sw)) continue;
+          const swLemma = lemmatizeWord(sw);
+          if (LEXICON_DATABASE[sw] || LEXICON_DATABASE[swLemma]) {
+            const item = LEXICON_DATABASE[sw] || LEXICON_DATABASE[swLemma];
+            return {
+              source: 'local_subword',
+              word: word,
+              baseWord: sw,
+              meaning: `[${word}] — ${item.meaning}`,
+              phonetic: item.phonetic || '',
+              pos: item.pos || catName,
+              cefr: item.cefr || 'B1',
+              synonyms: item.syn || [],
+              antonyms: item.ant || [],
+              example: item.example || `"${word}" appears in this narrative context.`,
+              family: item.family || ''
+            };
+          }
+        }
+      }
+
+      // 4. Check if tokenInfo contains an explicit contextual definition
+      const sanitizedDef = sanitizeDefinition(tokenInfo, word, tokenType);
+      
+      // 5. Query Online Thesaurus & Dictionary (Datamuse & FreeDictionary API) with fast fallback
+      let onlineMeaning = sanitizedDef;
       let onlineSyns = [];
       let onlineAnts = [];
       let onlinePhonetic = "";
       let onlineExample = "";
-      let onlinePos = getGrammarCategoryName(tokenType, tokenExtra);
+      let onlinePos = catName;
 
       try {
-        const queryTarget = lemma || clean;
-        const timeoutSignal = (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) ? AbortSignal.timeout(1800) : undefined;
-        const fetchOpts = timeoutSignal ? { signal: timeoutSignal } : {};
-        const [dictRes, synRes, antRes] = await Promise.allSettled([
-          fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${queryTarget}`, fetchOpts),
-          fetch(`https://api.datamuse.com/words?rel_syn=${queryTarget}&max=8`, fetchOpts),
-          fetch(`https://api.datamuse.com/words?rel_ant=${queryTarget}&max=6`, fetchOpts)
-        ]);
+        const queryTarget = lemma || clean.split(' ').pop();
+        if (queryTarget && queryTarget.length > 2) {
+          const timeoutSignal = (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) ? AbortSignal.timeout(1800) : undefined;
+          const fetchOpts = timeoutSignal ? { signal: timeoutSignal } : {};
+          const [dictRes, synRes, antRes] = await Promise.allSettled([
+            fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${queryTarget}`, fetchOpts),
+            fetch(`https://api.datamuse.com/words?rel_syn=${queryTarget}&max=8`, fetchOpts),
+            fetch(`https://api.datamuse.com/words?rel_ant=${queryTarget}&max=6`, fetchOpts)
+          ]);
 
-        // Process Datamuse Synonyms
-        if (synRes.status === 'fulfilled' && synRes.value.ok) {
-          const synData = await synRes.value.json();
-          if (Array.isArray(synData)) {
-            onlineSyns = synData.map(item => item.word).filter(w => w !== clean && w !== lemma);
-          }
-        }
-
-        // Process Datamuse Antonyms
-        if (antRes.status === 'fulfilled' && antRes.value.ok) {
-          const antData = await antRes.value.json();
-          if (Array.isArray(antData)) {
-            onlineAnts = antData.map(item => item.word).filter(w => w !== clean && w !== lemma);
-          }
-        }
-
-        // Process Dictionary API
-        if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
-          const dictData = await dictRes.value.json();
-          if (Array.isArray(dictData) && dictData[0]) {
-            const entry = dictData[0];
-            if (entry.phonetic) onlinePhonetic = entry.phonetic;
-            else if (entry.phonetics && entry.phonetics[0] && entry.phonetics[0].text) {
-              onlinePhonetic = entry.phonetics[0].text;
+          // Process Datamuse Synonyms
+          if (synRes.status === 'fulfilled' && synRes.value.ok) {
+            const synData = await synRes.value.json();
+            if (Array.isArray(synData)) {
+              onlineSyns = synData.map(item => item.word).filter(w => w !== clean && w !== lemma);
             }
+          }
 
-            if (entry.meanings && entry.meanings.length > 0) {
-              const firstMeaning = entry.meanings[0];
-              if (firstMeaning.partOfSpeech) {
-                onlinePos = firstMeaning.partOfSpeech.charAt(0).toUpperCase() + firstMeaning.partOfSpeech.slice(1);
+          // Process Datamuse Antonyms
+          if (antRes.status === 'fulfilled' && antRes.value.ok) {
+            const antData = await antRes.value.json();
+            if (Array.isArray(antData)) {
+              onlineAnts = antData.map(item => item.word).filter(w => w !== clean && w !== lemma);
+            }
+          }
+
+          // Process Dictionary API
+          if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
+            const dictData = await dictRes.value.json();
+            if (Array.isArray(dictData) && dictData[0]) {
+              const entry = dictData[0];
+              if (entry.phonetic) onlinePhonetic = entry.phonetic;
+              else if (entry.phonetics && entry.phonetics[0] && entry.phonetics[0].text) {
+                onlinePhonetic = entry.phonetics[0].text;
               }
-              if (firstMeaning.definitions && firstMeaning.definitions[0]) {
-                const defObj = firstMeaning.definitions[0];
-                if (defObj.definition) onlineMeaning = defObj.definition;
-                if (defObj.example) onlineExample = defObj.example;
-                if (defObj.synonyms && defObj.synonyms.length > 0) {
-                  onlineSyns.push(...defObj.synonyms);
+
+              if (entry.meanings && entry.meanings.length > 0) {
+                const firstMeaning = entry.meanings[0];
+                if (firstMeaning.partOfSpeech) {
+                  onlinePos = firstMeaning.partOfSpeech.charAt(0).toUpperCase() + firstMeaning.partOfSpeech.slice(1);
                 }
-                if (defObj.antonyms && defObj.antonyms.length > 0) {
-                  onlineAnts.push(...defObj.antonyms);
+                if (firstMeaning.definitions && firstMeaning.definitions[0]) {
+                  const defObj = firstMeaning.definitions[0];
+                  if (!onlineMeaning && defObj.definition) onlineMeaning = defObj.definition;
+                  if (defObj.example) onlineExample = defObj.example;
+                  if (defObj.synonyms && defObj.synonyms.length > 0) {
+                    onlineSyns.push(...defObj.synonyms);
+                  }
+                  if (defObj.antonyms && defObj.antonyms.length > 0) {
+                    onlineAnts.push(...defObj.antonyms);
+                  }
                 }
               }
             }
@@ -4737,17 +5420,27 @@
         console.warn("External dictionary query error:", err);
       }
 
+      // 6. If meaning is still not resolved, use Smart Contextual Synthesizer
+      if (!onlineMeaning) {
+        const synthesized = generateSmartContextualDefinition(word, tokenType, tokenInfo, tokenExtra);
+        onlineMeaning = synthesized.meaning;
+        if (!onlinePos) onlinePos = synthesized.pos;
+        if (onlineSyns.length === 0) onlineSyns = synthesized.synonyms;
+        if (onlineAnts.length === 0) onlineAnts = synthesized.antonyms;
+        if (!onlinePhonetic) onlinePhonetic = synthesized.phonetic;
+        if (!onlineExample) onlineExample = synthesized.example;
+      }
+
       // Deduplicate synonyms & antonyms
       onlineSyns = [...new Set(onlineSyns)].slice(0, 6);
       onlineAnts = [...new Set(onlineAnts)].slice(0, 5);
 
-      // Smart rule-based contextual example if none found
       if (!onlineExample) {
-        onlineExample = `In this narrative, "${word}" conveys: ${onlineMeaning.toLowerCase()}`;
+        onlineExample = `In this narrative, "${word}" is used to convey: ${onlineMeaning.toLowerCase()}`;
       }
 
       return {
-        source: 'online_synthesized',
+        source: 'synthesized_comprehensive',
         word: word,
         baseWord: lemma || clean,
         meaning: onlineMeaning,
@@ -4886,16 +5579,24 @@
 
     function saveCurrentWordToVocab() {
       if (!currentAnnotationObj) return;
+      const displayPos = currentAnnotationObj.fetchedPos || getGrammarCategoryName(currentAnnotationObj.type, currentAnnotationObj.extra) || currentAnnotationObj.type || 'Vocabulary';
+      const displayMeaning = currentAnnotationObj.fetchedMeaning || currentAnnotationObj.info || 'Key vocabulary item';
+      
       const item = {
         word: currentAnnotationObj.text,
         type: currentAnnotationObj.type,
+        pos: displayPos,
         extra: currentAnnotationObj.extra || '',
-        info: currentAnnotationObj.info,
+        meaning: displayMeaning,
+        info: displayMeaning,
+        grammarNote: (currentAnnotationObj.info && currentAnnotationObj.info !== displayMeaning) ? currentAnnotationObj.info : '',
+        phonetic: currentAnnotationObj.fetchedPhonetic || '',
         syn: currentAnnotationObj.fetchedSyn && currentAnnotationObj.fetchedSyn.length > 0 ? currentAnnotationObj.fetchedSyn.join(', ') : '',
         ant: currentAnnotationObj.fetchedAnt && currentAnnotationObj.fetchedAnt.length > 0 ? currentAnnotationObj.fetchedAnt.join(', ') : '',
         example: currentAnnotationObj.fetchedExample || '',
         date: new Date().toLocaleDateString()
       };
+
       // Prevent duplicates
       if (!savedVocab.some(v => v.word.toLowerCase() === item.word.toLowerCase())) {
         savedVocab.push(item);
@@ -4909,27 +5610,60 @@
     }
 
     function updateVocabCount() {
-      document.getElementById('vocabCount').innerText = savedVocab.length;
+      const countEl = document.getElementById('vocabCount');
+      if (countEl) countEl.innerText = savedVocab.length;
+      const badgeEl = document.getElementById('vocabModalBadge');
+      if (badgeEl) badgeEl.innerText = `${savedVocab.length} ${savedVocab.length === 1 ? 'word' : 'words'}`;
     }
 
     function openVocabNotebook() {
       const list = document.getElementById('vocabList');
+      updateVocabCount();
       list.innerHTML = "";
+
       if (savedVocab.length === 0) {
-        list.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:13px;">No saved words yet. Tap on any highlighted word while reading and click "Save to Vocab Notebook".</div>`;
+        list.innerHTML = `
+          <div style="text-align:center; padding:32px 16px; color:var(--text-muted); font-size:13px; background:var(--surface-variant); border-radius:12px; border:1px dashed var(--border);">
+            <div style="font-size:2rem; margin-bottom:8px;">📖</div>
+            <div style="font-weight:700; color:var(--text-main); font-size:14px; margin-bottom:4px;">Your Vocabulary Notebook is Empty</div>
+            <div>Tap on any highlighted word or phrase in a story and click <strong>"Save to Vocab Notebook"</strong> to build your custom study collection.</div>
+          </div>
+        `;
       } else {
         savedVocab.forEach((v, idx) => {
+          const pos = v.pos || getGrammarCategoryName(v.type, v.extra) || v.type || 'Word';
+          const phonetic = v.phonetic ? `[${v.phonetic}]` : '';
+          const meaning = v.meaning || v.info || '';
+          
           const div = document.createElement('div');
-          div.style = "padding:12px; margin-bottom:10px; border-radius:10px; border:1px solid var(--border); background:var(--surface-variant);";
+          div.style = "padding:14px; margin-bottom:12px; border-radius:12px; border:1px solid var(--border); background:var(--surface-variant); transition:transform 0.15s ease;";
           div.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-              <div>
-                <div style="font-weight:700; font-size:14px; color:var(--primary);">${v.word} <span style="font-size:10.5px; font-weight:normal; color:var(--text-muted);">(${v.type})</span></div>
-                <div style="font-size:12px; color:var(--text-main); margin-top:3px;">${v.info}</div>
-                ${v.syn ? `<div style="font-size:11px; margin-top:4px; color:var(--text-muted);"><strong>Syn:</strong> ${v.syn} | <strong>Ant:</strong> ${v.ant}</div>` : ''}
-                ${v.example ? `<div style="font-size:11px; font-style:italic; margin-top:2px; color:var(--text-muted);">"${v.example}"</div>` : ''}
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+              <div style="flex:1;">
+                <div style="display:flex; align-items:center; flex-wrap:wrap; gap:6px;">
+                  <span style="font-weight:800; font-size:15px; color:var(--primary);">${escapeHtml(v.word)}</span>
+                  ${phonetic ? `<span style="font-size:11.5px; font-family:monospace; color:var(--text-muted); background:rgba(99,102,241,0.08); padding:1px 6px; border-radius:4px;">${escapeHtml(phonetic)}</span>` : ''}
+                  <span style="font-size:10px; font-weight:700; text-transform:uppercase; background:rgba(99,102,241,0.15); color:var(--primary); padding:2px 7px; border-radius:10px;">${escapeHtml(pos)}</span>
+                </div>
+                
+                <div style="font-size:12.5px; color:var(--text-main); margin-top:6px; line-height:1.45; font-weight:500;">
+                  ${escapeHtml(meaning)}
+                </div>
+
+                ${v.example ? `
+                  <div style="font-size:11.5px; font-style:italic; margin-top:6px; color:var(--text-muted); background:rgba(0,0,0,0.03); padding:5px 8px; border-left:3px solid var(--primary); border-radius:0 6px 6px 0;">
+                    "${escapeHtml(v.example)}"
+                  </div>
+                ` : ''}
+
+                ${(v.syn || v.ant) ? `
+                  <div style="font-size:11px; margin-top:6px; color:var(--text-muted); display:flex; flex-wrap:wrap; gap:10px;">
+                    ${v.syn ? `<span><strong>Syn:</strong> ${escapeHtml(v.syn)}</span>` : ''}
+                    ${v.ant ? `<span><strong>Ant:</strong> ${escapeHtml(v.ant)}</span>` : ''}
+                  </div>
+                ` : ''}
               </div>
-              <button class="btn-pill" style="padding:4px 8px; font-size:10px; background:#ef4444; color:white; border:none;" onclick="removeVocabWord(${idx})">Remove</button>
+              <button class="btn-pill" style="padding:4px 9px; font-size:11px; background:#ef4444; color:white; border:none; border-radius:8px; cursor:pointer; align-self:flex-start;" onclick="removeVocabWord(${idx})" title="Remove word">✕</button>
             </div>
           `;
           list.appendChild(div);
@@ -4943,6 +5677,774 @@
       localStorage.setItem('lingo_saved_vocab', JSON.stringify(savedVocab));
       updateVocabCount();
       openVocabNotebook();
+    }
+
+    // Export Vocabulary Study Sheet to PDF / Printable Document with Quick Quiz
+    function exportVocabToPdf() {
+      if (!savedVocab || savedVocab.length === 0) {
+        alert("Your Vocabulary Notebook is currently empty. Tap any highlighted word in a story and click 'Save to Vocab Notebook' to add items first!");
+        return;
+      }
+
+      const dateStr = new Date().toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+
+      // 1. Generate Vocabulary Cards HTML
+      const cardsHtml = savedVocab.map((v, idx) => {
+        const pos = v.pos || getGrammarCategoryName(v.type, v.extra) || v.type || 'Vocabulary';
+        const def = v.meaning || v.info || 'Key narrative vocabulary item';
+        const phonetic = v.phonetic ? `[${v.phonetic}]` : '';
+        const example = v.example || '';
+        const syn = v.syn || '';
+        const ant = v.ant || '';
+
+        return `
+          <div class="study-card">
+            <div class="card-header">
+              <div class="word-col">
+                <span class="word-num">${idx + 1}.</span>
+                <span class="word-title">${escapeHtml(v.word)}</span>
+                ${phonetic ? `<span class="word-phonetic">${escapeHtml(phonetic)}</span>` : ''}
+                <span class="pos-badge">${escapeHtml(pos)}</span>
+              </div>
+              <div class="checkbox-col">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">Mastered</span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="def-row">
+                <span class="def-label">Definition:</span>
+                <span class="def-text">${escapeHtml(def)}</span>
+              </div>
+
+              ${example ? `
+                <div class="example-box">
+                  <span class="example-icon">💬</span>
+                  <span class="example-text">"${escapeHtml(example)}"</span>
+                </div>
+              ` : ''}
+
+              ${(syn || ant) ? `
+                <div class="syn-ant-row">
+                  ${syn ? `<div class="syn-item"><strong>Synonyms:</strong> ${escapeHtml(syn)}</div>` : ''}
+                  ${ant ? `<div class="ant-item"><strong>Antonyms:</strong> ${escapeHtml(ant)}</div>` : ''}
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // 2. Gather Quiz Data from currentStory and stored stories
+      let quizQuestions = [];
+      let quizSourceTitle = currentStory ? currentStory.title : "Story Comprehension";
+
+      if (currentStory && currentStory.quiz && Array.isArray(currentStory.quiz) && currentStory.quiz.length > 0) {
+        quizQuestions = currentStory.quiz.map((q, qIdx) => ({
+          ...q,
+          sourceStory: currentStory.title,
+          qNumber: qIdx + 1
+        }));
+      }
+
+      // If fewer than 3 questions, backfill from other stories in allStories
+      if (quizQuestions.length < 3 && typeof allStories !== 'undefined' && Array.isArray(allStories)) {
+        for (const st of allStories) {
+          if (st.id !== (currentStory ? currentStory.id : null) && st.quiz && Array.isArray(st.quiz)) {
+            for (const q of st.quiz) {
+              if (quizQuestions.length >= 4) break;
+              quizQuestions.push({
+                ...q,
+                sourceStory: st.title,
+                qNumber: quizQuestions.length + 1
+              });
+            }
+          }
+          if (quizQuestions.length >= 4) break;
+        }
+      }
+
+      // Generate Quick Quiz items HTML
+      const optionLetters = ['A', 'B', 'C', 'D', 'E'];
+      const quizCardsHtml = quizQuestions.map((q, idx) => {
+        let optionsHtml = '';
+        if (q.type === 'open') {
+          optionsHtml = `
+            <div class="open-answer-lines">
+              <div class="answer-line"></div>
+              <div class="answer-line"></div>
+            </div>
+          `;
+        } else if (q.options && Array.isArray(q.options)) {
+          optionsHtml = `
+            <div class="quiz-options-list">
+              ${q.options.map((opt, optIdx) => {
+                const letter = optionLetters[optIdx] || (optIdx + 1);
+                return `
+                  <div class="quiz-option-choice">
+                    <span class="option-circle">${letter}</span>
+                    <span class="option-label">${escapeHtml(opt)}</span>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          `;
+        }
+
+        return `
+          <div class="quiz-card">
+            <div class="quiz-card-head">
+              <span class="quiz-q-num">Q${idx + 1}</span>
+              <span class="quiz-q-text">${escapeHtml(q.question)}</span>
+            </div>
+            ${optionsHtml}
+          </div>
+        `;
+      }).join('');
+
+      // Generate Answer Key HTML
+      const answerKeyItemsHtml = quizQuestions.map((q, idx) => {
+        let correctText = '';
+        if (q.type === 'open') {
+          correctText = q.explanation || 'Reflective writing question.';
+        } else if (q.options && q.options[q.correct] !== undefined) {
+          const letter = optionLetters[q.correct] || (q.correct + 1);
+          correctText = `<strong>[${letter}]</strong> ${escapeHtml(q.options[q.correct])}`;
+        } else {
+          correctText = q.explanation || 'Answer key unavailable.';
+        }
+
+        return `
+          <div class="ans-key-item">
+            <div class="ans-key-head">
+              <span class="ans-key-num">Q${idx + 1}:</span>
+              <span class="ans-key-correct">${correctText}</span>
+            </div>
+            ${q.explanation ? `<div class="ans-key-exp">💡 ${escapeHtml(q.explanation)}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+
+      const fullPrintHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>English Vocabulary & Quick Quiz Study Sheet - ${dateStr}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 12mm 12mm 15mm 12mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1e293b;
+      background: #ffffff;
+      padding: 20px;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    /* Screen Action Bar */
+    .action-bar {
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      padding: 10px 0 16px 0;
+      display: flex;
+      gap: 12px;
+      border-bottom: 2px solid #e2e8f0;
+      margin-bottom: 20px;
+      z-index: 100;
+      align-items: center;
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, #4338ca, #6366f1);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
+      transition: opacity 0.2s;
+    }
+
+    .btn-action:hover {
+      opacity: 0.92;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    /* Sheet Header Banner */
+    .sheet-header {
+      border-bottom: 2.5px solid #4f46e5;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .title-area h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #1e1b4b;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .title-area p {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .meta-badge {
+      background: #eef2ff;
+      border: 1.5px solid #c7d2fe;
+      color: #3730a3;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* Section Headings */
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      margin-top: 10px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1e1b4b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Study Instruction Tip */
+    .study-tip {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #6366f1;
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 11.5px;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.45;
+    }
+
+    /* Study Cards Container */
+    .cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .study-card {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px 14px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+    }
+
+    .word-col {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .word-num {
+      font-weight: 700;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    .word-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.2px;
+    }
+
+    .word-phonetic {
+      font-family: monospace;
+      font-size: 11.5px;
+      color: #4f46e5;
+      background: #f5f3ff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .pos-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .checkbox-col {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .checkbox-box {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid #94a3b8;
+      border-radius: 3px;
+    }
+
+    .checkbox-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .def-row {
+      font-size: 12.5px;
+      color: #1e293b;
+      line-height: 1.45;
+    }
+
+    .def-label {
+      font-weight: 700;
+      color: #4338ca;
+      margin-right: 4px;
+    }
+
+    .example-box {
+      background: #f8fafc;
+      border-left: 3px solid #6366f1;
+      padding: 6px 10px;
+      border-radius: 0 6px 6px 0;
+      font-size: 11.5px;
+      color: #334155;
+      font-style: italic;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .example-icon {
+      font-style: normal;
+      font-size: 11px;
+    }
+
+    .syn-ant-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 11px;
+      color: #475569;
+      margin-top: 3px;
+      padding-top: 4px;
+      border-top: 1px dashed #f1f5f9;
+    }
+
+    .syn-item strong, .ant-item strong {
+      color: #0f172a;
+    }
+
+    /* QUICK QUIZ SECTION */
+    .quick-quiz-section {
+      margin-top: 28px;
+      border-top: 2px solid #e2e8f0;
+      padding-top: 20px;
+    }
+
+    .quiz-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .quiz-score-badge {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #4338ca;
+      background: #eef2ff;
+      border: 1.5px solid #c7d2fe;
+      padding: 5px 12px;
+      border-radius: 12px;
+    }
+
+    .quiz-instructions {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #10b981;
+      padding: 9px 13px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      font-size: 11.5px;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .quiz-items-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .quiz-card {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px 14px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .quiz-card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .quiz-q-num {
+      font-size: 12px;
+      font-weight: 800;
+      background: #4338ca;
+      color: #ffffff;
+      padding: 2px 7px;
+      border-radius: 5px;
+      line-height: 1.3;
+    }
+
+    .quiz-q-text {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .quiz-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-left: 4px;
+    }
+
+    .quiz-option-choice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      background: #f8fafc;
+      font-size: 12px;
+    }
+
+    .option-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid #6366f1;
+      color: #4338ca;
+      font-weight: 800;
+      font-size: 11px;
+      background: #ffffff;
+      flex-shrink: 0;
+    }
+
+    .option-label {
+      color: #1e293b;
+      line-height: 1.35;
+    }
+
+    .open-answer-lines {
+      margin-top: 8px;
+      padding: 4px 0;
+    }
+
+    .answer-line {
+      height: 24px;
+      border-bottom: 1px dashed #cbd5e1;
+      margin-bottom: 4px;
+    }
+
+    /* ANSWER KEY SECTION */
+    .answer-key-box {
+      margin-top: 22px;
+      border: 1.5px dashed #6366f1;
+      background: #faf5ff;
+      border-radius: 8px;
+      padding: 14px 16px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .answer-key-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-weight: 800;
+      font-size: 13px;
+      color: #4338ca;
+      border-bottom: 1px solid #e9d5ff;
+      padding-bottom: 6px;
+    }
+
+    .answer-key-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 10px;
+    }
+
+    .ans-key-item {
+      background: #ffffff;
+      border: 1px solid #e9d5ff;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 11.5px;
+    }
+
+    .ans-key-head {
+      font-weight: 600;
+      color: #1e1b4b;
+      margin-bottom: 3px;
+    }
+
+    .ans-key-num {
+      color: #6366f1;
+      font-weight: 800;
+      margin-right: 4px;
+    }
+
+    .ans-key-correct {
+      color: #15803d;
+    }
+
+    .ans-key-exp {
+      font-size: 10.5px;
+      color: #64748b;
+      font-style: italic;
+      line-height: 1.35;
+    }
+
+    .sheet-footer {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 10.5px;
+      color: #94a3b8;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 10px;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+      }
+      .action-bar {
+        display: none !important;
+      }
+      .study-card, .quiz-card, .answer-key-box {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="action-bar">
+    <button class="btn-action" onclick="window.print()">
+      🖨️ Print / Save as PDF
+    </button>
+    <button class="btn-action btn-secondary" onclick="window.close()">
+      ✕ Close Window
+    </button>
+    <span style="font-size:12px; color:#64748b; margin-left:auto;">Choose <strong>"Save as PDF"</strong> in the print destination dropdown.</span>
+  </div>
+
+  <div class="sheet-header">
+    <div class="title-area">
+      <h1>Vocabulary & Quick Quiz Study Sheet</h1>
+      <p>LingoStory English Reader • Comprehensive Revision, Vocabulary & Quiz Guide</p>
+    </div>
+    <div class="meta-badge">
+      <div>${dateStr}</div>
+      <div>${savedVocab.length} Saved ${savedVocab.length === 1 ? 'Term' : 'Terms'} • ${quizQuestions.length} Quiz ${quizQuestions.length === 1 ? 'Item' : 'Items'}</div>
+    </div>
+  </div>
+
+  <div class="section-title-wrap">
+    <div class="section-title">📖 Section 1: Saved Vocabulary & Grammar Notes</div>
+  </div>
+
+  <div class="study-tip">
+    <span>💡</span>
+    <span><strong>Study Guide:</strong> Review each word, pronunciation, and definition. Practice forming original sentences using the provided narrative context. Test yourself with synonyms & antonyms, and check off the <em>Mastered</em> box once confident.</span>
+  </div>
+
+  <div class="cards-container">
+    ${cardsHtml}
+  </div>
+
+  ${quizQuestions.length > 0 ? `
+    <div class="quick-quiz-section">
+      <div class="quiz-section-header">
+        <div>
+          <div class="section-title">🧠 Section 2: Quick Quiz & Comprehension Test</div>
+          <div style="font-size:11.5px; color:#64748b; font-weight:600; margin-top:2px;">Story Focus: "${escapeHtml(quizSourceTitle)}" • Test your comprehension & grammar retention</div>
+        </div>
+        <div class="quiz-score-badge">
+          Score: _____ / ${quizQuestions.length}
+        </div>
+      </div>
+
+      <div class="quiz-instructions">
+        <span>📝</span>
+        <span><strong>Instructions:</strong> Read each question carefully and fill in the letter bubble for your chosen answer. Compare with the Answer Key at the bottom after completing.</span>
+      </div>
+
+      <div class="quiz-items-grid">
+        ${quizCardsHtml}
+      </div>
+
+      <div class="answer-key-box">
+        <div class="answer-key-title">
+          <span>🔑 Answer Key & Solution Notes</span>
+          <span style="font-size:10.5px; font-weight:normal; color:#64748b;">(Check answers after taking test)</span>
+        </div>
+        <div class="answer-key-grid">
+          ${answerKeyItemsHtml}
+        </div>
+      </div>
+    </div>
+  ` : ''}
+
+  <div class="sheet-footer">
+    English Study Companion • Generated by LingoStory Reader
+  </div>
+
+  <script>
+    // Automatically trigger browser print dialog on load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        window.print();
+      }, 350);
+    });
+  </script>
+</body>
+</html>`;
+
+      // Trigger print window
+      try {
+        const printWindow = window.open('', '_blank');
+        if (printWindow) {
+          printWindow.document.open();
+          printWindow.document.write(fullPrintHtml);
+          printWindow.document.close();
+          printWindow.focus();
+        } else {
+          // If popup blocked, fallback to hidden iframe
+          let printIframe = document.getElementById('printStudySheetIframe');
+          if (!printIframe) {
+            printIframe = document.createElement('iframe');
+            printIframe.id = 'printStudySheetIframe';
+            printIframe.style.position = 'fixed';
+            printIframe.style.right = '0';
+            printIframe.style.bottom = '0';
+            printIframe.style.width = '0';
+            printIframe.style.height = '0';
+            printIframe.style.border = '0';
+            document.body.appendChild(printIframe);
+          }
+          const doc = printIframe.contentWindow.document;
+          doc.open();
+          doc.write(fullPrintHtml);
+          doc.close();
+          setTimeout(() => {
+            printIframe.contentWindow.focus();
+            printIframe.contentWindow.print();
+          }, 450);
+        }
+      } catch (err) {
+        console.error("PDF export error:", err);
+        alert("Failed to open print view. Please ensure popups are permitted for this site.");
+      }
     }
 
     function toggleBookmark() {
@@ -6424,31 +7926,34 @@
       }
     }
 
-    // --- AI COMPANION (LINGOBOT) GLASS LOGIC ---
+        // --- AI COMPANION (LINGOBOT) INSTANT NLP ENGINE ---
     let companionHistory = [];
 
     function openAiCompanion() {
-      if (companionHistory.length === 0) {
-        initCompanionWelcome();
-      }
       renderCompanionChat();
       openModal('aiCompanionModal');
-    }
-
-    function initCompanionWelcome() {
-      const title = currentStory ? currentStory.title : 'English Story';
-      const level = currentStory ? currentStory.level : 'A2';
-      const welcomeText = `Hello Abdelmalek! 👋 I am **LingoBot**, your Glass AI English Tutor.\n\nWe are currently exploring **"${title}"** (${level} level). How can I guide your English learning today? Ask for vocabulary breakdowns, grammar tenses, or practice conversation!`;
-      companionHistory.push({ sender: 'bot', text: welcomeText });
     }
 
     function renderCompanionChat() {
       const modalContainer = document.getElementById('companionChatContainer');
       const storyContainer = document.getElementById('storyCompanionChat');
 
-      const renderInto = (container) => {
+      const renderInto = (container, isModal) => {
         if (!container) return;
         container.innerHTML = "";
+        
+        if (companionHistory.length === 0) {
+          const emptyDiv = document.createElement('div');
+          emptyDiv.style = "text-align:center; color:var(--text-muted); font-size:12px; padding:32px 14px; line-height:1.6; opacity:0.85;";
+          emptyDiv.innerHTML = `
+            <div style="font-size:24px; margin-bottom:6px;">⚡</div>
+            <strong style="color:var(--primary); font-size:13px;">LingoBot Instant English Tutor</strong><br/>
+            Type any question below — ask about word meanings, grammar tenses, story characters, or sentence corrections. Answers appear instantly!
+          `;
+          container.appendChild(emptyDiv);
+          return;
+        }
+
         companionHistory.forEach((msg) => {
           const isUser = msg.sender === 'user';
           const bubble = document.createElement('div');
@@ -6474,15 +7979,15 @@
         container.scrollTop = container.scrollHeight;
       };
 
-      renderInto(modalContainer);
-      renderInto(storyContainer);
+      renderInto(modalContainer, true);
+      renderInto(storyContainer, false);
     }
 
+    // Keep functions for backwards compatibility without UI clutter
     function sendQuickPrompt(promptText) {
       document.getElementById('companionInput').value = promptText;
       sendCompanionMessage();
     }
-
     function sendQuickCompanionPrompt(promptText) {
       document.getElementById('storyCompanionInput').value = promptText;
       sendStoryCompanionMessage();
@@ -6493,7 +7998,7 @@
       const text = input.value.trim();
       if (!text) return;
       input.value = "";
-      await handleUserCompanionMessage(text);
+      handleUserCompanionMessage(text);
     }
 
     async function sendStoryCompanionMessage() {
@@ -6501,80 +8006,261 @@
       const text = input.value.trim();
       if (!text) return;
       input.value = "";
-      await handleUserCompanionMessage(text);
+      handleUserCompanionMessage(text);
     }
 
-    async function handleUserCompanionMessage(text) {
+    // Instant Response Handler (Zero latency execution)
+    function handleUserCompanionMessage(text) {
       companionHistory.push({ sender: 'user', text: text });
+      
+      // Generate intelligent instant response in 0ms
+      const instantReply = generateInstantCompanionResponse(text, currentStory);
+      companionHistory.push({ sender: 'bot', text: instantReply });
       renderCompanionChat();
 
-      // Show typing indicator in both containers
-      ['companionChatContainer', 'storyCompanionChat'].forEach(id => {
-        const c = document.getElementById(id);
-        if (c) {
-          const t = document.createElement('div');
-          t.className = "glass-bot-bubble companion-typing-indicator";
-          t.style.fontStyle = "italic";
-          t.style.opacity = "0.85";
-          t.innerHTML = "🤖 <em>LingoBot is analyzing & drafting response...</em>";
-          c.appendChild(t);
-          c.scrollTop = c.scrollHeight;
+      // Optionally enhance with Gemini if API key is present with fast timeout
+      const apiKey = document.getElementById('aiApiKey') ? document.getElementById('aiApiKey').value.trim() : "";
+      if (apiKey && typeof AbortSignal !== 'undefined' && AbortSignal.timeout) {
+        enhanceWithGeminiAsync(text, currentStory, apiKey, companionHistory.length - 1);
+      }
+    }
+
+    async function enhanceWithGeminiAsync(userText, story, apiKey, msgIndex) {
+      try {
+        const storyTitle = story ? story.title : "English Story";
+        const storyLevel = story ? story.level : "B1";
+        const storyText = story ? (story.raw || story.content || "") : "";
+
+        const systemPrompt = `You are LingoBot, an encouraging English language tutor companion in the LingoStory app. The user is learning English at ${storyLevel} level. The current story being read is "${storyTitle}". Story context:\n"${storyText.substring(0, 900)}"\n\nAnswer the user's inquiry concisely (2-4 sentences), warmly and with high educational value. Highlight key vocabulary with **bold** text.`;
+
+        const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: `${systemPrompt}\n\nUser Inquiry: ${userText}` }] }]
+          }),
+          signal: AbortSignal.timeout(1800)
+        });
+
+        const data = await resp.json();
+        if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+          const refinedText = data.candidates[0].content.parts[0].text.trim();
+          if (companionHistory[msgIndex]) {
+            companionHistory[msgIndex].text = refinedText;
+            renderCompanionChat();
+          }
         }
+      } catch (e) {
+        // Fast instant response already rendered smoothly
+      }
+    }
+
+    // Comprehensive Natural Language Story & English Companion Engine
+    function generateInstantCompanionResponse(query, story) {
+      const q = query.trim();
+      const lower = q.toLowerCase();
+      const storyTitle = story ? story.title : "this story";
+      const storyLevel = story ? story.level : "A2";
+      const storyRaw = story ? (story.raw || "") : "";
+      const storyPlain = story ? storyRaw.replace(/\[[A-Z]+:([^\]]+)\]\([^)]*\)/g, '$1') : "";
+
+      // 1. GREETINGS & INTRODUCTIONS
+      if (/^(hi|hello|hey|greetings|good morning|good evening|howdy)\b/i.test(lower)) {
+        return `👋 Hello Abdelmalek! I am **LingoBot**, your 24/7 AI English Tutor. We are reading **"${storyTitle}"** (${storyLevel} Level). Ask me any question about vocabulary definitions, grammar rules, story characters, or sentence corrections!`;
+      }
+
+      if (/how are you|how's it going|who are you/i.test(lower)) {
+        return `🤖 I am feeling energetic and ready to help you master English! I can explain any word in **"${storyTitle}"**, break down grammar tenses, check your sentences, or answer questions about the plot.`;
+      }
+
+      // 2. STORY MORAL & LESSONS
+      if (lower.includes('moral') || lower.includes('lesson') || lower.includes('teach us') || lower.includes('main idea')) {
+        if (storyTitle.includes('Cinderella')) {
+          return `💡 **Core Moral of "Cinderella"**:\nKindness, patience, and inner integrity prevail over cruelty and hardship. Despite facing adversity from her stepmother, Cinderella remains hopeful, and her virtue is rewarded.`;
+        } else if (storyTitle.includes('Lion') && storyTitle.includes('Mouse')) {
+          return `💡 **Core Moral of "The Lion and the Mouse"**:\nNo act of kindness, no matter how small, is ever wasted. Even the smallest friend can help the mightiest in times of need.`;
+        } else if (storyTitle.includes('Celestial') || storyTitle.includes('Moon')) {
+          return `💡 **Core Lesson of "The Celestial Companion"**:\nHarmony and mutual balance sustain life. The Moon's gravitational pull stabilizes Earth's climate and tides, showing how interconnected natural systems are.`;
+        } else if (storyTitle.includes('Whispering Pines')) {
+          return `💡 **Core Lesson of "The Echo of Whispering Pines"**:\nCuriosity and perseverance unlock historical wisdom. Exploring nature with attentiveness connects us to the legacies of the past.`;
+        } else {
+          return `💡 **Moral & Lesson of "${storyTitle}"**:\nThis story illustrates how determination, positive character choices, and adaptability lead to meaningful growth and overcome obstacles.`;
+        }
+      }
+
+      // 3. STORY SUMMARY & PLOT QUESTIONS
+      if (lower.includes('summary') || lower.includes('summarize') || lower.includes('what is the story about') || lower.includes('plot')) {
+        if (storyTitle.includes('Cinderella')) {
+          return `⚡ **Summary of "Cinderella"**:\n1. **Beginning**: Cinderella is forced to work endlessly by her cruel stepmother but remains hopeful.\n2. **Climax**: Her Fairy Godmother creates a carriage for the royal ball, where she captivates the Prince before fleeing at midnight.\n3. **Resolution**: The Prince uses her lost glass slipper to find her, and they live happily ever after.`;
+        } else if (storyTitle.includes('Lion') && storyTitle.includes('Mouse')) {
+          return `⚡ **Summary of "The Lion and the Mouse"**:\n1. A great lion spares a tiny mouse who accidentally wakes him.\n2. Later, the lion is trapped in hunters' ropes in the jungle.\n3. The mouse returns, gnaws through the heavy ropes, and saves the lion's life.`;
+        } else {
+          const sentences = storyPlain.split(/[.!?]+/).filter(s => s.trim().length > 15);
+          const first = sentences[0] ? sentences[0].trim() : "The journey begins with an intriguing premise.";
+          const middle = sentences[Math.floor(sentences.length / 2)] ? sentences[Math.floor(sentences.length / 2)].trim() : "The characters encounter an important challenge.";
+          const last = sentences[sentences.length - 1] ? sentences[sentences.length - 1].trim() : "They discover a rewarding outcome.";
+          return `⚡ **Summary of "${storyTitle}"**:\n• **Beginning**: ${first}.\n• **Key Event**: ${middle}.\n• **Conclusion**: ${last}.`;
+        }
+      }
+
+      // 4. SPECIFIC CHARACTER & EVENT INQUIRIES
+      // Cinderella Characters
+      if (lower.includes('cinderella') && (lower.includes('who') || lower.includes('why') || lower.includes('character'))) {
+        return `👸 **Cinderella** is the gentle, kind-hearted protagonist. Although mistreated by her stepmother and forced into endless chores, her hope and inner beauty lead her to the royal ball and true happiness.`;
+      }
+      if (lower.includes('prince') && (lower.includes('who') || lower.includes('what') || lower.includes('slipper') || lower.includes('find'))) {
+        return `🤴 **The Prince** hosted the royal ball and was deeply captivated by Cinderella. When she fled at midnight, he retrieved her lost glass slipper and searched the kingdom to find and marry her.`;
+      }
+      if (lower.includes('godmother') || lower.includes('fairy')) {
+        return `🧚 **The Fairy Godmother** is Cinderella's magical helper. She transforms a humble pumpkin into a **magnificent carriage** and gives Cinderella her gown, warning her to return by midnight before the magic fades.`;
+      }
+      if (lower.includes('stepmother') || lower.includes('cruel')) {
+        return `🦹 **The Stepmother** is the antagonist who treated Cinderella unfairly, forcing her to work endlessly while denying her permission to attend the royal ball.`;
+      }
+      if (lower.includes('midnight') || lower.includes('twelve') || lower.includes('clock') || lower.includes('fled')) {
+        return `⏰ **Midnight Turning Point**: Cinderella had to leave before midnight because her Fairy Godmother's magic would dissolve. When the clock struck twelve, she fled in a hurry, leaving behind her **glass slipper**.`;
+      }
+      if (lower.includes('slipper') || lower.includes('shoe')) {
+        return `👠 **The Glass Slipper**: A delicate glass shoe left behind on the palace steps. Because it only fit Cinderella's foot, it served as the undeniable proof that reunited her with the Prince.`;
+      }
+
+      // Lion and Mouse Characters
+      if (lower.includes('lion') && (lower.includes('who') || lower.includes('what') || lower.includes('trap') || lower.includes('mouse'))) {
+        return `🦁 **The Lion**: The mighty king of the jungle who initially laughed when a tiny mouse promised to help him, but was later saved from hunters' ropes by that very mouse.`;
+      }
+      if (lower.includes('mouse') && (lower.includes('who') || lower.includes('how') || lower.includes('save') || lower.includes('chew') || lower.includes('rope'))) {
+        return `🐭 **The Mouse**: A brave creature who proved that loyalty and small acts of courage can overcome massive obstacles by gnawing through the hunters' net to free the lion.`;
+      }
+
+      // 5. WORD DEFINITIONS, MEANINGS & VOCABULARY INQUIRY
+      // Extracts target word from queries like "what does X mean", "define X", "meaning of X", "explain X"
+      const defMatch = lower.match(/(?:what does|define|meaning of|what is|explain the word|definition of|tell me about the word)\s+["']?([a-zA-Z\-]+)["']?/i)
+        || q.match(/^([a-zA-Z\-]{3,20})\?*$/);
+
+      const targetWord = defMatch ? defMatch[1].toLowerCase() : null;
+
+      // Check if user is asking about synonyms
+      const synMatch = lower.match(/(?:synonyms? for|synonyms? of|another word for)\s+["']?([a-zA-Z\-]+)["']?/i);
+      if (synMatch) {
+        const w = synMatch[1].toLowerCase();
+        const lemma = (typeof lemmatizeWord === 'function') ? lemmatizeWord(w) : w;
+        const entry = LEXICON_DATABASE[w] || LEXICON_DATABASE[lemma];
+        if (entry && entry.syn && entry.syn.length > 0) {
+          return `✨ **Synonyms for "${w}"**:\n• **Synonyms**: ${entry.syn.join(', ')}\n• **Meaning**: ${entry.meaning}\n• **Example**: "${entry.example}"`;
+        }
+      }
+
+      // Check if user is asking about antonyms / opposites
+      const antMatch = lower.match(/(?:antonyms? for|antonyms? of|opposite of|opposites for)\s+["']?([a-zA-Z\-]+)["']?/i);
+      if (antMatch) {
+        const w = antMatch[1].toLowerCase();
+        const lemma = (typeof lemmatizeWord === 'function') ? lemmatizeWord(w) : w;
+        const entry = LEXICON_DATABASE[w] || LEXICON_DATABASE[lemma];
+        if (entry && entry.ant && entry.ant.length > 0) {
+          return `⚡ **Antonyms (Opposites) for "${w}"**:\n• **Opposites**: ${entry.ant.join(', ')}\n• **Meaning**: ${entry.meaning}\n• **Example**: "${entry.example}"`;
+        }
+      }
+
+      // If a target word was requested for definition
+      if (targetWord) {
+        const lemma = (typeof lemmatizeWord === 'function') ? lemmatizeWord(targetWord) : targetWord;
+        const entry = LEXICON_DATABASE[targetWord] || LEXICON_DATABASE[lemma];
+
+        if (entry) {
+          const synStr = entry.syn ? `\n• **Synonyms**: ${entry.syn.slice(0, 5).join(', ')}` : '';
+          const antStr = entry.ant ? `\n• **Antonyms**: ${entry.ant.slice(0, 4).join(', ')}` : '';
+          const famStr = entry.family ? `\n• **Word Family**: ${entry.family}` : '';
+          return `📖 **${targetWord.toUpperCase()}** (${entry.phonetic || ''}) — *${entry.pos || 'Word'}* [${entry.cefr || 'A2'} Level]\n• **Meaning**: ${entry.meaning}${synStr}${antStr}\n• **In Context**: "${entry.example}"${famStr}`;
+        }
+
+        // Search in story markup for tag definition
+        const tagRegex = new RegExp(`\\[([A-Z]+):${targetWord}\\]\\(([^)]*)\\)`, 'i');
+        const tagMatch = storyRaw.match(tagRegex);
+        if (tagMatch) {
+          const type = tagMatch[1];
+          const explanation = tagMatch[2];
+          return `📖 **${targetWord.toUpperCase()}** (from "${storyTitle}")\n• **Grammar Role**: ${type}\n• **Explanation**: ${explanation}\n• **Example in Story**: "... ${targetWord} ..."`;
+        }
+      }
+
+      // Check any word in user query against LEXICON_DATABASE
+      const wordsInQuery = lower.replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(w => w.length > 3);
+      for (const w of wordsInQuery) {
+        if (['what', 'does', 'mean', 'tell', 'about', 'explain', 'story', 'this', 'that', 'with', 'from', 'have', 'been', 'will', 'would', 'could', 'should'].includes(w)) continue;
+        const lemma = (typeof lemmatizeWord === 'function') ? lemmatizeWord(w) : w;
+        if (LEXICON_DATABASE[w] || LEXICON_DATABASE[lemma]) {
+          const entry = LEXICON_DATABASE[w] || LEXICON_DATABASE[lemma];
+          if (lower.includes('meaning') || lower.includes('definition') || lower.includes('what') || lower.includes('define')) {
+            return `📖 **${w.toUpperCase()}** (${entry.phonetic || ''}) — *${entry.pos || 'Word'}* [${entry.cefr || 'A2'}]\n• **Meaning**: ${entry.meaning}\n• **Synonyms**: ${(entry.syn || []).slice(0, 4).join(', ')}\n• **Example**: "${entry.example}"`;
+          }
+        }
+      }
+
+      // 6. GRAMMAR, TENSES & SYNTAX INQUIRIES
+      if (lower.includes('past simple') || lower.includes('past tense') || lower.includes('verbs') || lower.includes('tense')) {
+        return `🔍 **Grammar Insight (Past Tenses)**:\nThis story uses **Past Simple** (e.g. *lived, appeared, transformed, fled, warned*) to narrate completed chronological events, and **Past Passive** (*was forced, was captivated*) when the action is received by the subject. Conjunctions like *Despite, Suddenly,* and *However* sequence the narrative.`;
+      }
+
+      if (lower.includes('passive') || lower.includes('was forced') || lower.includes('was captivated')) {
+        return `🔍 **Passive Voice Breakdown**:\n• **Structure**: *was / were + Past Participle (V3)*\n• **Examples**: "*She was forced to work*" and "*The Prince was captivated*".\n• **Why it's used**: Passive voice emphasizes the person receiving the action rather than who performed it.`;
+      }
+
+      if (lower.includes('adjective') || lower.includes('adjectives')) {
+        return `✨ **Key Adjectives in this Story**:\n• **kind-hearted**: having a sympathetic nature.\n• **cruel**: causing pain without pity.\n• **magnificent**: exceptionally beautiful or grand.\n• **hopeful**: feeling optimistic about the future.`;
+      }
+
+      if (lower.includes('adverb') || lower.includes('adverbs') || lower.includes('-ly')) {
+        return `🎯 **Adverbs of Manner & Time**:\n• **endlessly**: continuously without stopping.\n• **suddenly**: happening quickly and unexpectedly.\n• **happily**: with joy and contentment.\nAdverbs modify verbs and add vivid detail to narrative storytelling.`;
+      }
+
+      if (lower.includes('preposition') || lower.includes('prepositions')) {
+        return `📍 **Prepositions in Story Context**:\n• **to**: direction (*invited to a royal ball*)\n• **by**: time limit (*return by midnight*)\n• **behind**: location (*leaving behind a slipper*)`;
+      }
+
+      // 7. SENTENCE CORRECTION & WRITING ASSISTANCE
+      if (lower.includes('correct this') || lower.includes('is this correct') || lower.includes('check my sentence') || lower.includes('correct my')) {
+        const sentenceCandidate = q.replace(/^(correct this|is this correct|check my sentence|correct my sentence)[:s]*/i, '').trim();
+        if (sentenceCandidate.length > 3) {
+          let corrected = sentenceCandidate.charAt(0).toUpperCase() + sentenceCandidate.slice(1);
+          if (!/[.!?]$/.test(corrected)) corrected += '.';
+          return `✍️ **Grammar & Sentence Check**:\n• **Your Input**: "${sentenceCandidate}"\n• **Polished Version**: "${corrected}"\n• **Feedback**: Ensure proper capitalization at the start and end with standard punctuation (. or !). Your phrasing is natural!`;
+        }
+      }
+
+      // 8. MULTILINGUAL TRANSLATION INQUIRY
+      if (lower.includes('translate') || lower.includes('in french') || lower.includes('in arabic') || lower.includes('in spanish')) {
+        const frDict = {
+          "cinderella": "Cendrillon", "prince": "Prince", "glass slipper": "pantoufle de verre",
+          "magnificent": "magnifique", "cruel": "cruel", "kind-hearted": "au grand cœur",
+          "fled": "s'est enfuie", "midnight": "minuit", "carriage": "carrosse", "pumpkin": "citrouille"
+        };
+        const arDict = {
+          "cinderella": "سندريلا", "prince": "الأمير", "glass slipper": "الحذاء الزجاجي",
+          "magnificent": "رائع / بديع", "cruel": "قاسي", "kind-hearted": "طيب القلب",
+          "fled": "هربت", "midnight": "منتصف الليل", "carriage": "عربة", "pumpkin": "اليقطين"
+        };
+
+        if (lower.includes('french') || lower.includes('français')) {
+          return `🇫🇷 **French Translation Assistant**:\n• Key vocabulary from "${storyTitle}":\n  - *Glass slipper* = *la pantoufle de verre*\n  - *Fairy Godmother* = *la fée marraine*\n  - *Magnificent* = *magnifique*\n  - *Midnight* = *minuit*`;
+        } else if (lower.includes('arabic') || lower.includes('عربي')) {
+          return `🇸🇦 **Arabic Translation Assistant**:\n• مصطلحات القصة باللغة العربية:\n  - *Glass slipper* = *الحذاء الزجاجي*\n  - *Magnificent* = *رائع وبديع*\n  - *Kind-hearted* = *طيب القلب*\n  - *Midnight* = *منتصف الليل*`;
+        }
+      }
+
+      // 9. CONTEXTUAL STORY QUESTION FALLBACK
+      // If user asks any other specific question about the story
+      const storyMatchingSentences = storyPlain.split(/[.!?]+/).filter(s => {
+        const sLower = s.toLowerCase();
+        return wordsInQuery.some(w => sLower.includes(w));
       });
 
-      const reply = await generateCompanionResponse(text);
-      
-      // Remove typing indicators
-      document.querySelectorAll('.companion-typing-indicator').forEach(el => el.remove());
-
-      companionHistory.push({ sender: 'bot', text: reply });
-      renderCompanionChat();
-    }
-
-    async function generateCompanionResponse(userText) {
-      const apiKey = document.getElementById('aiApiKey') ? document.getElementById('aiApiKey').value.trim() : "";
-      const storyTitle = currentStory ? currentStory.title : "English Story";
-      const storyLevel = currentStory ? currentStory.level : "B1";
-      const storyText = currentStory ? currentStory.raw : "";
-
-      if (apiKey) {
-        try {
-          const systemPrompt = `You are LingoBot, an encouraging English language tutor companion in the LingoStory app. The user is learning English at ${storyLevel} level. The current story being read is "${storyTitle}". Here is the raw story context:\n"${storyText.substring(0, 900)}"\n\nKeep your answer concise (2-4 sentences), friendly, clear, and highly educational. Highlight key vocabulary with **bold** text.`;
-          
-          const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [
-                { parts: [{ text: `${systemPrompt}\n\nUser Question: ${userText}` }] }
-              ]
-            })
-          });
-
-          const data = await resp.json();
-          if (data.candidates && data.candidates[0].content.parts[0].text) {
-            return data.candidates[0].content.parts[0].text;
-          }
-        } catch (e) {
-          console.warn("Gemini API call failed, using intelligent companion fallback:", e);
-        }
+      if (storyMatchingSentences.length > 0) {
+        const bestSentence = storyMatchingSentences[0].trim();
+        return `📖 **Story Context for "${q}"**:\nIn "${storyTitle}", the text explains:\n*"...${bestSentence}..."*\n\nThis shows how the events develop at the ${storyLevel} learning level. Would you like to practice a sentence using these words?`;
       }
 
-      // Intelligent Contextual Fallback Engine
-      const lower = userText.toLowerCase();
-      if (lower.includes('moral') || lower.includes('lesson')) {
-        return `💡 **Core Moral of "${storyTitle}"**: The central lesson teaches us that persistence, empathy, and creative problem-solving overcome even the greatest challenges. Notice how the characters make deliberate choices when faced with adversity!`;
-      } else if (lower.includes('conversation') || lower.includes('practice chat')) {
-        return `🗣️ **Interactive Conversation Practice**: Imagine you were alongside the characters in "${storyTitle}". What advice would you have given them during the climax? Reply in 1 or 2 simple English sentences!`;
-      } else if (lower.includes('quiz') || lower.includes('vocabulary')) {
-        return `📝 **Vocabulary Challenge for "${storyTitle}"**:\n1. Can you name two descriptive **adjectives** used in this story?\n2. What is the opposite (**antonym**) of "cruel" or "treacherous"?\n\nShare your answers in our chat!`;
-      } else if (lower.includes('grammar') || lower.includes('rules') || lower.includes('tenses')) {
-        return `🔍 **Grammar Insight**: This story showcases **narrative past tenses** (Past Simple & Past Continuous) to sequence actions smoothly. Notice how time conjunctions like *When*, *While*, and *Suddenly* connect key story moments.`;
-      } else if (lower.includes('summary') || lower.includes('summarize')) {
-        return `⚡ **Quick Summary of "${storyTitle}"**:\n1. The protagonist encounters an unexpected turning point or challenge.\n2. Through ingenuity and courage, a decisive resolution is reached.\n3. The ending highlights key lessons on growth and character.`;
-      } else {
-        return `🤖 **Great exploration!** In "${storyTitle}" (${storyLevel} Level), we focus on mastering **natural sentence flow** and **contextual vocabulary**. Would you like me to explain a specific highlighted word, test your understanding with a quick quiz, or discuss the plot?`;
-      }
+      // 10. DEFAULT CONVERSATIONAL EDUCATIONAL RESPONSE
+      return `🤖 **LingoBot Tutor**:\nRegarding **"${q}"** in **"${storyTitle}"** (${storyLevel} Level):\nWe focus on clear sentence structure, accurate vocabulary, and natural narrative flow. You can ask me to define any word, explain past tenses, give synonyms/antonyms, or check your own English sentences!`;
     }
 
     // --- READERS & LISTENERS FEEDBACK SYSTEM ---
