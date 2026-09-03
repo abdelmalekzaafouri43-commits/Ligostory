@@ -323,15 +323,15 @@
       display: none; /* Hidden by default until an image is loaded */
     }
 
-    .part { cursor: pointer; border-radius: 4px; padding: 1px 3px; margin: 0 1px; display: inline; transition: background 0.15s; }
-    .part-noun { background: var(--noun-bg); color: var(--noun-text); border: 1px solid var(--noun-border); }
-    .part-tense { background: var(--tense-bg); color: var(--tense-text); border: 1px solid var(--tense-border); font-weight: 600; }
+    .part { cursor: pointer; border-radius: 4px; padding: 1px 3px; margin: 0 1px; display: inline-block; vertical-align: baseline; transition: background 0.15s; }
+    .part-n, .part-noun { background: var(--noun-bg); color: var(--noun-text); border: 1px solid var(--noun-border); }
+    .part-t, .part-tense { background: var(--tense-bg); color: var(--tense-text); border: 1px solid var(--tense-border); font-weight: 600; }
     .part-adj { background: var(--adj-bg); color: var(--adj-text); border: 1px solid var(--adj-border); }
     .part-adv { background: var(--adv-bg); color: var(--adv-text); border: 1px solid var(--adv-border); }
-    .part-prep { background: var(--prep-bg); color: var(--prep-text); border: 1px solid var(--prep-border); }
-    .part-conj { background: var(--conj-bg); color: var(--conj-text); border: 1px solid var(--conj-border); }
-    .part-struct { background: var(--struct-bg); color: var(--struct-text); border: 1px dashed var(--struct-border); }
-    .part-lex { background: var(--lex-bg); color: var(--lex-text); border: 1.5px solid var(--lex-border); font-weight: 700; }
+    .part-p, .part-prep { background: var(--prep-bg); color: var(--prep-text); border: 1px solid var(--prep-border); }
+    .part-c, .part-conj { background: var(--conj-bg); color: var(--conj-text); border: 1px solid var(--conj-border); }
+    .part-s, .part-struct { background: var(--struct-bg); color: var(--struct-text); border: 1px dashed var(--struct-border); }
+    .part-l, .part-lex { background: var(--lex-bg); color: var(--lex-text); border: 1.5px solid var(--lex-border); font-weight: 700; }
     .reading-active { background: var(--reading-highlight) !important; color: #000000 !important; border-radius: 4px; box-shadow: 0 0 6px var(--reading-highlight); }
 
     .pagination-bar { display: flex; justify-content: space-between; align-items: center; margin: 16px 0 20px 0; padding: 8px 12px; background: var(--surface-variant); border-radius: 12px; }
@@ -4969,11 +4969,18 @@
       renderQuiz();
       renderFeedbacks();
       updateBookmarkButton();
-      scanAndUpdateAdaptiveSoundscape(story);
-      if (companionHistory.length === 0) {
-        initCompanionWelcome();
+      try {
+        scanAndUpdateAdaptiveSoundscape(story);
+      } catch(e) {
+        console.warn("Adaptive soundscape init skipped:", e);
       }
-      renderCompanionChat();
+      try {
+        if (typeof renderCompanionChat === 'function') {
+          renderCompanionChat();
+        }
+      } catch(e) {
+        console.warn("Companion chat render skipped:", e);
+      }
     }
 
     let fullPlainString = "";
@@ -5013,9 +5020,32 @@
           }
         }
 
-        const [_, tagType, p1, p2, info] = match;
-        const word = (p2 && p2.trim()) ? p2.trim() : (p1 ? p1.trim() : "");
-        const extra = (p2 && p2.trim()) ? p1.trim() : "";
+        const [fullMatch, tagType, p1, p2, parens] = match;
+        let word = "";
+        let info = "";
+        let extra = "";
+
+        const strP1 = (p1 || "").trim();
+        const strP2 = (p2 || "").trim();
+        const strParens = (parens || "").trim();
+
+        if (strP2) {
+          word = strP2;
+          info = strParens || strP1;
+          extra = strP1;
+        } else if (strP1) {
+          const isParensGrammarLabel = /^(Past|Present|Future|Noun|Verb|Adjective|Adverb|Preposition|Conjunction|Pronoun|Infinitive|Subordinating|Coordinating|Proper|Descriptive|Grammar|Structure|Lexical|Vocabulary|Clause|Tense|Gerund|Participle|Modal)/i.test(strParens);
+          if (isParensGrammarLabel || !strParens) {
+            word = strP1;
+            info = strParens || strP1;
+          } else {
+            word = strParens;
+            info = strP1;
+          }
+        } else {
+          word = strParens || tagType;
+          info = tagType;
+        }
 
         const start = fullPlainString.length;
         fullPlainString += word;
@@ -5067,26 +5097,29 @@
       if (!parsedTokens || parsedTokens.length === 0) {
         const raw = getStoryRawText(currentStory);
         if (raw) {
-          content.innerHTML = `<div style="padding:16px; font-size:16px; line-height:1.8; color:var(--text-main);">${escapeHtml(raw)}</div>`;
+          const cleanRaw = raw.replace(/\[([A-Z]+)(?::([^:\]]+))?(?::([^\]]+))?\]\(([^)]+)\)/g, '$4');
+          content.innerHTML = `<div style="padding:12px; font-size:1.05rem; line-height:2.0; color:var(--text-main); font-family:Georgia, serif;">${escapeHtml(cleanRaw)}</div>`;
         } else {
           content.innerHTML = `<div style="padding:16px; font-size:15px; color:var(--text-muted);">No story text available for this item.</div>`;
         }
         return;
       }
 
+      const fragment = document.createDocumentFragment();
+
       parsedTokens.forEach((token) => {
         if (token.type === 'WS') {
-          content.appendChild(document.createTextNode(token.text));
+          fragment.appendChild(document.createTextNode(token.text));
         } else if (token.type === 'TEXT') {
           const span = document.createElement('span');
-          span.innerText = token.text;
+          span.textContent = token.text;
           span.className = 'story-word clickable-plain-word';
           span.style.opacity = '1';
+          span.style.color = 'var(--text-main)';
           
           span.dataset.start = token.charStart;
           span.dataset.end = token.charEnd;
           
-          // Allow clicking any plain word to define it!
           span.onclick = (e) => {
             e.stopPropagation();
             const clean = token.text.replace(/[^a-zA-Z]/g, '');
@@ -5101,12 +5134,13 @@
             }
           };
 
-          content.appendChild(span);
+          fragment.appendChild(span);
           wordIndex++;
         } else {
           const span = document.createElement('span');
-          span.innerText = token.text;
-          span.className = `story-word part part-${token.type.toLowerCase()}`;
+          span.textContent = token.text || token.info || '';
+          const typeLower = (token.type || '').toLowerCase();
+          span.className = `story-word part part-${typeLower}`;
           
           const finalOpacity = (activeFilter && activeFilter !== token.type) ? "0.35" : "1";
           span.style.opacity = finalOpacity;
@@ -5115,13 +5149,15 @@
           span.dataset.end = token.charEnd;
           span.onclick = (e) => {
             e.stopPropagation();
-            checkSpokenWordForSoundEffects(token.text.toLowerCase());
+            checkSpokenWordForSoundEffects((token.text || '').toLowerCase());
             showAnnotationModal(token);
           };
-          content.appendChild(span);
+          fragment.appendChild(span);
           wordIndex++;
         }
       });
+
+      content.appendChild(fragment);
     }
 
     function setGrammarFilter(type, btn) {
@@ -9294,16 +9330,21 @@
     function stopAudio() {
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       isSpeaking = false;
-      document.getElementById('btnPlay').style.display = 'flex';
-      document.getElementById('btnStop').style.display = 'none';
-      document.getElementById('progressFill').style.width = '0%';
+      const btnPlay = document.getElementById('btnPlay');
+      if (btnPlay) btnPlay.style.display = 'flex';
+      const btnStop = document.getElementById('btnStop');
+      if (btnStop) btnStop.style.display = 'none';
+      const progressFill = document.getElementById('progressFill');
+      if (progressFill) progressFill.style.width = '0%';
       
       const content = document.getElementById('storyContent');
-      if (content) content.classList.remove('is-reading-aloud');
+      if (content && content.classList) content.classList.remove('is-reading-aloud');
       
       document.querySelectorAll('#storyContent .story-word').forEach(span => {
-        span.classList.remove('active-spoken-word');
-        span.classList.remove('already-spoken');
+        if (span && span.classList) {
+          span.classList.remove('active-spoken-word');
+          span.classList.remove('already-spoken');
+        }
       });
     }
 
