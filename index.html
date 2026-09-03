@@ -476,25 +476,19 @@
       text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     }
     
-    #storyContent::first-letter {
-      font-size: 3.8rem;
-      font-weight: 700;
-      color: var(--primary);
-      float: left;
-      margin-right: 8px;
-      margin-top: 8px;
-      line-height: 0.8;
-      text-shadow: 2px 2px 4px rgba(99, 102, 241, 0.3);
+    /* Story Content Text */
+    #storyContent {
       font-family: 'Georgia', 'Times New Roman', serif;
+      color: var(--text-main);
+      letter-spacing: 0.3px;
     }
     
-    /* 3D Story Card & Page Flip Animation */
+    /* Clean Story Card Transition */
     .reader-scroll {
       flex: 1;
       overflow-y: auto;
       padding: 16px 16px 60px 16px;
       line-height: 1.9;
-      perspective: 1400px;
     }
 
     .story-card-container {
@@ -504,42 +498,26 @@
       padding: 20px 22px;
       margin-bottom: 20px;
       box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
-      will-change: transform, opacity, box-shadow;
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
     .story-flip-out {
-      animation: pageFlipOut 0.22s cubic-bezier(0.4, 0, 0.7, 0.2) forwards;
+      opacity: 0;
+      transform: translateY(6px);
     }
 
     .story-flip-in {
-      animation: pageFlipIn 0.36s cubic-bezier(0.16, 0.9, 0.28, 1.05) forwards;
+      animation: storyFadeIn 0.25s ease forwards;
     }
 
-    @keyframes pageFlipOut {
+    @keyframes storyFadeIn {
       0% {
-        opacity: 1;
-        transform: perspective(1400px) rotateY(0deg) scale(1);
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
-      }
-      100% {
-        opacity: 0;
-        transform: perspective(1400px) rotateY(-80deg) scale(0.93) translateY(-4px);
-        box-shadow: -15px 12px 28px rgba(0, 0, 0, 0.16);
-      }
-    }
-
-    @keyframes pageFlipIn {
-      0% {
-        opacity: 0.4;
-        transform: perspective(1400px) rotateY(20deg) scale(0.97);
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+        opacity: 0.3;
+        transform: translateY(6px);
       }
       100% {
         opacity: 1;
-        transform: perspective(1400px) rotateY(0deg) scale(1) translateY(0);
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+        transform: translateY(0);
       }
     }
     
@@ -4802,15 +4780,18 @@
       combinedStoriesMap[s.id] = Object.assign({}, s);
     });
 
+    // Purge legacy corrupted storage keys immediately
+    try {
+      localStorage.removeItem('lingo_stories_v9');
+      localStorage.removeItem('lingo_stories_v8');
+      localStorage.removeItem('lingo_stories_v7');
+      localStorage.removeItem('lingo_stories_v6');
+    } catch(e){}
+
     // Add user-created custom stories from localStorage (only if NOT a built-in story ID)
     let savedStories = [];
     try {
-      savedStories = JSON.parse(
-        localStorage.getItem('lingo_custom_stories') ||
-        localStorage.getItem('lingo_stories_v9') ||
-        localStorage.getItem('lingo_stories_v8') ||
-        localStorage.getItem('lingo_stories_v7')
-      ) || [];
+      savedStories = JSON.parse(localStorage.getItem('lingo_custom_stories')) || [];
     } catch (e) {
       savedStories = [];
     }
@@ -4964,6 +4945,7 @@
     }
 
     function renderStoryContent(story) {
+      stopAudio();
       currentStory = story;
       document.getElementById('storyTitle').innerText = story.title;
       document.getElementById('storyThemeDesc').innerText = story.description;
@@ -4992,7 +4974,6 @@
         initCompanionWelcome();
       }
       renderCompanionChat();
-      stopAudio();
     }
 
     let fullPlainString = "";
@@ -8943,10 +8924,12 @@
         }
 
         allStories.unshift(newStory);
-        localStorage.setItem('lingo_stories_v9', JSON.stringify(allStories));
-        localStorage.setItem('lingo_stories_v8', JSON.stringify(allStories));
-        localStorage.setItem('lingo_stories_v7', JSON.stringify(allStories));
-        localStorage.setItem('lingo_stories_v6', JSON.stringify(allStories));
+        let customStories = [];
+        try {
+          customStories = JSON.parse(localStorage.getItem('lingo_custom_stories')) || [];
+        } catch(e) { customStories = []; }
+        customStories.unshift(newStory);
+        localStorage.setItem('lingo_custom_stories', JSON.stringify(customStories));
         document.getElementById('libCount').innerText = allStories.length;
         loadStory(newStory);
         closeModalDirect('aiModal');
