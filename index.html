@@ -1931,11 +1931,21 @@
 
   <!-- Library Modal -->
   <div id="libraryModal" class="modal-overlay" onclick="closeSheet(event, 'libraryModal')">
-    <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-sheet" style="max-height:85vh; display:flex; flex-direction:column;" onclick="event.stopPropagation()">
       <div class="modal-drag-handle"></div>
-      <h2 style="font-size:1.15rem; margin-bottom:12px; color:var(--primary);">📚 Story Library & Gallery</h2>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <h2 style="font-size:1.15rem; color:var(--primary); margin:0;">📚 Story Library & Gallery</h2>
+        <span id="libSearchResultsCount" style="font-size:11.5px; font-weight:600; color:var(--text-muted);"></span>
+      </div>
       <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Select a story to read or take its quiz test without answers exposed.</div>
-      <div id="libraryList"></div>
+      
+      <!-- Search Bar -->
+      <div style="margin-bottom:12px; position:relative;">
+        <input type="text" id="librarySearchInput" class="form-input" placeholder="🔍 Search stories by title or theme..." oninput="filterStoryLibrary(this.value)" style="width:100%; box-sizing:border-box; padding:9px 36px 9px 12px; font-size:13px; border-radius:10px;">
+        <button id="librarySearchClear" onclick="clearLibrarySearch()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:12px; color:var(--text-muted); display:none; padding:4px;">✕</button>
+      </div>
+
+      <div id="libraryList" style="max-height:50vh; overflow-y:auto; padding-right:2px;"></div>
       <button class="btn-play" style="width:100%; margin-top:14px; justify-content:center;" onclick="closeModalDirect('libraryModal')">Close</button>
     </div>
   </div>
@@ -9484,22 +9494,79 @@
 
     function openAiGenerator() { openModal('aiModal'); }
     function openStoryHub() {
+      const searchInput = document.getElementById('librarySearchInput');
+      if (searchInput) searchInput.value = '';
+      const clearBtn = document.getElementById('librarySearchClear');
+      if (clearBtn) clearBtn.style.display = 'none';
+      renderLibraryList('');
+      openModal('libraryModal');
+    }
+
+    function clearLibrarySearch() {
+      const searchInput = document.getElementById('librarySearchInput');
+      if (searchInput) searchInput.value = '';
+      const clearBtn = document.getElementById('librarySearchClear');
+      if (clearBtn) clearBtn.style.display = 'none';
+      renderLibraryList('');
+      if (searchInput) searchInput.focus();
+    }
+
+    function filterStoryLibrary(query) {
+      const clearBtn = document.getElementById('librarySearchClear');
+      if (clearBtn) {
+        clearBtn.style.display = query && query.length > 0 ? 'block' : 'none';
+      }
+      renderLibraryList(query);
+    }
+
+    function renderLibraryList(query = '') {
       const list = document.getElementById('libraryList');
+      const countEl = document.getElementById('libSearchResultsCount');
+      if (!list) return;
       list.innerHTML = "";
-      allStories.forEach((s) => {
+      
+      const q = (query || '').trim().toLowerCase();
+
+      const filtered = allStories.filter((s) => {
+        if (!q) return true;
+        const titleMatch = (s.title || '').toLowerCase().includes(q);
+        const themeMatch = (s.theme || '').toLowerCase().includes(q);
+        const levelMatch = (s.level || '').toLowerCase().includes(q);
+        return titleMatch || themeMatch || levelMatch;
+      });
+
+      if (countEl) {
+        countEl.innerText = q ? `${filtered.length} of ${allStories.length} stories` : `${allStories.length} stories`;
+      }
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div style="text-align:center; padding:30px 12px; color:var(--text-muted); font-size:13px;">
+            🔍 No stories found matching "<strong>${escapeHtml(query)}</strong>"
+            <div style="font-size:11.5px; margin-top:6px; opacity:0.8;">Try searching for a different title or theme keyword (e.g. <em>Mystery, Courage, Friendship, Adventure</em>).</div>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach((s) => {
         const item = document.createElement('div');
-        item.style = `padding:10px 12px; margin-bottom:8px; border-radius:10px; border:1px solid var(--border); background:${s.id === currentStory.id ? 'rgba(67,56,202,0.15)' : 'var(--surface-variant)'}; display:flex; justify-content:space-between; align-items:center;`;
+        const isCurrent = currentStory && s.id === currentStory.id;
+        item.style = `padding:10px 12px; margin-bottom:8px; border-radius:10px; border:1px solid ${isCurrent ? 'var(--primary)' : 'var(--border)'}; background:${isCurrent ? 'rgba(67,56,202,0.12)' : 'var(--surface-variant)'}; display:flex; justify-content:space-between; align-items:center; gap:10px; transition:all 0.15s ease;`;
         
         const infoDiv = document.createElement('div');
-        infoDiv.style = "cursor:pointer; flex:1;";
+        infoDiv.style = "cursor:pointer; flex:1; min-width:0;";
         infoDiv.innerHTML = `
-          <div style="font-weight:700; font-size:13px;">${s.title}</div>
-          <div style="font-size:11px; color:var(--text-muted);">${s.level} • ${s.theme}</div>
+          <div style="font-weight:700; font-size:13.5px; margin-bottom:2px; display:flex; align-items:center; gap:6px;">
+            <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(s.title)}</span>
+            ${isCurrent ? '<span style="font-size:10px; padding:2px 6px; border-radius:10px; background:var(--primary); color:white; font-weight:600; flex-shrink:0;">Active</span>' : ''}
+          </div>
+          <div style="font-size:11.5px; color:var(--text-muted);">${escapeHtml(s.level)} • <span style="color:var(--primary); font-weight:500;">${escapeHtml(s.theme)}</span></div>
         `;
         infoDiv.onclick = () => { loadStory(s); closeModalDirect('libraryModal'); };
 
         const actionsDiv = document.createElement('div');
-        actionsDiv.style = "display:flex; gap:6px; align-items:center;";
+        actionsDiv.style = "display:flex; gap:6px; align-items:center; flex-shrink:0;";
 
         const quizBtn = document.createElement('button');
         quizBtn.className = "btn-pill";
@@ -9520,7 +9587,6 @@
         item.appendChild(actionsDiv);
         list.appendChild(item);
       });
-      openModal('libraryModal');
     }
 
     let activeQuizStory = null;
