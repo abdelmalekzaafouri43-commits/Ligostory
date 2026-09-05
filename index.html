@@ -1477,7 +1477,9 @@
           <h1 id="storyTitle" class="story-title">A Journey of Discovery</h1>
           <p id="storyThemeDesc" class="story-desc">Alex explores new horizons and opportunities</p>
         </div>
-        <button id="bookmarkBtn" class="icon-btn" onclick="toggleBookmark()" title="Bookmark Story" style="font-size:18px; background:var(--surface-variant);">☆</button>
+         <button id="bookmarkBtn" class="btn-pill" onclick="toggleBookmark()" title="Save Story" style="padding:6px 12px; font-size:12px; font-weight:700; background:var(--surface-variant); display:flex; align-items:center; gap:5px; border:1px solid var(--border); flex-shrink:0;">
+           <span id="bookmarkIcon" style="font-size:14px;">☆</span> <span id="saveBtnText">Save</span>
+         </button>
       </div>
     </div>
 
@@ -1939,10 +1941,16 @@
       </div>
       <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Select a story to read or take its quiz test without answers exposed.</div>
       
-      <!-- Search Bar -->
-      <div style="margin-bottom:12px; position:relative;">
-        <input type="text" id="librarySearchInput" class="form-input" placeholder="🔍 Search stories by title or theme..." oninput="filterStoryLibrary(this.value)" style="width:100%; box-sizing:border-box; padding:9px 36px 9px 12px; font-size:13px; border-radius:10px;">
-        <button id="librarySearchClear" onclick="clearLibrarySearch()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:12px; color:var(--text-muted); display:none; padding:4px;">✕</button>
+      <!-- Filter Chips & Search Bar -->
+      <div style="margin-bottom:12px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; gap:6px;">
+          <button id="libFilterAll" class="btn-pill" onclick="setLibraryFilter('all')" style="padding:5px 12px; font-size:11.5px; background:var(--primary); color:white; border:none;">All Stories (<span id="libAllCount">0</span>)</button>
+          <button id="libFilterSaved" class="btn-pill" onclick="setLibraryFilter('saved')" style="padding:5px 12px; font-size:11.5px; background:var(--surface-variant); color:var(--text-main); border:1px solid var(--border);">⭐ Saved (<span id="libSavedCount">0</span>)</button>
+        </div>
+        <div style="position:relative;">
+          <input type="text" id="librarySearchInput" class="form-input" placeholder="🔍 Search stories by title or theme..." oninput="filterStoryLibrary(this.value)" style="width:100%; box-sizing:border-box; padding:9px 36px 9px 12px; font-size:13px; border-radius:10px;">
+          <button id="librarySearchClear" onclick="clearLibrarySearch()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:12px; color:var(--text-muted); display:none; padding:4px;">✕</button>
+        </div>
       </div>
 
       <div id="libraryList" style="max-height:50vh; overflow-y:auto; padding-right:2px;"></div>
@@ -8128,12 +8136,24 @@
 
     function updateBookmarkButton() {
       const btn = document.getElementById('bookmarkBtn');
+      const icon = document.getElementById('bookmarkIcon');
+      const text = document.getElementById('saveBtnText');
       if (currentStory && bookmarkedIds.includes(currentStory.id)) {
-        btn.innerText = "★";
-        btn.style.color = "#f59e0b";
+        if (icon) icon.innerText = "★";
+        if (text) text.innerText = "Saved";
+        if (btn) {
+          btn.style.background = "rgba(245, 158, 11, 0.15)";
+          btn.style.color = "#d97706";
+          btn.style.borderColor = "rgba(245, 158, 11, 0.4)";
+        }
       } else {
-        btn.innerText = "☆";
-        btn.style.color = "inherit";
+        if (icon) icon.innerText = "☆";
+        if (text) text.innerText = "Save";
+        if (btn) {
+          btn.style.background = "var(--surface-variant)";
+          btn.style.color = "var(--text-main)";
+          btn.style.borderColor = "var(--border)";
+        }
       }
     }
 
@@ -9492,12 +9512,41 @@
     function changeSpeed(val) { currentSpeed = parseFloat(val); if (isSpeaking) startAudio(); }
     function changeAccent(val) { currentAccent = val; if (isSpeaking) startAudio(); }
 
+    let currentLibraryFilter = 'all'; // 'all' or 'saved'
+
+    function setLibraryFilter(filter) {
+      currentLibraryFilter = filter;
+      const allBtn = document.getElementById('libFilterAll');
+      const savedBtn = document.getElementById('libFilterSaved');
+      if (allBtn && savedBtn) {
+        if (filter === 'all') {
+          allBtn.style.background = 'var(--primary)';
+          allBtn.style.color = 'white';
+          allBtn.style.border = 'none';
+          savedBtn.style.background = 'var(--surface-variant)';
+          savedBtn.style.color = 'var(--text-main)';
+          savedBtn.style.border = '1px solid var(--border)';
+        } else {
+          savedBtn.style.background = 'var(--primary)';
+          savedBtn.style.color = 'white';
+          savedBtn.style.border = 'none';
+          allBtn.style.background = 'var(--surface-variant)';
+          allBtn.style.color = 'var(--text-main)';
+          allBtn.style.border = '1px solid var(--border)';
+        }
+      }
+      const searchInput = document.getElementById('librarySearchInput');
+      renderLibraryList(searchInput ? searchInput.value : '');
+    }
+
     function openAiGenerator() { openModal('aiModal'); }
     function openStoryHub() {
       const searchInput = document.getElementById('librarySearchInput');
       if (searchInput) searchInput.value = '';
       const clearBtn = document.getElementById('librarySearchClear');
       if (clearBtn) clearBtn.style.display = 'none';
+      currentLibraryFilter = 'all';
+      setLibraryFilter('all');
       renderLibraryList('');
       openModal('libraryModal');
     }
@@ -9522,12 +9571,23 @@
     function renderLibraryList(query = '') {
       const list = document.getElementById('libraryList');
       const countEl = document.getElementById('libSearchResultsCount');
+      const allCountEl = document.getElementById('libAllCount');
+      const savedCountEl = document.getElementById('libSavedCount');
       if (!list) return;
       list.innerHTML = "";
       
       const q = (query || '').trim().toLowerCase();
 
-      const filtered = allStories.filter((s) => {
+      if (allCountEl) allCountEl.innerText = allStories.length;
+      const savedStoriesList = allStories.filter(s => bookmarkedIds.includes(s.id));
+      if (savedCountEl) savedCountEl.innerText = savedStoriesList.length;
+
+      let baseList = allStories;
+      if (currentLibraryFilter === 'saved') {
+        baseList = savedStoriesList;
+      }
+
+      const filtered = baseList.filter((s) => {
         if (!q) return true;
         const titleMatch = (s.title || '').toLowerCase().includes(q);
         const themeMatch = (s.theme || '').toLowerCase().includes(q);
@@ -9536,14 +9596,14 @@
       });
 
       if (countEl) {
-        countEl.innerText = q ? `${filtered.length} of ${allStories.length} stories` : `${allStories.length} stories`;
+        countEl.innerText = q ? `${filtered.length} of ${baseList.length}` : `${filtered.length} stories`;
       }
 
       if (filtered.length === 0) {
         list.innerHTML = `
           <div style="text-align:center; padding:30px 12px; color:var(--text-muted); font-size:13px;">
-            🔍 No stories found matching "<strong>${escapeHtml(query)}</strong>"
-            <div style="font-size:11.5px; margin-top:6px; opacity:0.8;">Try searching for a different title or theme keyword (e.g. <em>Mystery, Courage, Friendship, Adventure</em>).</div>
+            ${currentLibraryFilter === 'saved' ? '⭐ No saved stories found.' : `🔍 No stories found matching "<strong>${escapeHtml(query)}</strong>"`}
+            <div style="font-size:11.5px; margin-top:6px; opacity:0.8;">${currentLibraryFilter === 'saved' ? 'Click the Save button on any story to bookmark it here.' : 'Try searching for a different title or theme keyword.'}</div>
           </div>
         `;
         return;
@@ -9552,6 +9612,7 @@
       filtered.forEach((s) => {
         const item = document.createElement('div');
         const isCurrent = currentStory && s.id === currentStory.id;
+        const isBookmarked = bookmarkedIds.includes(s.id);
         item.style = `padding:10px 12px; margin-bottom:8px; border-radius:10px; border:1px solid ${isCurrent ? 'var(--primary)' : 'var(--border)'}; background:${isCurrent ? 'rgba(67,56,202,0.12)' : 'var(--surface-variant)'}; display:flex; justify-content:space-between; align-items:center; gap:10px; transition:all 0.15s ease;`;
         
         const infoDiv = document.createElement('div');
@@ -9566,7 +9627,24 @@
         infoDiv.onclick = () => { loadStory(s); closeModalDirect('libraryModal'); };
 
         const actionsDiv = document.createElement('div');
-        actionsDiv.style = "display:flex; gap:6px; align-items:center; flex-shrink:0;";
+        actionsDiv.style = "display:flex; gap:5px; align-items:center; flex-shrink:0;";
+
+        const saveCardBtn = document.createElement('button');
+        saveCardBtn.className = "btn-pill";
+        saveCardBtn.style = `padding:4px 8px; font-size:11px; background:${isBookmarked ? 'rgba(245,158,11,0.2)' : 'var(--surface)'}; color:${isBookmarked ? '#d97706' : 'var(--text-main)'}; border:1px solid ${isBookmarked ? '#f59e0b' : 'var(--border)'};`;
+        saveCardBtn.innerText = isBookmarked ? '⭐ Saved' : '💾 Save';
+        saveCardBtn.onclick = (e) => {
+          e.stopPropagation();
+          const idx = bookmarkedIds.indexOf(s.id);
+          if (idx > -1) {
+            bookmarkedIds.splice(idx, 1);
+          } else {
+            bookmarkedIds.push(s.id);
+          }
+          localStorage.setItem('lingo_bookmarks', JSON.stringify(bookmarkedIds));
+          updateBookmarkButton();
+          renderLibraryList(document.getElementById('librarySearchInput') ? document.getElementById('librarySearchInput').value : '');
+        };
 
         const quizBtn = document.createElement('button');
         quizBtn.className = "btn-pill";
@@ -9580,6 +9658,7 @@
         readBtn.innerText = "📖 Read";
         readBtn.onclick = (e) => { e.stopPropagation(); loadStory(s); closeModalDirect('libraryModal'); };
 
+        actionsDiv.appendChild(saveCardBtn);
         actionsDiv.appendChild(quizBtn);
         actionsDiv.appendChild(readBtn);
 
